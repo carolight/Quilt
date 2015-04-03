@@ -20,6 +20,7 @@ class BlockViewController: UIViewController {
         super.viewDidLoad()
   
       blockView.image = image
+      blockView.delegate = self
       
       scrollView.delegate = self
       
@@ -71,5 +72,17 @@ extension BlockViewController: UIScrollViewDelegate {
   
   func scrollViewDidZoom(scrollView: UIScrollView!) {
     centerScrollViewContents()
+  }
+}
+
+extension BlockViewController: BlockViewDelegate {
+  func blockViewShouldShowFabric(blockView: BlockView, location: CGPoint) {
+    if let fabricViewController = storyboard?.instantiateViewControllerWithIdentifier("FabricViewController") as? FabricViewController {
+//      if let image = getBlockImage(location) {
+//        blockViewController.image = image
+//      }
+      navigationController?.pushViewController(fabricViewController, animated: true)
+    }
+
   }
 }

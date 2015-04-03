@@ -26,6 +26,8 @@
 		82E943831ACCCA0A00211608 /* BlockView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82E943821ACCCA0A00211608 /* BlockView.swift */; };
 		82E943851ACCCAEA00211608 /* block1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 82E943841ACCCAEA00211608 /* block1.jpg */; };
 		82FCF5A51ACE1ECA000FC779 /* fabrics in Resources */ = {isa = PBXBuildFile; fileRef = 82FCF5A41ACE1ECA000FC779 /* fabrics */; };
+		82FCF5A81ACE2127000FC779 /* FabricView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82FCF5A71ACE2127000FC779 /* FabricView.swift */; };
+		82FCF5AA1ACE2134000FC779 /* FabricViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82FCF5A91ACE2134000FC779 /* FabricViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -62,6 +64,8 @@
 		82E943821ACCCA0A00211608 /* BlockView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockView.swift; sourceTree = "<group>"; };
 		82E943841ACCCAEA00211608 /* block1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = block1.jpg; sourceTree = "<group>"; };
 		82FCF5A41ACE1ECA000FC779 /* fabrics */ = {isa = PBXFileReference; lastKnownFileType = folder; name = fabrics; path = images/fabrics; sourceTree = "<group>"; };
+		82FCF5A71ACE2127000FC779 /* FabricView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FabricView.swift; sourceTree = "<group>"; };
+		82FCF5A91ACE2134000FC779 /* FabricViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FabricViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,9 +115,10 @@
 				82455F761ACBA21300973B40 /* QuiltView.swift */,
 				82E943801ACCC9E400211608 /* BlockViewController.swift */,
 				82E943821ACCCA0A00211608 /* BlockView.swift */,
+				82FCF5A91ACE2134000FC779 /* FabricViewController.swift */,
+				82FCF5A71ACE2127000FC779 /* FabricView.swift */,
 				82455F5A1ACBA1F500973B40 /* Main.storyboard */,
-				82FCF5A41ACE1ECA000FC779 /* fabrics */,
-				82455F7E1ACBC44400973B40 /* quiltImages */,
+				82FCF5A61ACE2059000FC779 /* Images */,
 				82455F5D1ACBA1F600973B40 /* Images.xcassets */,
 				82455F5F1ACBA1F600973B40 /* LaunchScreen.xib */,
 				82455F541ACBA1F500973B40 /* Supporting Files */,
@@ -158,6 +163,15 @@
 			);
 			name = quiltImages;
 			path = images;
+			sourceTree = "<group>";
+		};
+		82FCF5A61ACE2059000FC779 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				82FCF5A41ACE1ECA000FC779 /* fabrics */,
+				82455F7E1ACBC44400973B40 /* quiltImages */,
+			);
+			name = Images;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -270,7 +284,9 @@
 				82E943831ACCCA0A00211608 /* BlockView.swift in Sources */,
 				82455F7D1ACBBAC600973B40 /* CollectionViewFlowLayout.swift in Sources */,
 				82455F591ACBA1F500973B40 /* ViewController.swift in Sources */,
+				82FCF5AA1ACE2134000FC779 /* FabricViewController.swift in Sources */,
 				82455F571ACBA1F500973B40 /* AppDelegate.swift in Sources */,
+				82FCF5A81ACE2127000FC779 /* FabricView.swift in Sources */,
 				82E943811ACCC9E400211608 /* BlockViewController.swift in Sources */,
 				82455F771ACBA21300973B40 /* QuiltView.swift in Sources */,
 				82E9437F1ACBFC5100211608 /* QuiltViewController.swift in Sources */,
