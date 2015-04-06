@@ -31,23 +31,30 @@ class QuiltView: UIView {
     override func drawRect(rect: CGRect) {
       println("drawrect")
       image.drawInRect(rect)
-      for i in 0..<blocksAcross {
-        for j in 0..<blocksDown {
-          let column = CGFloat(i)
-          let row = CGFloat(j)
-          let originX = column * blockSize.width
-          let originY = row * blockSize.height
-          
-          var path = UIBezierPath(rect: CGRect(origin: CGPoint(x: originX, y: originY), size: blockSize))
-    
-          UIColor.blackColor().setStroke()
-          path.lineWidth = 4.0
-          path.stroke()
-          
-          paths.append(path)
-          
-        }
+      
+      for path in paths {
+        path.lineWidth = 4.0
+        UIColor.yellowColor().setStroke()
+        path.stroke()
+        
       }
+//      for i in 0..<blocksAcross {
+//        for j in 0..<blocksDown {
+//          let column = CGFloat(i)
+//          let row = CGFloat(j)
+//          let originX = column * blockSize.width
+//          let originY = row * blockSize.height
+//          
+//          var path = UIBezierPath(rect: CGRect(origin: CGPoint(x: originX, y: originY), size: blockSize))
+//    
+//          UIColor.yellowColor().setStroke()
+//          path.lineWidth = 4.0
+//          path.stroke()
+//          
+//          paths.append(path)
+//          
+//        }
+//      }
     }
   
   func handleTap(gesture:UITapGestureRecognizer) {

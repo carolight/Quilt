@@ -10,7 +10,7 @@ import UIKit
 
 class QuiltViewController: UIViewController {
 
-  var image:UIImage!
+  var quilt:Quilt!
   
   @IBOutlet weak var scrollView: UIScrollView!
 
@@ -21,8 +21,9 @@ class QuiltViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-      quiltView.image = image
+      quiltView.image = quilt.image
       quiltView.delegate = self
+      quiltView.paths = quilt.blockPaths
       
       scrollView.delegate = self
       
@@ -90,7 +91,6 @@ class QuiltViewController: UIViewController {
 
 extension QuiltViewController: UIScrollViewDelegate {
   func viewForZoomingInScrollView(scrollView: UIScrollView!) -> UIView! {
-    println("viewForZoomingInScrollView")
     return quiltView
   }
   
@@ -101,14 +101,44 @@ extension QuiltViewController: UIScrollViewDelegate {
 
 extension QuiltViewController: QuiltViewDelegate {
   func quiltViewShouldShowBlock(quiltView: QuiltView, location:CGPoint) {
-    if let blockViewController = storyboard?.instantiateViewControllerWithIdentifier("BlockViewController") as? BlockViewController {
+//    if let blockViewController = storyboard?.instantiateViewControllerWithIdentifier("BlockNavigationController") as? UINavigationController {
+//    if let blockViewController = storyboard?.instantiateViewControllerWithIdentifier("BlockViewController") as? BlockViewController {
+//    
+//      
+//      if let image = getBlockImage(location) {
+//        blockViewController.image = image
+//      }
+//      
+//      blockViewController.title = "Replace Block"
+////      self.presentViewController(blockViewController, animated: true, completion: nil)
+//      navigationController?.pushViewController(blockViewController, animated: true)
+//      
+//    }
+    
+    if let collectionViewController = storyboard?.instantiateViewControllerWithIdentifier("CollectionViewController") as? CollectionViewController {
+      collectionViewController.appState = .Block
       
+//      var blocksPath = NSBundle.mainBundle().resourcePath!
+//      blocksPath = blocksPath.stringByAppendingString("/blocks/")
+//      
+//      let manager = NSFileManager.defaultManager()
+//      let directoryEnum = manager.enumeratorAtPath(blocksPath)
+//      while let file = directoryEnum?.nextObject() as? String {
+//        println(file)
+//        let filename = blocksPath.stringByAppendingString(file)
+//        if let image = UIImage(contentsOfFile: filename) {
+//          collectionViewController.array.append(image)
+//        }
+//      }
       
-      if let image = getBlockImage(location) {
-        blockViewController.image = image
+      for block in blocks {
+        if let image = block.image {
+          collectionViewController.array.append(image)
+        }
       }
-      navigationController?.pushViewController(blockViewController, animated: true)
       
+      navigationController?.pushViewController(collectionViewController, animated: true)
+
     }
   }
   
@@ -118,7 +148,7 @@ extension QuiltViewController: QuiltViewDelegate {
     
     UIGraphicsBeginImageContextWithOptions(quiltView.bounds.size, true, 1)
     let context = UIGraphicsGetCurrentContext()
-    self.image.drawInRect(quiltView.bounds)
+    self.quilt.image!.drawInRect(quiltView.bounds)
     let quiltImage = UIGraphicsGetImageFromCurrentImageContext()
     UIGraphicsEndImageContext()
     

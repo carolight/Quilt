@@ -55,6 +55,13 @@
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="tFB-bm-UmB"/>
                                 </connections>
                             </collectionView>
+                            <containerView opaque="NO" contentMode="scaleToFill" id="BU0-md-nTp">
+                                <rect key="frame" x="16" y="34" width="288" height="501"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                <connections>
+                                    <segue destination="8rg-gq-u6H" kind="embed" identifier="QuiltCollectionViewController" id="uhG-ux-Wd7"/>
+                                </connections>
+                            </containerView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
@@ -66,6 +73,56 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="694" y="336"/>
+        </scene>
+        <!--Collection View Controller-->
+        <scene sceneID="qec-gz-Yf8">
+            <objects>
+                <collectionViewController storyboardIdentifier="CollectionViewController" id="8rg-gq-u6H" customClass="CollectionViewController" customModule="Quilt" customModuleProvider="target" sceneMemberID="viewController">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="gHo-Ur-gBT">
+                        <rect key="frame" x="0.0" y="0.0" width="288" height="501"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="ReJ-1d-fSn">
+                            <size key="itemSize" width="213" height="376"/>
+                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        </collectionViewFlowLayout>
+                        <cells>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CollectionViewCell" id="Xn1-Fw-iMr" customClass="CollectionViewCell" customModule="Quilt" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                    <rect key="frame" x="0.0" y="0.0" width="213" height="376"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <view contentMode="scaleToFill" id="DMw-WY-Ozx">
+                                            <rect key="frame" x="0.0" y="0.0" width="205" height="359"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="21X-MF-1TB">
+                                                    <rect key="frame" x="0.0" y="0.0" width="230" height="350"/>
+                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                </imageView>
+                                            </subviews>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </view>
+                                    </subviews>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </view>
+                                <connections>
+                                    <outlet property="imageView" destination="21X-MF-1TB" id="ekk-6h-qZF"/>
+                                </connections>
+                            </collectionViewCell>
+                        </cells>
+                        <connections>
+                            <outlet property="dataSource" destination="8rg-gq-u6H" id="RPP-m0-ySD"/>
+                            <outlet property="delegate" destination="8rg-gq-u6H" id="x9g-LG-iRH"/>
+                        </connections>
+                    </collectionView>
+                </collectionViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="yNf-Br-92r" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1063" y="140"/>
         </scene>
         <!--Quilt-->
         <scene sceneID="6dt-Ao-uQf">
@@ -120,6 +177,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
+                    <navigationItem key="navigationItem" id="1Ot-tX-DtI"/>
                     <connections>
                         <outlet property="blockView" destination="uPQ-le-iyt" id="ziQ-w7-kJ8"/>
                         <outlet property="scrollView" destination="mPP-wB-ytH" id="CyA-gk-r0H"/>
@@ -127,7 +185,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PkS-ON-2rD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="689" y="1618"/>
+            <point key="canvasLocation" x="1221" y="1618"/>
         </scene>
         <!--Fabric View Controller-->
         <scene sceneID="DKl-uF-YYN">
@@ -141,7 +199,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XFD-eu-8As" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1063" y="1618"/>
+            <point key="canvasLocation" x="1595" y="1618"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="WhV-XD-Rzb">
@@ -160,6 +218,36 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="R7f-NQ-I1p" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="162" y="336"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="RF7-h9-g6E">
+            <objects>
+                <navigationController storyboardIdentifier="BlockNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="0yW-g1-Gxk" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="9Ox-Gv-Vps">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="pFv-qb-gIu" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="689" y="1618"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="12y-ex-mkW">
+            <objects>
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="zqk-iX-ahz" sceneMemberID="viewController">
+                    <view key="view" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="aMG-pM-KnW">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <toolbarItems/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="rio-ZF-r9j" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1023" y="-402"/>
         </scene>
     </scenes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

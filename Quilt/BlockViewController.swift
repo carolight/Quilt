@@ -11,6 +11,10 @@ import UIKit
 class BlockViewController: UIViewController {
   
   var image = UIImage(named: "block1.jpg")
+  var block:Block!
+  
+  var selectedPatchColor:Int? = nil
+  
   @IBOutlet weak var blockView: BlockView!
   
   @IBOutlet weak var scrollView: UIScrollView!
@@ -21,6 +25,8 @@ class BlockViewController: UIViewController {
   
       blockView.image = image
       blockView.delegate = self
+      blockView.patches = block.patches
+      blockView.patchColors = block.patchColors
       
       scrollView.delegate = self
       
@@ -62,11 +68,18 @@ class BlockViewController: UIViewController {
     blockView.frame = contentsFrame
   }
 
+  @IBAction func btnCancel(sender: AnyObject) {
+    println("cancel")
+    dismissViewControllerAnimated(true, completion: nil)
+  }
+  @IBAction func btnSave(sender: AnyObject) {
+    println("save")
+    dismissViewControllerAnimated(true, completion: nil)
+  }
 }
 
 extension BlockViewController: UIScrollViewDelegate {
   func viewForZoomingInScrollView(scrollView: UIScrollView!) -> UIView! {
-    println("viewForZoomingInScrollView")
     return blockView
   }
   
@@ -77,12 +90,64 @@ extension BlockViewController: UIScrollViewDelegate {
 
 extension BlockViewController: BlockViewDelegate {
   func blockViewShouldShowFabric(blockView: BlockView, location: CGPoint) {
-    if let fabricViewController = storyboard?.instantiateViewControllerWithIdentifier("FabricViewController") as? FabricViewController {
-//      if let image = getBlockImage(location) {
-//        blockViewController.image = image
-//      }
-      navigationController?.pushViewController(fabricViewController, animated: true)
+//    if let fabricViewController = storyboard?.instantiateViewControllerWithIdentifier("FabricViewController") as? FabricViewController {
+////      if let image = getBlockImage(location) {
+////        blockViewController.image = image
+////      }
+//      navigationController?.pushViewController(fabricViewController, animated: true)
+//    }
+    
+    //test to see which one tapped
+
+    for (index, patch) in enumerate(blockView.patches) {
+      if patch.path.containsPoint(location) {
+        println("found")
+        println(block.patchColors[index])
+        selectedPatchColor = block.patchColors[index]
+        break
+      }
+    }
+    
+    
+    if let collectionViewController = storyboard?.instantiateViewControllerWithIdentifier("CollectionViewController") as? CollectionViewController {
+      collectionViewController.appState = .Fabric
+      collectionViewController.delegate = self
+
+      var fabricsPath = NSBundle.mainBundle().resourcePath!
+      fabricsPath = fabricsPath.stringByAppendingString("/fabrics/")
+      
+      let manager = NSFileManager.defaultManager()
+      let directoryEnum = manager.enumeratorAtPath(fabricsPath)
+      while let file = directoryEnum?.nextObject() as? String {
+        let filename = fabricsPath.stringByAppendingString(file)
+        if let image = UIImage(contentsOfFile: filename) {
+          collectionViewController.array.append(image)
+        }
+      }
+      
+      navigationController?.pushViewController(collectionViewController, animated: true)
+      
     }
 
+
+  }
+}
+
+extension BlockViewController: CollectionViewControllerDelegate {
+  func didSelectItem(item: AnyObject) {
+    println("didSelectItem")
+    if let fabricImage = item as? UIImage {
+      if let selectedColor = selectedPatchColor {
+        for (index, color) in enumerate(block.patchColors) {
+          if color == selectedColor {
+            
+            let path = block.patches[index].path
+            let fabricColor = UIColor(patternImage: fabricImage)
+            block.patches[index].color = fabricColor
+          }
+        }
+        blockView.setNeedsDisplay()
+      }
+    }
   }
 }
