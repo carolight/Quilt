@@ -24,6 +24,7 @@ class QuiltViewController: UIViewController {
       quiltView.image = quilt.image
       quiltView.delegate = self
       quiltView.paths = quilt.blockPaths
+      quiltView.blockSize = quilt.blockSize
       
       scrollView.delegate = self
       
@@ -157,5 +158,16 @@ extension QuiltViewController: QuiltViewDelegate {
     return image
     
   }
+  
+  @IBAction func exitBlockCancel(segue:UIStoryboardSegue) {
+    println("cancel")
+  }
+
+  @IBAction func exitBlockSave(segue:UIStoryboardSegue) {
+    println("save")
+    println(segue.sourceViewController)
+    
+  }
+
 }
 

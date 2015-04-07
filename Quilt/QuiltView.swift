@@ -18,7 +18,8 @@ class QuiltView: UIView {
   var delegate: QuiltViewDelegate? = nil
   var paths:[UIBezierPath] = []
   
-  let blockSize = CGSize(width: 100, height: 100)
+  let displayBlockSize = CGSize(width: 100, height: 100)
+  var blockSize = CGSizeZero
   let blocksAcross = 6
   let blocksDown = 9
   
@@ -33,11 +34,14 @@ class QuiltView: UIView {
       image.drawInRect(rect)
       
       for path in paths {
-        path.lineWidth = 4.0
+        var pathCopy = path.copy() as UIBezierPath
+        var scale = displayBlockSize.width / blockSize.width
+        var transform = CGAffineTransformIdentity
+        transform = CGAffineTransformScale(transform, scale, scale)
+        pathCopy.applyTransform(transform)
+        pathCopy.lineWidth = 4.0
         UIColor.yellowColor().setStroke()
-        path.stroke()
-        
-      }
+        pathCopy.stroke()
 //      for i in 0..<blocksAcross {
 //        for j in 0..<blocksDown {
 //          let column = CGFloat(i)
@@ -56,6 +60,7 @@ class QuiltView: UIView {
 //        }
 //      }
     }
+  }
   
   func handleTap(gesture:UITapGestureRecognizer) {
     println("tap")

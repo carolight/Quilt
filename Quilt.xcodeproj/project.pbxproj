@@ -15,11 +15,6 @@
 		82455F771ACBA21300973B40 /* QuiltView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82455F761ACBA21300973B40 /* QuiltView.swift */; };
 		82455F7B1ACBB97A00973B40 /* QuiltCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82455F7A1ACBB97A00973B40 /* QuiltCollectionViewCell.swift */; };
 		82455F7D1ACBBAC600973B40 /* CollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82455F7C1ACBBAC600973B40 /* CollectionViewFlowLayout.swift */; };
-		82455F841ACBC44400973B40 /* quilt1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 82455F7F1ACBC44400973B40 /* quilt1.jpg */; };
-		82455F851ACBC44400973B40 /* quilt2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 82455F801ACBC44400973B40 /* quilt2.jpg */; };
-		82455F861ACBC44400973B40 /* quilt3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 82455F811ACBC44400973B40 /* quilt3.jpg */; };
-		82455F871ACBC44400973B40 /* quilt4.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 82455F821ACBC44400973B40 /* quilt4.jpg */; };
-		82455F881ACBC44400973B40 /* quilt5.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 82455F831ACBC44400973B40 /* quilt5.jpg */; };
 		825353C41ACE47EC00FEE2D9 /* blocks in Resources */ = {isa = PBXBuildFile; fileRef = 825353C31ACE47EC00FEE2D9 /* blocks */; };
 		825353C61ACE500800FEE2D9 /* Quilt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 825353C51ACE500800FEE2D9 /* Quilt.swift */; };
 		825353C81ACE501400FEE2D9 /* Block.swift in Sources */ = {isa = PBXBuildFile; fileRef = 825353C71ACE501400FEE2D9 /* Block.swift */; };
@@ -28,7 +23,12 @@
 		82E9437F1ACBFC5100211608 /* QuiltViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82E9437E1ACBFC5100211608 /* QuiltViewController.swift */; };
 		82E943811ACCC9E400211608 /* BlockViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82E943801ACCC9E400211608 /* BlockViewController.swift */; };
 		82E943831ACCCA0A00211608 /* BlockView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82E943821ACCCA0A00211608 /* BlockView.swift */; };
-		82FCF5A51ACE1ECA000FC779 /* fabrics in Resources */ = {isa = PBXBuildFile; fileRef = 82FCF5A41ACE1ECA000FC779 /* fabrics */; };
+		82ED3B691AD34FC90049EB87 /* quilt1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 82ED3B641AD34FC90049EB87 /* quilt1.jpg */; };
+		82ED3B6A1AD34FC90049EB87 /* quilt2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 82ED3B651AD34FC90049EB87 /* quilt2.jpg */; };
+		82ED3B6B1AD34FC90049EB87 /* quilt3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 82ED3B661AD34FC90049EB87 /* quilt3.jpg */; };
+		82ED3B6C1AD34FC90049EB87 /* quilt4.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 82ED3B671AD34FC90049EB87 /* quilt4.jpg */; };
+		82ED3B6D1AD34FC90049EB87 /* quilt5.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 82ED3B681AD34FC90049EB87 /* quilt5.jpg */; };
+		82ED3B711AD352E50049EB87 /* fabrics in Resources */ = {isa = PBXBuildFile; fileRef = 82ED3B701AD352E50049EB87 /* fabrics */; };
 		82FCF5A81ACE2127000FC779 /* FabricView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82FCF5A71ACE2127000FC779 /* FabricView.swift */; };
 		82FCF5AA1ACE2134000FC779 /* FabricViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82FCF5A91ACE2134000FC779 /* FabricViewController.swift */; };
 		82FCF5AC1ACE29D2000FC779 /* CollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82FCF5AB1ACE29D2000FC779 /* CollectionViewController.swift */; };
@@ -59,11 +59,6 @@
 		82455F761ACBA21300973B40 /* QuiltView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuiltView.swift; sourceTree = "<group>"; };
 		82455F7A1ACBB97A00973B40 /* QuiltCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuiltCollectionViewCell.swift; sourceTree = "<group>"; };
 		82455F7C1ACBBAC600973B40 /* CollectionViewFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewFlowLayout.swift; sourceTree = "<group>"; };
-		82455F7F1ACBC44400973B40 /* quilt1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = quilt1.jpg; sourceTree = "<group>"; };
-		82455F801ACBC44400973B40 /* quilt2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = quilt2.jpg; sourceTree = "<group>"; };
-		82455F811ACBC44400973B40 /* quilt3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = quilt3.jpg; sourceTree = "<group>"; };
-		82455F821ACBC44400973B40 /* quilt4.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = quilt4.jpg; sourceTree = "<group>"; };
-		82455F831ACBC44400973B40 /* quilt5.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = quilt5.jpg; sourceTree = "<group>"; };
 		825353C31ACE47EC00FEE2D9 /* blocks */ = {isa = PBXFileReference; lastKnownFileType = folder; name = blocks; path = images/blocks; sourceTree = "<group>"; };
 		825353C51ACE500800FEE2D9 /* Quilt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Quilt.swift; sourceTree = "<group>"; };
 		825353C71ACE501400FEE2D9 /* Block.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Block.swift; sourceTree = "<group>"; };
@@ -72,7 +67,12 @@
 		82E9437E1ACBFC5100211608 /* QuiltViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuiltViewController.swift; sourceTree = "<group>"; };
 		82E943801ACCC9E400211608 /* BlockViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockViewController.swift; sourceTree = "<group>"; };
 		82E943821ACCCA0A00211608 /* BlockView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockView.swift; sourceTree = "<group>"; };
-		82FCF5A41ACE1ECA000FC779 /* fabrics */ = {isa = PBXFileReference; lastKnownFileType = folder; name = fabrics; path = images/fabrics; sourceTree = "<group>"; };
+		82ED3B641AD34FC90049EB87 /* quilt1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = quilt1.jpg; sourceTree = "<group>"; };
+		82ED3B651AD34FC90049EB87 /* quilt2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = quilt2.jpg; sourceTree = "<group>"; };
+		82ED3B661AD34FC90049EB87 /* quilt3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = quilt3.jpg; sourceTree = "<group>"; };
+		82ED3B671AD34FC90049EB87 /* quilt4.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = quilt4.jpg; sourceTree = "<group>"; };
+		82ED3B681AD34FC90049EB87 /* quilt5.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = quilt5.jpg; sourceTree = "<group>"; };
+		82ED3B701AD352E50049EB87 /* fabrics */ = {isa = PBXFileReference; lastKnownFileType = folder; name = fabrics; path = images/fabrics; sourceTree = "<group>"; };
 		82FCF5A71ACE2127000FC779 /* FabricView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FabricView.swift; sourceTree = "<group>"; };
 		82FCF5A91ACE2134000FC779 /* FabricViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FabricViewController.swift; sourceTree = "<group>"; };
 		82FCF5AB1ACE29D2000FC779 /* CollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewController.swift; sourceTree = "<group>"; };
@@ -170,11 +170,11 @@
 		82455F7E1ACBC44400973B40 /* quiltImages */ = {
 			isa = PBXGroup;
 			children = (
-				82455F7F1ACBC44400973B40 /* quilt1.jpg */,
-				82455F801ACBC44400973B40 /* quilt2.jpg */,
-				82455F811ACBC44400973B40 /* quilt3.jpg */,
-				82455F821ACBC44400973B40 /* quilt4.jpg */,
-				82455F831ACBC44400973B40 /* quilt5.jpg */,
+				82ED3B641AD34FC90049EB87 /* quilt1.jpg */,
+				82ED3B651AD34FC90049EB87 /* quilt2.jpg */,
+				82ED3B661AD34FC90049EB87 /* quilt3.jpg */,
+				82ED3B671AD34FC90049EB87 /* quilt4.jpg */,
+				82ED3B681AD34FC90049EB87 /* quilt5.jpg */,
 			);
 			name = quiltImages;
 			path = images;
@@ -193,8 +193,8 @@
 		82FCF5A61ACE2059000FC779 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				82ED3B701AD352E50049EB87 /* fabrics */,
 				825353C31ACE47EC00FEE2D9 /* blocks */,
-				82FCF5A41ACE1ECA000FC779 /* fabrics */,
 				82455F7E1ACBC44400973B40 /* quiltImages */,
 			);
 			name = Images;
@@ -281,15 +281,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				825353C41ACE47EC00FEE2D9 /* blocks in Resources */,
-				82455F861ACBC44400973B40 /* quilt3.jpg in Resources */,
+				82ED3B6A1AD34FC90049EB87 /* quilt2.jpg in Resources */,
 				82FCF5B11ACE3C4A000FC779 /* Main.storyboard in Resources */,
-				82455F841ACBC44400973B40 /* quilt1.jpg in Resources */,
+				82ED3B691AD34FC90049EB87 /* quilt1.jpg in Resources */,
+				82ED3B6C1AD34FC90049EB87 /* quilt4.jpg in Resources */,
+				82ED3B711AD352E50049EB87 /* fabrics in Resources */,
 				82455F611ACBA1F600973B40 /* LaunchScreen.xib in Resources */,
-				82FCF5A51ACE1ECA000FC779 /* fabrics in Resources */,
-				82455F851ACBC44400973B40 /* quilt2.jpg in Resources */,
-				82455F881ACBC44400973B40 /* quilt5.jpg in Resources */,
+				82ED3B6D1AD34FC90049EB87 /* quilt5.jpg in Resources */,
 				82455F5E1ACBA1F600973B40 /* Images.xcassets in Resources */,
-				82455F871ACBC44400973B40 /* quilt4.jpg in Resources */,
+				82ED3B6B1AD34FC90049EB87 /* quilt3.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

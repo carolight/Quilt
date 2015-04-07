@@ -13,4 +13,5 @@ class Quilt {
   var name:String = " "
   var image:UIImage? = nil
   var blockPaths: [UIBezierPath] = []
+  var blockSize:CGSize = CGSizeZero
 }

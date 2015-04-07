@@ -27,6 +27,7 @@ func setupQuilts() {
   var rect = CGRect(origin: CGPointZero, size: quiltSize)
   
   quilt.name = "untitled 1"
+  quilt.blockSize = blockSize
   
   UIGraphicsBeginImageContextWithOptions(quiltSize, true, 0)
   let context = UIGraphicsGetCurrentContext()
@@ -66,6 +67,7 @@ func setupQuilts() {
       path = UIBezierPath(rect: rect)
       path.stroke()
       quilt.blockPaths.append(path)
+
     }
   }
 
