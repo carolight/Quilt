@@ -66,6 +66,9 @@ extension CollectionViewController: UICollectionViewDataSource {
     case .Quilt:
       let quilt = array[indexPath.row] as Quilt
       image = quilt.image!
+    case .Block:
+      let block = array[indexPath.row] as Block
+      image = block.image!
     default:
       image = array[indexPath.row] as UIImage
     }
@@ -95,14 +98,10 @@ extension CollectionViewController: UICollectionViewDelegate {
 //      let blockViewController = storyboard?.instantiateViewControllerWithIdentifier("BlockViewController") as BlockViewController
       let blockViewController = navigationController.viewControllers[0] as BlockViewController
       blockViewController.title = "Block"
-      let blockimage = array[indexPath.row] as UIImage
-      blockViewController.image = blockimage
+      let block = array[indexPath.row] as Block
       
-      if indexPath.row < blocks.count {
-        let block = blocks[indexPath.row]
         println("selected block: \(block.name)")
         blockViewController.block = block
-      }
 
       presentViewController(navigationController, animated: true, completion: nil)
 //      var viewControllers = navigationController?.viewControllers

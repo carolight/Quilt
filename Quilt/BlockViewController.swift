@@ -10,7 +10,6 @@ import UIKit
 
 class BlockViewController: UIViewController {
   
-  var image = UIImage(named: "block1.jpg")
   var block:Block!
   
   var selectedPatchColor:Int? = nil
@@ -23,7 +22,7 @@ class BlockViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
   
-      blockView.image = image
+      blockView.image = block.image
       blockView.delegate = self
       blockView.patches = block.patches
       blockView.patchColors = block.patchColors
@@ -115,7 +114,6 @@ extension BlockViewController: BlockViewDelegate {
 
       var fabricsPath = NSBundle.mainBundle().resourcePath!
       fabricsPath = fabricsPath.stringByAppendingString("/fabrics/")
-      
       let manager = NSFileManager.defaultManager()
       let directoryEnum = manager.enumeratorAtPath(fabricsPath)
       while let file = directoryEnum?.nextObject() as? String {

@@ -14,7 +14,7 @@ var blocks:[Block] = []
 var fabrics:[Fabric] = []
 
 func setupQuilts() {
-  var quiltSize = CGSize(width:240, height:420)
+  var quiltSize = CGSize(width:240, height:400)
   var blockSize = CGSize(width: 40, height: 40)
   var blocksAcross = 5
   var blocksDown = 9
@@ -42,7 +42,7 @@ func setupQuilts() {
   path.stroke()
   
   //  bottom border
-  rect.origin.y = quiltSize.height - borderWidth*2
+  rect.origin.y = quiltSize.height - borderWidth
   path = UIBezierPath(rect: rect)
   path.stroke()
 
@@ -65,7 +65,9 @@ func setupQuilts() {
       rect.origin.x = CGFloat(column) * blockSize.width + borderWidth
       rect.origin.y = CGFloat(row) * blockSize.height + borderWidth
       path = UIBezierPath(rect: rect)
-      path.stroke()
+      UIColor.yellowColor().setFill()
+//      path.stroke()
+      path.fill()
       quilt.blockPaths.append(path)
 
     }
@@ -77,8 +79,10 @@ func setupQuilts() {
   
   quilt.image = image
   quilts.append(quilt)
+//  quilt.save()
   
 }
+
 
 func setupBlocks() {
   

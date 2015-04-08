@@ -14,9 +14,44 @@ class ViewController: UIViewController {
   var array:[AnyObject] = []
   @IBOutlet weak var collectionView: UICollectionView!
   
+  func printAll() {
+    println("-- PRINTING ALL")
+    database.viewNamed("all").setMapBlock("2") {
+      (document, emit) in
+      if let object:AnyObject = document["name"] {
+        if let name = object as? String {
+          emit(name, document)
+        }
+      }
+    }
+    let query = database.viewNamed("all").createQuery()
+    var error:NSError?
+    let result = query.run(&error)
+    while let row = result?.nextRow() {
+      println("\(row.key) / \(row.value)")
+    }
+    println("-- END ALL")
+  }
+  
+  func useDatabase() {
+    database.viewNamed("quiltName").setMapBlock("2") {
+      (document, emit) in
+      if document["type"] as? String == "Quilt" {
+        if let object:AnyObject = document["name"] {
+          if let name = object as? String {
+            emit(name, document)
+          }
+        }
+      }
+    }
+    
+  }
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    
+    printAll()
+    
     
     self.title = "Select Quilt"
     let flowLayout = CollectionViewFlowLayout()
@@ -35,21 +70,21 @@ class ViewController: UIViewController {
       println(segue.destinationViewController)
       if let collectionViewController = segue.destinationViewController as? CollectionViewController {
         collectionViewController.appState = .Quilt
-        println("HERE")
-        println(quilts)
         
-        for quilt in quilts {
-          println(quilt.name)
+        
+        useDatabase()
+        quilts = []
+        
+        let query = database.viewNamed("quiltName").createQuery()
+        var error:NSError?
+        let result = query.run(&error)
+        while let row = result?.nextRow() {
+          println("\(row.key) / \(row.value)")
+          let quilt = Quilt()
+          quilt.load(row.documentID)
+          //          quilts.append(quilt)
           collectionViewController.array.append(quilt)
-//          collectionViewController.array.append(quilt.image!)
         }
-//        for i in 0..<5 {
-//          println("quilt\(i).jpg")
-//          if let image = UIImage(named: "quilt\(i).jpg") {
-//            collectionViewController.array.append(image)
-//          }
-//        }
-
       }
     }
   }
@@ -78,7 +113,7 @@ extension ViewController: UICollectionViewDataSource {
     cell.imageView.userInteractionEnabled = true
     cell.imageView.addGestureRecognizer(cell.swipeGesture)
     cell.setupOptionsView()
-
+    
     return cell
     
   }

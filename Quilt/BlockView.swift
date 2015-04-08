@@ -50,11 +50,17 @@ class BlockView: UIView {
         if patch.color == UIColor.blueColor() {
         switch patchColors[index] {
         case 0:
-          patch.color = UIColor.whiteColor()
+          patch.color = UIColor.lightGrayColor()
         case 1:
-          patch.color = UIColor.darkGrayColor()
-        case 2:
           patch.color = UIColor.grayColor()
+        case 2:
+          patch.color = UIColor.darkGrayColor()
+        case 3:
+          patch.color = UIColor.purpleColor()
+        case 4:
+          patch.color = UIColor.yellowColor()
+        case 5:
+          patch.color = UIColor.greenColor()
         default:
           patch.color = UIColor.cyanColor()
         }

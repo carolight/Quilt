@@ -9,44 +9,61 @@
 import UIKit
 
 class QuiltViewController: UIViewController {
-
+  
   var quilt:Quilt!
   
   @IBOutlet weak var scrollView: UIScrollView!
-
+  
   
   @IBOutlet weak var quiltView: QuiltView!
   
+  func useDatabase() {
+    database.viewNamed("blockName").setMapBlock("2") {
+      (document, emit) in
+      if document["type"] as? String == "Block" {
+        if let object:AnyObject = document["name"] {
+          if let name = object as? String {
+            emit(name, document)
+          }
+        }
+      }
+    }
+  }
   
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-      quiltView.image = quilt.image
-      quiltView.delegate = self
-      quiltView.paths = quilt.blockPaths
-      quiltView.blockSize = quilt.blockSize
-      
-      scrollView.delegate = self
-      
-      scrollView.contentSize = quiltView.bounds.size
-      
-      let scrollViewFrame = scrollView.frame
-      let scaleWidth = scrollViewFrame.size.width / scrollView.contentSize.width
-      let scaleHeight = scrollViewFrame.size.height / scrollView.contentSize.height
-      let minScale = min(scaleWidth, scaleHeight);
-      scrollView.minimumZoomScale = minScale;
-      
-      // 5
-      scrollView.maximumZoomScale = 2.0
-      scrollView.zoomScale = minScale;
-
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
+  
+  override func viewDidLoad() {
+    super.viewDidLoad()
     
+    quiltView.image = quilt.image
+    quiltView.delegate = self
+    quiltView.paths = quilt.blockPaths
+    quiltView.blockSize = quilt.blockSize
+    
+    scrollView.delegate = self
+    
+    scrollView.contentSize = quiltView.bounds.size
+    
+    let scrollViewFrame = scrollView.frame
+    let scaleWidth = scrollViewFrame.size.width / scrollView.contentSize.width
+    let scaleHeight = scrollViewFrame.size.height / scrollView.contentSize.height
+    let minScale = min(scaleWidth, scaleHeight);
+    scrollView.minimumZoomScale = minScale;
+    println("min: \(minScale)")
+    println("Image: \(quilt.image?.size)")
+    println(scrollView.bounds)
+    // 5
+    scrollView.maximumZoomScale = 2.0
+    scrollView.zoomScale = minScale;
+    
+    self.automaticallyAdjustsScrollViewInsets = false
+    
+  }
+  
+  override func didReceiveMemoryWarning() {
+    super.didReceiveMemoryWarning()
+    // Dispose of any resources that can be recreated.
+  }
+  
   func scrollViewDoubleTapped(recognizer: UITapGestureRecognizer) {
     println("double tap")
     // 1
@@ -87,7 +104,7 @@ class QuiltViewController: UIViewController {
     
     quiltView.frame = contentsFrame
   }
-
+  
 }
 
 extension QuiltViewController: UIScrollViewDelegate {
@@ -102,44 +119,60 @@ extension QuiltViewController: UIScrollViewDelegate {
 
 extension QuiltViewController: QuiltViewDelegate {
   func quiltViewShouldShowBlock(quiltView: QuiltView, location:CGPoint) {
-//    if let blockViewController = storyboard?.instantiateViewControllerWithIdentifier("BlockNavigationController") as? UINavigationController {
-//    if let blockViewController = storyboard?.instantiateViewControllerWithIdentifier("BlockViewController") as? BlockViewController {
-//    
-//      
-//      if let image = getBlockImage(location) {
-//        blockViewController.image = image
-//      }
-//      
-//      blockViewController.title = "Replace Block"
-////      self.presentViewController(blockViewController, animated: true, completion: nil)
-//      navigationController?.pushViewController(blockViewController, animated: true)
-//      
-//    }
+    //    if let blockViewController = storyboard?.instantiateViewControllerWithIdentifier("BlockNavigationController") as? UINavigationController {
+    //    if let blockViewController = storyboard?.instantiateViewControllerWithIdentifier("BlockViewController") as? BlockViewController {
+    //
+    //
+    //      if let image = getBlockImage(location) {
+    //        blockViewController.image = image
+    //      }
+    //
+    //      blockViewController.title = "Replace Block"
+    ////      self.presentViewController(blockViewController, animated: true, completion: nil)
+    //      navigationController?.pushViewController(blockViewController, animated: true)
+    //
+    //    }
     
     if let collectionViewController = storyboard?.instantiateViewControllerWithIdentifier("CollectionViewController") as? CollectionViewController {
       collectionViewController.appState = .Block
       
-//      var blocksPath = NSBundle.mainBundle().resourcePath!
-//      blocksPath = blocksPath.stringByAppendingString("/blocks/")
-//      
-//      let manager = NSFileManager.defaultManager()
-//      let directoryEnum = manager.enumeratorAtPath(blocksPath)
-//      while let file = directoryEnum?.nextObject() as? String {
-//        println(file)
-//        let filename = blocksPath.stringByAppendingString(file)
-//        if let image = UIImage(contentsOfFile: filename) {
-//          collectionViewController.array.append(image)
-//        }
-//      }
+      //      var blocksPath = NSBundle.mainBundle().resourcePath!
+      //      blocksPath = blocksPath.stringByAppendingString("/blocks/")
+      //
+      //      let manager = NSFileManager.defaultManager()
+      //      let directoryEnum = manager.enumeratorAtPath(blocksPath)
+      //      while let file = directoryEnum?.nextObject() as? String {
+      //        println(file)
+      //        let filename = blocksPath.stringByAppendingString(file)
+      //        if let image = UIImage(contentsOfFile: filename) {
+      //          collectionViewController.array.append(image)
+      //        }
+      //      }
       
-      for block in blocks {
-        if let image = block.image {
-          collectionViewController.array.append(image)
-        }
+      
+      useDatabase()
+      blocks = []
+      
+      let query = database.viewNamed("blockName").createQuery()
+      var error:NSError?
+      let result = query.run(&error)
+      while let row = result?.nextRow() {
+        println("\(row.key) / \(row.value)")
+        let block = Block()
+        block.load(row.documentID)
+        //          quilts.append(quilt)
+        collectionViewController.array.append(block)
       }
       
+      
+      //      for block in blocks {
+      //        if let image = block.image {
+      //          collectionViewController.array.append(image)
+      //        }
+      //      }
+      
       navigationController?.pushViewController(collectionViewController, animated: true)
-
+      
     }
   }
   
@@ -162,12 +195,12 @@ extension QuiltViewController: QuiltViewDelegate {
   @IBAction func exitBlockCancel(segue:UIStoryboardSegue) {
     println("cancel")
   }
-
+  
   @IBAction func exitBlockSave(segue:UIStoryboardSegue) {
     println("save")
     println(segue.sourceViewController)
     
   }
-
+  
 }
 
