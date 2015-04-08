@@ -55,8 +55,6 @@ class Block  {
     newRevision.setAttachmentNamed("image.png", withContentType: "image/png", content: imageData)
     assert(newRevision.save(&error) != nil)
     
-    //TODO: - the points must be saved, not the paths, as the points are resizable
-    
     newRevision = document.currentRevision.createRevision()
     
     var newPatches:[[String]] = []
@@ -74,16 +72,6 @@ class Block  {
       newRevision.setAttachmentNamed("patchPoints", withContentType: "CGPoint", content: patchesData)
       assert(newRevision.save(&error) != nil)
     }
-//    var paths:[UIBezierPath] = []
-//    for patch in patches {
-//      let path = patch.createPath(CGSize(width: 100, height: 100))
-//      paths.append(path)
-//    }
-//    if paths.count > 0 {
-//      let pathsData = NSKeyedArchiver.archivedDataWithRootObject(paths)
-//      newRevision.setAttachmentNamed("patchPaths", withContentType: "UIBezierPath", content: pathsData)
-//      assert(newRevision.save(&error) != nil)
-//    }
     
     newRevision = document.currentRevision.createRevision()
     let colorData = NSKeyedArchiver.archivedDataWithRootObject(patchColors)
@@ -107,20 +95,6 @@ class Block  {
         self.image = image
       }
     }
-    
-//    if let pathsData = revision.attachmentNamed("patchPaths") {
-//      if let data = pathsData.content {
-//        if let paths = NSKeyedUnarchiver.unarchiveObjectWithData(data) as? [UIBezierPath] {
-//          patches = []
-//          for path in paths {
-//            let patch = Patch()
-//            patch.path = path
-//            patches.append(patch)
-//          }
-//        }
-//        println("loaded \(patches.count) patches")
-//      }
-//    }
     
     if let patchesData = revision.attachmentNamed("patchPoints") {
       if let data = patchesData.content {
@@ -149,6 +123,54 @@ class Block  {
     }
   }
 
+  func saveToPlist() {
+    
+    let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true) as NSArray
+    let documentsDirectory = paths[0] as NSString
+    let path = documentsDirectory.stringByAppendingPathComponent("Block-\(name).plist")
+    
+    let dictionary = NSMutableDictionary()
+    dictionary["name"] = name
+
+    let imageData = UIImagePNGRepresentation(image)
+    dictionary["image"] = imageData
+    
+    var newPatches:[[String]] = []
+    var newPatch:[String] = []
+    for patch in patches {
+      newPatch = []
+      for point in patch.points {
+        var newStringPoint:String = NSStringFromCGPoint(point)
+        newPatch.append(newStringPoint)
+      }
+      newPatches.append(newPatch)
+    }
+    dictionary["patches"] = newPatches
+    dictionary["patchColors"] = patchColors
+    
+    dictionary.writeToFile(path, atomically: false)
+  }
+  
+  func loadFromDictionary(dictionary:NSDictionary) {
+    name = dictionary["name"] as String
+    if let imageData = dictionary["image"] as? NSData {
+      if let image = UIImage(data: imageData, scale: UIScreen.mainScreen().scale) {
+        self.image = image
+      }
+    }
+    
+    if let patches = dictionary["patches"] as? [[String]] {
+      for patch in patches {
+        let newPatch = Patch()
+        for stringPoint in patch {
+          let point = CGPointFromString(stringPoint)
+          newPatch.points.append(point)
+        }
+        self.patches.append(newPatch)
+      }
+    }
+    self.patchColors = dictionary["patchColors"] as [Int]
+  }
 }
 
 class Patch {

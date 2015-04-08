@@ -21,6 +21,7 @@
 		825353CA1ACE502100FEE2D9 /* Fabric.swift in Sources */ = {isa = PBXBuildFile; fileRef = 825353C91ACE502100FEE2D9 /* Fabric.swift */; };
 		825353CD1ACE509C00FEE2D9 /* SampleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 825353CC1ACE509C00FEE2D9 /* SampleData.swift */; };
 		82544D341AD4CB4A00CCA4B2 /* QuiltBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82544D331AD4CB4A00CCA4B2 /* QuiltBlock.swift */; };
+		82544D391AD4E05100CCA4B2 /* LoadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82544D381AD4E05100CCA4B2 /* LoadViewController.swift */; };
 		82C381091AD36CF500B85B39 /* CouchbaseLite.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82C381081AD36CF500B85B39 /* CouchbaseLite.framework */; };
 		82C3810C1AD36D7A00B85B39 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82C3810B1AD36D7A00B85B39 /* CFNetwork.framework */; };
 		82C3810E1AD36D7F00B85B39 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82C3810D1AD36D7F00B85B39 /* Security.framework */; };
@@ -77,6 +78,7 @@
 		825353C91ACE502100FEE2D9 /* Fabric.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Fabric.swift; sourceTree = "<group>"; };
 		825353CC1ACE509C00FEE2D9 /* SampleData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SampleData.swift; sourceTree = "<group>"; };
 		82544D331AD4CB4A00CCA4B2 /* QuiltBlock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuiltBlock.swift; sourceTree = "<group>"; };
+		82544D381AD4E05100CCA4B2 /* LoadViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadViewController.swift; sourceTree = "<group>"; };
 		82C381081AD36CF500B85B39 /* CouchbaseLite.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = CouchbaseLite.framework; sourceTree = "<group>"; };
 		82C3810B1AD36D7A00B85B39 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		82C3810D1AD36D7F00B85B39 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
@@ -170,6 +172,7 @@
 				82C3811D1AD3AE9F00B85B39 /* CreateBlockView.swift */,
 				82C3811F1AD3C2E600B85B39 /* CreateBlockPointTableViewController.swift */,
 				82C381211AD4A19700B85B39 /* CreateBlockPatchEditViewController.swift */,
+				82544D381AD4E05100CCA4B2 /* LoadViewController.swift */,
 				825353CB1ACE505400FEE2D9 /* Model */,
 				82FCF5A61ACE2059000FC779 /* Images */,
 				82455F5D1ACBA1F600973B40 /* Images.xcassets */,
@@ -360,6 +363,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				825353C61ACE500800FEE2D9 /* Quilt.swift in Sources */,
+				82544D391AD4E05100CCA4B2 /* LoadViewController.swift in Sources */,
 				825353C81ACE501400FEE2D9 /* Block.swift in Sources */,
 				82E943831ACCCA0A00211608 /* BlockView.swift in Sources */,
 				82455F7D1ACBBAC600973B40 /* CollectionViewFlowLayout.swift in Sources */,

@@ -24,6 +24,9 @@ func setupQuilts() {
   blockSize.height = blockSize.width
   
   var quilt = Quilt()
+  quilt.blocksAcross = blocksAcross
+  quilt.blocksDown = blocksDown
+  
   var rect = CGRect(origin: CGPointZero, size: quiltSize)
   
   quilt.name = "untitled 1"
@@ -79,7 +82,7 @@ func setupQuilts() {
   
   quilt.image = image
   quilts.append(quilt)
-//  quilt.save()
+  quilt.save()
   
 }
 

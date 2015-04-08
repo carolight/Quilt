@@ -19,6 +19,8 @@ class CreateBlockViewController: UIViewController {
   }
   
   @IBOutlet weak var createBlockView: CreateBlockView!
+  @IBOutlet weak var blockName: UITextField!
+  
   var result = CGPointZero
 
   var path = UIBezierPath()
@@ -117,7 +119,7 @@ class CreateBlockViewController: UIViewController {
   
   @IBAction func btnSave(sender:UIButton) {
     var block = Block()
-    block.name = "Untitled"
+    block.name = blockName.text
     block.patches = createBlockView.patches
     block.image = block.createImage()
 
@@ -126,7 +128,7 @@ class CreateBlockViewController: UIViewController {
     }
     
     block.save()
-    
+    block.saveToPlist()
   }
   
   
@@ -139,4 +141,18 @@ class CreateBlockViewController: UIViewController {
     }
   }
   
+}
+
+extension CreateBlockViewController:UITextFieldDelegate {
+  
+  func textFieldShouldReturn(textField: UITextField) -> Bool {
+    println("return")
+    textField.resignFirstResponder()
+    return true
+  }
+  func textFieldDidEndEditing(textField: UITextField) {
+    println("end editing")
+    self.title = textField.text
+    textField.resignFirstResponder()
+  }
 }

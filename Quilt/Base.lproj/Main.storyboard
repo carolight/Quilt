@@ -19,7 +19,7 @@
                                 <color key="backgroundColor" red="0.87450980389999999" green="1" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Mgg-PV-eGp">
-                                <rect key="frame" x="178" y="416" width="75" height="30"/>
+                                <rect key="frame" x="126" y="416" width="75" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Close Path">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -29,7 +29,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="uA7-cp-02H">
-                                <rect key="frame" x="112" y="448" width="63" height="30"/>
+                                <rect key="frame" x="227" y="416" width="63" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Edit Path">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -49,7 +49,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="420-Tf-yPb">
-                                <rect key="frame" x="126" y="494" width="34" height="30"/>
+                                <rect key="frame" x="126" y="507" width="34" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Save">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -58,11 +58,28 @@
                                     <action selector="btnSave:" destination="lwI-YO-fr5" eventType="touchUpInside" id="wM0-w2-gEG"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name:" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="XbQ-KG-9YL">
+                                <rect key="frame" x="61" y="465" width="42" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Block Name" minimumFontSize="17" id="Gek-QT-N0H">
+                                <rect key="frame" x="111" y="461" width="157" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="lwI-YO-fr5" id="Dh8-Bd-VL2"/>
+                                </connections>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="Create Block" id="eGF-yy-rnB"/>
                     <connections>
+                        <outlet property="blockName" destination="Gek-QT-N0H" id="bcf-ZT-eGw"/>
                         <outlet property="createBlockView" destination="8AY-lh-Bwo" id="y4c-3m-wzT"/>
                     </connections>
                 </viewController>
@@ -227,6 +244,11 @@
                                 <segue destination="lwI-YO-fr5" kind="push" id="uIP-Of-L8U"/>
                             </connections>
                         </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Load" id="Nn0-dl-brv">
+                            <connections>
+                                <segue destination="vLP-jW-Pek" kind="push" id="eqU-VY-Aon"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="collectionView" destination="chB-aC-a3D" id="ThW-vh-kvO"/>
@@ -235,6 +257,21 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="694" y="336"/>
+        </scene>
+        <!--Load View Controller-->
+        <scene sceneID="ajh-c4-WKq">
+            <objects>
+                <viewController id="vLP-jW-Pek" customClass="LoadViewController" customModule="Quilt" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="fhq-z7-jvy">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="vnh-Fb-wbI"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="oQX-qA-nCZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="311" y="-289"/>
         </scene>
         <!--Collection View Controller-->
         <scene sceneID="qec-gz-Yf8">

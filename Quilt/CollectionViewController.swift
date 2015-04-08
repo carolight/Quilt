@@ -86,7 +86,6 @@ extension CollectionViewController: UICollectionViewDelegate {
     switch appState {
     case .Quilt:
       let quiltViewController = storyboard?.instantiateViewControllerWithIdentifier("QuiltViewController") as QuiltViewController
-//      let quilt = array[indexPath.row] as UIImage
       let quilt = array[indexPath.row] as Quilt
       quiltViewController.quilt = quilt
       navigationController?.pushViewController(quiltViewController, animated: true)
@@ -95,7 +94,6 @@ extension CollectionViewController: UICollectionViewDelegate {
       let navigationController = storyboard?.instantiateViewControllerWithIdentifier("BlockNavigationController") as UINavigationController
       println("controlelrs: \(navigationController.viewControllers)")
       
-//      let blockViewController = storyboard?.instantiateViewControllerWithIdentifier("BlockViewController") as BlockViewController
       let blockViewController = navigationController.viewControllers[0] as BlockViewController
       blockViewController.title = "Block"
       let block = array[indexPath.row] as Block
@@ -104,12 +102,6 @@ extension CollectionViewController: UICollectionViewDelegate {
         blockViewController.block = block
 
       presentViewController(navigationController, animated: true, completion: nil)
-//      var viewControllers = navigationController?.viewControllers
-//      viewControllers?.removeLast()
-//      viewControllers?.append(blockViewController)
-//      navigationController?.setViewControllers(viewControllers, animated: true)
-      
-//      navigationController?.pushViewController(blockViewController, animated: true)
     case .Fabric:
       
       let image = array[indexPath.row] as UIImage 

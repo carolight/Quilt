@@ -17,14 +17,16 @@ class Quilt {
   var quiltSize:CGSize = CGSizeZero
   var library:Bool = false
   var documentID:String? = nil
+  var blocksAcross: Int = 5
+  var blocksDown: Int = 9
   
   func save() {
     let properties = ["type": "Quilt",
-                      "name": name,
-                      "blocksAcross": 5,
-                      "blocksDown":9,
-                      "library":library]
-
+      "name": name,
+      "blocksAcross": blocksAcross,
+      "blocksDown": blocksDown,
+      "library":library]
+    
     let document = database.createDocument()
     var error:NSError?
     
@@ -34,12 +36,12 @@ class Quilt {
     
     println("Saving image size: \(image?.size)")
     println("scale: \(image?.scale)")
-
+    
     var newRevision = document.currentRevision.createRevision()
     let imageData = UIImagePNGRepresentation(image)
     newRevision.setAttachmentNamed("image.png", withContentType: "image/png", content: imageData)
     assert(newRevision.save(&error) != nil)
-
+    
     newRevision = document.currentRevision.createRevision()
     let blockPathsData = NSKeyedArchiver.archivedDataWithRootObject(blockPaths)
     newRevision.setAttachmentNamed("blockPaths", withContentType: "UIBezierPath", content: blockPathsData)
@@ -50,7 +52,7 @@ class Quilt {
   
   func load(documentID:String) {
     self.documentID = documentID
-
+    
     let document = database.documentWithID(documentID)
     if let name = document["name"] as? String {
       self.name = name
@@ -65,7 +67,7 @@ class Quilt {
     
     println("Loading image size: \(image?.size)")
     println("scale: \(image?.scale)")
-
+    
     if let blockPathsData = revision.attachmentNamed("blockPaths") {
       if let data = blockPathsData.content {
         if let array = NSKeyedUnarchiver.unarchiveObjectWithData(data) as? [UIBezierPath] {
@@ -74,6 +76,35 @@ class Quilt {
         }
       }
     }
+  }
+  
+  func update(documentID:String) {
+    
+    var error:NSError?
+    let document = database.documentWithID(documentID)
+    let retrievedProperties = document.properties as NSDictionary
+    var properties = retrievedProperties.copy() as NSMutableDictionary
+    
+    properties["type"] = "Quilt"
+    properties["name"] = name
+    properties["blocksAcross"] = blocksAcross
+    properties["blocksDown"] = blocksDown
+    properties["library"] = library
+    
+    if document.putProperties(properties, error: &error) == nil {
+      println("couldn't save new item \(error?.localizedDescription)")
+    }
+    
+    var newRevision = document.currentRevision.createRevision()
+    let imageData = UIImagePNGRepresentation(image)
+    newRevision.setAttachmentNamed("image.png", withContentType: "image/png", content: imageData)
+    assert(newRevision.save(&error) != nil)
+    
+    newRevision = document.currentRevision.createRevision()
+    let blockPathsData = NSKeyedArchiver.archivedDataWithRootObject(blockPaths)
+    newRevision.setAttachmentNamed("blockPaths", withContentType: "UIBezierPath", content: blockPathsData)
+    assert(newRevision.save(&error) != nil)
+    
   }
   
 }
