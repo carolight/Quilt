@@ -18,6 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     createDB("quiltdb")
     println("Database: \(database)")
+    createViews()
     
     return true
   }

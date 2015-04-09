@@ -132,9 +132,6 @@ class Block  {
     let dictionary = NSMutableDictionary()
     dictionary["name"] = name
 
-    let imageData = UIImagePNGRepresentation(image)
-    dictionary["image"] = imageData
-    
     var newPatches:[[String]] = []
     var newPatch:[String] = []
     for patch in patches {
@@ -153,11 +150,6 @@ class Block  {
   
   func loadFromDictionary(dictionary:NSDictionary) {
     name = dictionary["name"] as String
-    if let imageData = dictionary["image"] as? NSData {
-      if let image = UIImage(data: imageData, scale: UIScreen.mainScreen().scale) {
-        self.image = image
-      }
-    }
     
     if let patches = dictionary["patches"] as? [[String]] {
       for patch in patches {
@@ -170,6 +162,8 @@ class Block  {
       }
     }
     self.patchColors = dictionary["patchColors"] as [Int]
+    
+    self.image = createImage()
   }
 }
 

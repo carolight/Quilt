@@ -20,6 +20,20 @@ class Quilt {
   var blocksAcross: Int = 5
   var blocksDown: Int = 9
   
+  func copy() -> Quilt {
+    var newQuilt = Quilt()
+    newQuilt.name = self.name
+    newQuilt.image = self.image
+    newQuilt.blockPaths = self.blockPaths
+    newQuilt.blockSize = self.blockSize
+    newQuilt.quiltSize = self.quiltSize
+    newQuilt.library = self.library
+    newQuilt.documentID = self.documentID
+    newQuilt.blocksAcross = self.blocksAcross
+    newQuilt.blocksDown = self.blocksDown
+    return newQuilt
+  }
+  
   func save() {
     let properties = ["type": "Quilt",
       "name": name,

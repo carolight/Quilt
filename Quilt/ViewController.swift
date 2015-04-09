@@ -29,6 +29,7 @@ class ViewController: UIViewController {
     let result = query.run(&error)
     while let row = result?.nextRow() {
       println("\(row.key) / \(row.value)")
+      println("Document: \(row.document)")
     }
     println("-- END ALL")
   }

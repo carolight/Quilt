@@ -31,10 +31,6 @@ class CreateBlockViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     
-//    let tap = UITapGestureRecognizer(target: self, action: "handleTap:")
-//    createBlockView.addGestureRecognizer(tap)
-//    let pan = UIPanGestureRecognizer(target: self, action: "handlePan:")
-//    createBlockView.addGestureRecognizer(pan)
   }
   
   override func viewDidAppear(animated: Bool) {

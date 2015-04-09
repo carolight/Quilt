@@ -30,9 +30,46 @@ class QuiltViewController: UIViewController {
     }
   }
   
+  func createNewQuilt() {
+    let newQuilt = quilt.copy()
+    newQuilt.name = "Mine"
+    newQuilt.library = false
+    newQuilt.save()
+    
+    
+    
+    self.quilt = newQuilt
+
+    //save a block into the quilt
+    let query = database.viewNamed("blocks").createQuery()
+    var error:NSError?
+    let result = query.run(&error)
+    var block = Block()
+    while let row = result?.nextRow() {
+      let documentID = row.documentID
+      block.load(documentID)
+      break
+    }
+
+    for row in 0..<quilt.blocksDown {
+      for column in 0..<quilt.blocksAcross {
+        let quiltBlock = QuiltBlock()
+        quiltBlock.quilt = quilt
+        quiltBlock.block = block
+        quiltBlock.column = column
+        quiltBlock.row = row
+        quiltBlock.image = block.image
+        quiltBlock.save()
+      }
+    }
+
+    
+  }
+  
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    createNewQuilt()
     
     quiltView.image = quilt.image
     quiltView.delegate = self
@@ -57,6 +94,29 @@ class QuiltViewController: UIViewController {
     
     self.automaticallyAdjustsScrollViewInsets = false
     
+    createViews()
+    
+    println("here")
+    //display blocks on quilt
+    let query = database.viewNamed("quiltBlocks").createQuery()
+    println(quilt.documentID)
+    query.startKey = quilt.documentID
+    query.endKey = quilt.documentID
+    var error:NSError?
+    let result = query.run(&error)
+    while let row = result?.nextRow() {
+      let quiltBlock = QuiltBlock()
+      quiltBlock.load(row.documentID)
+      let imageView = UIImageView(image: quiltBlock.image)
+      let x = quiltBlock.column * 100
+      let y = quiltBlock.row * 100
+      let frame = CGRect(origin: CGPoint(x: x, y: y), size: CGSize(width: 100, height: 100))
+      imageView.frame = frame
+      quiltView.addSubview(imageView)
+    }
+    println(query)
+    println("query done")
+
   }
   
   override func didReceiveMemoryWarning() {

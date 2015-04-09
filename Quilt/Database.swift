@@ -34,6 +34,35 @@ func createDB(name:String) -> Bool{
   
 }
 
+func createViews() {
+  database.viewNamed("quilts").setMapBlock("1") {
+    (document, emit) in
+    if document["type"] as? String == "Quilt" {
+      if let name = document["name"] as? [String] {
+        emit(document["name"], nil)
+      }
+    }
+  }
+  
+  database.viewNamed("quiltBlocks").setMapBlock("1") {
+    (document, emit) in
+    if document["type"] as? String == "QB" {
+      emit(document["quiltID"], nil)
+    }
+  }
+  
+  database.viewNamed("blocks").setMapBlock("1") {
+    (document, emit) in
+    if document["type"] as? String == "Block" {
+      if let name = document["name"] as? String {
+        emit(name, document)
+      }
+    }
+  }
+}
+
+
+
 extension CBLView {
   // Just reorders the parameters to take advantage of Swift's trailing-block syntax.
   func setMapBlock(version: String, mapBlock: CBLMapBlock) -> Bool {

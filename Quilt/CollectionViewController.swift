@@ -61,6 +61,8 @@ extension CollectionViewController: UICollectionViewDataSource {
   }
   
   override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+    let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as CollectionViewCell
+
     var image:UIImage
     switch appState {
     case .Quilt:
@@ -69,10 +71,10 @@ extension CollectionViewController: UICollectionViewDataSource {
     case .Block:
       let block = array[indexPath.row] as Block
       image = block.image!
+      cell.imageView.frame = CGRect(origin: CGPoint(x: 5, y: 5), size: CGSize(width: 240, height: 240))
     default:
       image = array[indexPath.row] as UIImage
     }
-    let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as CollectionViewCell
     cell.imageView.image = image
     
     return cell

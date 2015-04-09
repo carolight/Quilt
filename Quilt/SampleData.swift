@@ -31,6 +31,8 @@ func setupQuilts() {
   
   quilt.name = "untitled 1"
   quilt.blockSize = blockSize
+  quilt.library = true
+  
   
   UIGraphicsBeginImageContextWithOptions(quiltSize, true, 0)
   let context = UIGraphicsGetCurrentContext()
