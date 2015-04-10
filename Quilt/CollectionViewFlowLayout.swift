@@ -31,7 +31,7 @@ class CollectionViewFlowLayout: UICollectionViewFlowLayout {
       let proposedContentOffsetCenterX:CGFloat = proposedContentOffset.x + halfWidth
       
       
-      let attributes = self.layoutAttributesForElementsInRect(bounds) as [UICollectionViewLayoutAttributes]
+      let attributes = self.layoutAttributesForElementsInRect(bounds) as! [UICollectionViewLayoutAttributes]
       
       var candidateAttribute:UICollectionViewLayoutAttributes? = nil
       for attribute in attributes {

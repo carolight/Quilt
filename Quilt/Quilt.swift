@@ -44,7 +44,7 @@ class Quilt {
     let document = database.createDocument()
     var error:NSError?
     
-    if document.putProperties(properties, error: &error) == nil {
+    if document.putProperties(properties as [NSObject : AnyObject], error: &error) == nil {
       println("couldn't save new item \(error?.localizedDescription)")
     }
     
@@ -97,7 +97,7 @@ class Quilt {
     var error:NSError?
     let document = database.documentWithID(documentID)
     let retrievedProperties = document.properties as NSDictionary
-    var properties = retrievedProperties.copy() as NSMutableDictionary
+    var properties = retrievedProperties.copy() as! NSMutableDictionary
     
     properties["type"] = "Quilt"
     properties["name"] = name
@@ -105,7 +105,7 @@ class Quilt {
     properties["blocksDown"] = blocksDown
     properties["library"] = library
     
-    if document.putProperties(properties, error: &error) == nil {
+    if document.putProperties(properties as [NSObject : AnyObject], error: &error) == nil {
       println("couldn't save new item \(error?.localizedDescription)")
     }
     

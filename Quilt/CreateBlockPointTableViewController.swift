@@ -42,7 +42,7 @@ class CreateBlockPointTableViewController: UITableViewController {
   }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("CreateBlockEditCell", forIndexPath: indexPath) as UITableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("CreateBlockEditCell", forIndexPath: indexPath) as! UITableViewCell
       
       let patch = patches[indexPath.section]
       let point = patch.points[indexPath.row]
@@ -90,9 +90,9 @@ class CreateBlockPointTableViewController: UITableViewController {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
       println(segue.destinationViewController)
       println(sender)
-      let controller = segue.destinationViewController as CreateBlockPatchEditViewController
+      let controller = segue.destinationViewController as! CreateBlockPatchEditViewController
       controller.delegate = self
-      let cell = sender as UITableViewCell
+      let cell = sender as! UITableViewCell
       if let indexPath = tableView.indexPathForCell(cell) {
         let patch = patches[indexPath.section]
         let point = patch.points[indexPath.row]

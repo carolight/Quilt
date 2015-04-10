@@ -102,8 +102,8 @@ extension ViewController: UICollectionViewDataSource {
   }
   
   func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-    let quilt = array[indexPath.row] as Quilt
-    let cell = collectionView.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: indexPath) as QuiltCollectionViewCell
+    let quilt = array[indexPath.row] as! Quilt
+    let cell = collectionView.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: indexPath) as! QuiltCollectionViewCell
     cell.imageView.image = quilt.image
     cell.tapGesture = UITapGestureRecognizer(target: cell, action: "handleTap:")
     cell.tapGesture.numberOfTapsRequired = 1
@@ -122,8 +122,8 @@ extension ViewController: UICollectionViewDataSource {
 
 extension ViewController: UICollectionViewDelegate {
   func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-    let quiltViewController = storyboard?.instantiateViewControllerWithIdentifier("QuiltViewController") as QuiltViewController
-    let quilt = array[indexPath.row] as Quilt
+    let quiltViewController = storyboard?.instantiateViewControllerWithIdentifier("QuiltViewController") as! QuiltViewController
+    let quilt = array[indexPath.row] as! Quilt
     quiltViewController.quilt = quilt
     navigationController?.pushViewController(quiltViewController, animated: true)
   }

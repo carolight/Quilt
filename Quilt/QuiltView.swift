@@ -35,7 +35,7 @@ class QuiltView: UIView {
       image.drawInRect(rect)
       
       for path in paths {
-        var pathCopy = path.copy() as UIBezierPath
+        var pathCopy = path.copy() as! UIBezierPath
         var scale:CGFloat = self.bounds.width / image.size.width
         var transform = CGAffineTransformIdentity
         transform = CGAffineTransformScale(transform, scale, scale)

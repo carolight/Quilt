@@ -126,7 +126,7 @@ class Block  {
   func saveToPlist() {
     
     let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true) as NSArray
-    let documentsDirectory = paths[0] as NSString
+    let documentsDirectory = paths[0] as! NSString
     let path = documentsDirectory.stringByAppendingPathComponent("Block-\(name).plist")
     
     let dictionary = NSMutableDictionary()
@@ -149,7 +149,16 @@ class Block  {
   }
   
   func loadFromDictionary(dictionary:NSDictionary) {
+<<<<<<< Updated upstream
     name = dictionary["name"] as String
+=======
+    name = dictionary["name"] as! String
+    if let imageData = dictionary["image"] as? NSData {
+      if let image = UIImage(data: imageData, scale: UIScreen.mainScreen().scale) {
+        self.image = image
+      }
+    }
+>>>>>>> Stashed changes
     
     if let patches = dictionary["patches"] as? [[String]] {
       for patch in patches {
@@ -161,9 +170,13 @@ class Block  {
         self.patches.append(newPatch)
       }
     }
+<<<<<<< Updated upstream
     self.patchColors = dictionary["patchColors"] as [Int]
     
     self.image = createImage()
+=======
+    self.patchColors = dictionary["patchColors"] as! [Int]
+>>>>>>> Stashed changes
   }
 }
 

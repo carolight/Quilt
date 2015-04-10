@@ -66,15 +66,19 @@ extension CollectionViewController: UICollectionViewDataSource {
     var image:UIImage
     switch appState {
     case .Quilt:
-      let quilt = array[indexPath.row] as Quilt
+      let quilt = array[indexPath.row] as! Quilt
       image = quilt.image!
     case .Block:
-      let block = array[indexPath.row] as Block
+      let block = array[indexPath.row] as! Block
       image = block.image!
       cell.imageView.frame = CGRect(origin: CGPoint(x: 5, y: 5), size: CGSize(width: 240, height: 240))
     default:
-      image = array[indexPath.row] as UIImage
+      image = array[indexPath.row] as! UIImage
     }
+<<<<<<< Updated upstream
+=======
+    let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath)as! CollectionViewCell
+>>>>>>> Stashed changes
     cell.imageView.image = image
     
     return cell
@@ -87,18 +91,18 @@ extension CollectionViewController: UICollectionViewDelegate {
     
     switch appState {
     case .Quilt:
-      let quiltViewController = storyboard?.instantiateViewControllerWithIdentifier("QuiltViewController") as QuiltViewController
-      let quilt = array[indexPath.row] as Quilt
+      let quiltViewController = storyboard?.instantiateViewControllerWithIdentifier("QuiltViewController") as! QuiltViewController
+      let quilt = array[indexPath.row] as! Quilt
       quiltViewController.quilt = quilt
       navigationController?.pushViewController(quiltViewController, animated: true)
     case .Block:
       
-      let navigationController = storyboard?.instantiateViewControllerWithIdentifier("BlockNavigationController") as UINavigationController
+      let navigationController = storyboard?.instantiateViewControllerWithIdentifier("BlockNavigationController") as! UINavigationController
       println("controlelrs: \(navigationController.viewControllers)")
       
-      let blockViewController = navigationController.viewControllers[0] as BlockViewController
+      let blockViewController = navigationController.viewControllers[0] as! BlockViewController
       blockViewController.title = "Block"
-      let block = array[indexPath.row] as Block
+      let block = array[indexPath.row] as! Block
       
         println("selected block: \(block.name)")
         blockViewController.block = block
@@ -106,7 +110,7 @@ extension CollectionViewController: UICollectionViewDelegate {
       presentViewController(navigationController, animated: true, completion: nil)
     case .Fabric:
       
-      let image = array[indexPath.row] as UIImage 
+      let image = array[indexPath.row] as! UIImage
       delegate?.didSelectItem(image)
       
       navigationController?.popViewControllerAnimated(true)

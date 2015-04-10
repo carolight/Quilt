@@ -131,7 +131,7 @@ class CreateBlockViewController: UIViewController {
   override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
     if segue.identifier == "CreateBlockEdit" {
       println("edit")
-      let controller = segue.destinationViewController as CreateBlockPointTableViewController
+      let controller = segue.destinationViewController as! CreateBlockPointTableViewController
       controller.patches = createBlockView.patches
       
     }

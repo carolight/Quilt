@@ -31,7 +31,7 @@ class QuiltBlock {
         let document = database.createDocument()
         var error:NSError?
         
-        if document.putProperties(properties, error: &error) == nil {
+        if document.putProperties(properties as [NSObject : AnyObject], error: &error) == nil {
           println("couldn't save new item \(error?.localizedDescription)")
         }
         
