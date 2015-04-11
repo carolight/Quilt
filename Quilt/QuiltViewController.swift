@@ -12,58 +12,37 @@ class QuiltViewController: UIViewController {
   
   var quilt:Quilt!
   
+  var quiltBlocks:[QuiltBlock] = []
+  
   @IBOutlet weak var scrollView: UIScrollView!
   
   
   @IBOutlet weak var quiltView: QuiltView!
   
-  func useDatabase() {
-    database.viewNamed("blockName").setMapBlock("2") {
-      (document, emit) in
-      if document["type"] as? String == "Block" {
-        if let object:AnyObject = document["name"] {
-          if let name = object as? String {
-            emit(name, document)
-          }
-        }
-      }
-    }
-  }
+//  func useDatabase() {
+//    database.viewNamed("blockName").setMapBlock("2") {
+//      (document, emit) in
+//      if document["type"] as? String == "Block" {
+//        if let object:AnyObject = document["name"] {
+//          if let name = object as? String {
+//            emit(name, document)
+//          }
+//        }
+//      }
+//    }
+//  }
   
   func createNewQuilt() {
     let newQuilt = quilt.copy()
     newQuilt.name = "Mine"
     newQuilt.library = false
-    newQuilt.save()
+    //newQuilt has already been saved once
+    newQuilt.update(newQuilt.documentID!)
     
     
     
     self.quilt = newQuilt
 
-    //save a block into the quilt
-    let query = database.viewNamed("blocks").createQuery()
-    var error:NSError?
-    let result = query.run(&error)
-    var block = Block()
-    while let row = result?.nextRow() {
-      let documentID = row.documentID
-      block.load(documentID)
-      break
-    }
-
-    for row in 0..<quilt.blocksDown {
-      for column in 0..<quilt.blocksAcross {
-        let quiltBlock = QuiltBlock()
-        quiltBlock.quilt = quilt
-        quiltBlock.block = block
-        quiltBlock.column = column
-        quiltBlock.row = row
-        quiltBlock.image = block.image
-        quiltBlock.save()
-      }
-    }
-
-    
   }
   
   
@@ -168,68 +147,31 @@ class QuiltViewController: UIViewController {
 }
 
 extension QuiltViewController: UIScrollViewDelegate {
-  func viewForZoomingInScrollView(scrollView: UIScrollView!) -> UIView! {
+  func viewForZoomingInScrollView(scrollView: UIScrollView) -> UIView? {
     return quiltView
   }
-  
-  func scrollViewDidZoom(scrollView: UIScrollView!) {
+
+  func scrollViewDidZoom(scrollView: UIScrollView) {
     centerScrollViewContents()
   }
 }
 
 extension QuiltViewController: QuiltViewDelegate {
   func quiltViewShouldShowBlock(quiltView: QuiltView, location:CGPoint) {
-    //    if let blockViewController = storyboard?.instantiateViewControllerWithIdentifier("BlockNavigationController") as? UINavigationController {
-    //    if let blockViewController = storyboard?.instantiateViewControllerWithIdentifier("BlockViewController") as? BlockViewController {
-    //
-    //
-    //      if let image = getBlockImage(location) {
-    //        blockViewController.image = image
-    //      }
-    //
-    //      blockViewController.title = "Replace Block"
-    ////      self.presentViewController(blockViewController, animated: true, completion: nil)
-    //      navigationController?.pushViewController(blockViewController, animated: true)
-    //
-    //    }
-    
     if let collectionViewController = storyboard?.instantiateViewControllerWithIdentifier("CollectionViewController") as? CollectionViewController {
       collectionViewController.appState = .Block
       
-      //      var blocksPath = NSBundle.mainBundle().resourcePath!
-      //      blocksPath = blocksPath.stringByAppendingString("/blocks/")
-      //
-      //      let manager = NSFileManager.defaultManager()
-      //      let directoryEnum = manager.enumeratorAtPath(blocksPath)
-      //      while let file = directoryEnum?.nextObject() as? String {
-      //        println(file)
-      //        let filename = blocksPath.stringByAppendingString(file)
-      //        if let image = UIImage(contentsOfFile: filename) {
-      //          collectionViewController.array.append(image)
-      //        }
-      //      }
-      
-      
-      useDatabase()
       blocks = []
       
-      let query = database.viewNamed("blockName").createQuery()
+      let query = database.viewNamed("blocks").createQuery()
       var error:NSError?
       let result = query.run(&error)
       while let row = result?.nextRow() {
         println("\(row.key) / \(row.value)")
         let block = Block()
         block.load(row.documentID)
-        //          quilts.append(quilt)
         collectionViewController.array.append(block)
       }
-      
-      
-      //      for block in blocks {
-      //        if let image = block.image {
-      //          collectionViewController.array.append(image)
-      //        }
-      //      }
       
       navigationController?.pushViewController(collectionViewController, animated: true)
       

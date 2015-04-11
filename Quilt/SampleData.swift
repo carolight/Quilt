@@ -86,195 +86,32 @@ func setupQuilts() {
   quilts.append(quilt)
   quilt.save()
   
-}
-
-
-func setupBlocks() {
   
-  var blocksPath = NSBundle.mainBundle().resourcePath!
-  blocksPath = blocksPath.stringByAppendingString("/blocks/")
-  var patch:Patch
-  var point:CGPoint
+  // setup new quilt blocks
   
+  //find a block to save into the quilt
+  let query = database.viewNamed("blocks").createQuery()
+  var error:NSError?
+  let result = query.run(&error)
   var block = Block()
-  block.name = "Ladies Beautiful Star"
-  var filename = blocksPath.stringByAppendingString("block1.png")
-  block.image = UIImage(contentsOfFile: filename)
-  blocks.append(block)
+  while let row = result?.nextRow() {
+    let documentID = row.documentID
+    block.load(documentID)
+    break
+  }
+
+  let quiltBlock = QuiltBlock()
+  quiltBlock.quilt = quilt
+  quiltBlock.block = block
+  quiltBlock.image = block.image
+  quiltBlock.save()
   
-  block = Block()
-  block.name = "Star of Many Points"
-  filename = blocksPath.stringByAppendingString("block2.png")
-  block.image = UIImage(contentsOfFile: filename)
-  blocks.append(block)
-  
-  block = Block()
-  block.name = "Star of Bethlehem"
-  filename = blocksPath.stringByAppendingString("block3.png")
-  block.image = UIImage(contentsOfFile: filename)
-
-  //1
-  patch = Patch()
-  patch.points = [CGPointMake(0.0, 0.0),
-                  CGPointMake(0.5, 0.0),
-                  CGPointMake(0.33, 0.25),
-                  CGPointMake(0.0, 0.25)]
-  block.patches.append(patch)
-  block.patchColors.append(0)
-
-  //2
-  patch = Patch()
-  patch.points = [CGPointMake(0.5, 0.0),
-    CGPointMake(0.66, 0.25),
-    CGPointMake(0.33, 0.25)]
-  block.patches.append(patch)
-  block.patchColors.append(1)
-
-  //3
-  patch = Patch()
-  patch.points = [CGPointMake(0.5, 0.0),
-    CGPointMake(1, 0.0),
-    CGPointMake(1, 0.25),
-    CGPointMake(0.66, 0.25)]
-  block.patches.append(patch)
-  block.patchColors.append(0)
-
-  //4
-  patch = Patch()
-  patch.points = [CGPointMake(0.0, 0.25),
-    CGPointMake(0.33, 0.25),
-    CGPointMake(0.25, 0.5)]
-  block.patches.append(patch)
-  block.patchColors.append(1)
-
-  //5
-  patch = Patch()
-  patch.points = [CGPointMake(0.33, 0.25),
-    CGPointMake(0.66, 0.25),
-    CGPointMake(0.75, 0.5),
-    CGPointMake(0.66, 0.75),
-    CGPointMake(0.33, 0.75),
-    CGPointMake(0.25, 0.5)]
-  
-  block.patches.append(patch)
-  block.patchColors.append(2)
-
-  //6
-  patch = Patch()
-  patch.points = [CGPointMake(0.66, 0.25),
-    CGPointMake(1, 0.25),
-    CGPointMake(0.75, 0.5)]
-  block.patches.append(patch)
-  block.patchColors.append(1)
-  
-  //7
-  patch = Patch()
-  patch.points = [CGPointMake(0, 0.25),
-    CGPointMake(0.25, 0.5),
-    CGPointMake(0, 0.75)]
-  block.patches.append(patch)
-  block.patchColors.append(0)
-
-  //8
-  patch = Patch()
-  patch.points = [CGPointMake(1, 0.25),
-    CGPointMake(0.75, 0.5),
-    CGPointMake(1, 0.75)]
-  block.patches.append(patch)
-  block.patchColors.append(0)
-
-  //9
-  patch = Patch()
-  patch.points = [CGPointMake(0, 0.75),
-    CGPointMake(0.25, 0.5),
-    CGPointMake(0.33, 0.75)]
-  block.patches.append(patch)
-  block.patchColors.append(1)
-  
-  //10
-  patch = Patch()
-  patch.points = [CGPointMake(0.75, 0.5),
-    CGPointMake(1, 0.75),
-    CGPointMake(0.66, 0.75)]
-  block.patches.append(patch)
-  block.patchColors.append(1)
-
-  
-  //11
-  patch = Patch()
-  patch.points = [CGPointMake(0.0, 0.75),
-    CGPointMake(0.33, 0.75),
-    CGPointMake(0.5, 1),
-    CGPointMake(0.0, 1)]
-  block.patches.append(patch)
-  block.patchColors.append(0)
-  
-  //12
-  patch = Patch()
-  patch.points = [CGPointMake(0.33, 0.75),
-    CGPointMake(0.66, 0.75),
-    CGPointMake(0.5, 1)]
-  block.patches.append(patch)
-  block.patchColors.append(1)
-
-  //13
-  patch = Patch()
-  patch.points = [CGPointMake(0.66, 0.75),
-    CGPointMake(1, 0.75),
-    CGPointMake(1, 1),
-    CGPointMake(0.5, 1)]
-  block.patches.append(patch)
-  block.patchColors.append(0)
-  
-  
-  
-  
-  
-  
-
-  blocks.append(block)
-
-  block = Block()
-  block.name = "Rolling Star"
-  filename = blocksPath.stringByAppendingString("block4.png")
-  block.image = UIImage(contentsOfFile: filename)
-  blocks.append(block)
-
-  block = Block()
-  block.name = "Evening Star"
-  filename = blocksPath.stringByAppendingString("block5.png")
-  block.image = UIImage(contentsOfFile: filename)
-  blocks.append(block)
-
-  block = Block()
-  block.name = "Star and Chains"
-  filename = blocksPath.stringByAppendingString("block6.png")
-  block.image = UIImage(contentsOfFile: filename)
-  blocks.append(block)
-
-  block = Block()
-  block.name = "Morning Star"
-  filename = blocksPath.stringByAppendingString("block7.png")
-  block.image = UIImage(contentsOfFile: filename)
-  blocks.append(block)
-
-  block = Block()
-  block.name = "Seven Stars"
-  filename = blocksPath.stringByAppendingString("block8.png")
-  block.image = UIImage(contentsOfFile: filename)
-  blocks.append(block)
-
-  block = Block()
-  block.name = "Feather Star"
-  filename = blocksPath.stringByAppendingString("block9.png")
-  block.image = UIImage(contentsOfFile: filename)
-  blocks.append(block)
-
-  block = Block()
-  block.name = "Star Puzzle"
-  filename = blocksPath.stringByAppendingString("block10.png")
-  block.image = UIImage(contentsOfFile: filename)
-  blocks.append(block)
-
-  
+  //update quilt matrix to point at new block
+  for column in 0..<blocksAcross {
+    for row in 0..<blocksDown {
+      quilt.quiltBlocksID[column][row] = quiltBlock.documentID!
+    }
+  }
+  quilt.update(quilt.documentID!)
 }
+

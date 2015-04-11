@@ -81,6 +81,8 @@ class Block  {
     documentID = document.documentID
 
   }
+  
+
 
   func load(documentID:String) {
     self.documentID = documentID
@@ -149,16 +151,16 @@ class Block  {
   }
   
   func loadFromDictionary(dictionary:NSDictionary) {
-<<<<<<< Updated upstream
-    name = dictionary["name"] as String
-=======
+//<<<<<<< Updated upstream
+//    name = dictionary["name"] as String
+//=======
     name = dictionary["name"] as! String
     if let imageData = dictionary["image"] as? NSData {
       if let image = UIImage(data: imageData, scale: UIScreen.mainScreen().scale) {
         self.image = image
       }
     }
->>>>>>> Stashed changes
+//>>>>>>> Stashed changes
     
     if let patches = dictionary["patches"] as? [[String]] {
       for patch in patches {
@@ -170,13 +172,14 @@ class Block  {
         self.patches.append(newPatch)
       }
     }
-<<<<<<< Updated upstream
-    self.patchColors = dictionary["patchColors"] as [Int]
-    
-    self.image = createImage()
-=======
+//<<<<<<< Updated upstream
+//    self.patchColors = dictionary["patchColors"] as [Int]
+//    
+//    self.image = createImage()
+//=======
     self.patchColors = dictionary["patchColors"] as! [Int]
->>>>>>> Stashed changes
+    self.image = createImage()
+//>>>>>>> Stashed changes
   }
 }
 
@@ -184,6 +187,7 @@ class Patch {
   var points:[CGPoint] = []
   var color: UIColor = UIColor.blueColor()
   var path: UIBezierPath = UIBezierPath() //sometimes path is available instead of points
+  var fabric: Fabric? = nil
   
   func createPath(blockSize:CGSize) -> UIBezierPath {
     var first = true

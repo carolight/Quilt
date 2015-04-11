@@ -61,25 +61,31 @@ extension CollectionViewController: UICollectionViewDataSource {
   }
   
   override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-    let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as CollectionViewCell
+    let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! CollectionViewCell
 
-    var image:UIImage
+    var image:UIImage? = nil
     switch appState {
     case .Quilt:
-      let quilt = array[indexPath.row] as! Quilt
-      image = quilt.image!
+      if let quilt = array[indexPath.row] as? Quilt {
+        image = quilt.image
+      }
     case .Block:
-      let block = array[indexPath.row] as! Block
-      image = block.image!
-      cell.imageView.frame = CGRect(origin: CGPoint(x: 5, y: 5), size: CGSize(width: 240, height: 240))
+      if let block = array[indexPath.row] as? Block {
+        image = block.image
+        cell.imageView.frame = CGRect(origin: CGPoint(x: 5, y: 5), size: CGSize(width: 240, height: 240))
+      }
     default:
-      image = array[indexPath.row] as! UIImage
+      if let fabric = array[indexPath.row] as? Fabric {
+        image = fabric.image!
+      }
     }
-<<<<<<< Updated upstream
-=======
-    let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath)as! CollectionViewCell
->>>>>>> Stashed changes
-    cell.imageView.image = image
+//<<<<<<< Updated upstream
+//=======
+//    let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath)as! CollectionViewCell
+////>>>>>>> Stashed changes
+    if let image = image {
+      cell.imageView.image = image
+    }
     
     return cell
     
@@ -98,20 +104,21 @@ extension CollectionViewController: UICollectionViewDelegate {
     case .Block:
       
       let navigationController = storyboard?.instantiateViewControllerWithIdentifier("BlockNavigationController") as! UINavigationController
-      println("controlelrs: \(navigationController.viewControllers)")
-      
       let blockViewController = navigationController.viewControllers[0] as! BlockViewController
       blockViewController.title = "Block"
       let block = array[indexPath.row] as! Block
       
-        println("selected block: \(block.name)")
-        blockViewController.block = block
+      println("selected block: \(block.name)")
+      blockViewController.block = block
+      
+      
+      //TODO: instead of block, blockViewController should be showing UserBlock
 
       presentViewController(navigationController, animated: true, completion: nil)
     case .Fabric:
       
-      let image = array[indexPath.row] as! UIImage
-      delegate?.didSelectItem(image)
+      let fabric = array[indexPath.row] as! Fabric
+      delegate?.didSelectItem(fabric)
       
       navigationController?.popViewControllerAnimated(true)
       

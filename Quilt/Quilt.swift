@@ -17,8 +17,37 @@ class Quilt {
   var quiltSize:CGSize = CGSizeZero
   var library:Bool = false
   var documentID:String? = nil
-  var blocksAcross: Int = 5
-  var blocksDown: Int = 9
+  var blocksAcross: Int = 5 {
+    didSet {
+      self.resetLinkedQuilts(oldValue, oldBlocksDown: self.blocksDown)
+    }
+  }
+  var blocksDown: Int = 9 {
+    didSet {
+      self.resetLinkedQuilts(self.blocksAcross, oldBlocksDown: oldValue)
+    }
+  }
+  
+  //A two dimensional array of the quilt blocks
+  //preallocated and pointing at the block used
+  //If it's a user quilt, it's a user block
+  var quiltBlocksID:[[String]] = [[String]]()
+  
+  func resetLinkedQuilts(oldBlocksAcross: Int, oldBlocksDown:Int) {
+    var newQuiltBlocksID = [[String]]()
+    for column in 0..<blocksAcross {
+      let array = [String](count:blocksDown, repeatedValue: " ")
+      newQuiltBlocksID.append(array)
+    }
+    for column in 0..<blocksAcross {
+      for row in 0..<blocksDown {
+        if column < oldBlocksAcross && row < oldBlocksDown {
+          newQuiltBlocksID[column][row] = quiltBlocksID[column][row]
+        }
+      }
+    }
+    quiltBlocksID = newQuiltBlocksID
+  }
   
   func copy() -> Quilt {
     var newQuilt = Quilt()
@@ -31,6 +60,36 @@ class Quilt {
     newQuilt.documentID = self.documentID
     newQuilt.blocksAcross = self.blocksAcross
     newQuilt.blocksDown = self.blocksDown
+    
+    //need to save to get document id to save in user blocks
+    newQuilt.save()
+    
+    //copy quilt blocks to user blocks
+    let query = database.viewNamed("quiltBlocks").createQuery()
+    var error:NSError?
+    let result = query.run(&error)
+    while let row = result?.nextRow() {
+      let quiltBlock = QuiltBlock()
+      quiltBlock.load(row.documentID)
+      let newQuiltBlock = QuiltBlock()
+      newQuiltBlock.quilt = newQuilt
+      newQuiltBlock.block = quiltBlock.block
+      newQuiltBlock.column = quiltBlock.column
+      newQuiltBlock.row = quiltBlock.row
+      newQuiltBlock.blockFabrics = quiltBlock.blockFabrics
+      newQuiltBlock.save()
+
+      //update quilt matrix to point at new block
+      for column in 0..<blocksAcross {
+        for row in 0..<blocksDown {
+          if self.quiltBlocksID[column][row] == quiltBlock.documentID {
+            self.quiltBlocksID[column][row] = newQuiltBlock.documentID!
+          }
+        }
+      }
+    }
+    
+    //newQuilt is updated with other details on return
     return newQuilt
   }
   
@@ -39,7 +98,11 @@ class Quilt {
       "name": name,
       "blocksAcross": blocksAcross,
       "blocksDown": blocksDown,
-      "library":library]
+      "library":library,
+      "quiltBlocksID": quiltBlocksID]
+    
+
+    
     
     let document = database.createDocument()
     var error:NSError?
@@ -70,6 +133,10 @@ class Quilt {
     let document = database.documentWithID(documentID)
     if let name = document["name"] as? String {
       self.name = name
+    }
+    
+    if let quiltBlocksID = document["quiltBlocksID"] as? [[String]] {
+      self.quiltBlocksID = quiltBlocksID
     }
     
     let revision = document.currentRevision
@@ -104,6 +171,7 @@ class Quilt {
     properties["blocksAcross"] = blocksAcross
     properties["blocksDown"] = blocksDown
     properties["library"] = library
+    properties["quiltBlocksID"] = quiltBlocksID
     
     if document.putProperties(properties as [NSObject : AnyObject], error: &error) == nil {
       println("couldn't save new item \(error?.localizedDescription)")

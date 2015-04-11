@@ -40,6 +40,9 @@ class BlockViewController: UIViewController {
       // 5
       scrollView.maximumZoomScale = 2.0
       scrollView.zoomScale = minScale;
+      
+      self.automaticallyAdjustsScrollViewInsets = false
+
     }
 
     override func didReceiveMemoryWarning() {
@@ -49,6 +52,7 @@ class BlockViewController: UIViewController {
     
 
   func centerScrollViewContents() {
+    return
     let boundsSize = scrollView.bounds.size
     var contentsFrame = blockView.frame
     
@@ -73,16 +77,28 @@ class BlockViewController: UIViewController {
   }
   @IBAction func btnSave(sender: AnyObject) {
     println("save")
+    
+    UIGraphicsBeginImageContextWithOptions(blockView.bounds.size, view.opaque, 0.0)
+    blockView.drawViewHierarchyInRect(blockView.bounds, afterScreenUpdates: true)
+    let image = UIGraphicsGetImageFromCurrentImageContext()
+    UIGraphicsEndImageContext()
+
+    block.image = image
+    
+    //create image
+    //update quilt block in file
+    //update quilt image
+    
     dismissViewControllerAnimated(true, completion: nil)
   }
 }
 
 extension BlockViewController: UIScrollViewDelegate {
-  func viewForZoomingInScrollView(scrollView: UIScrollView!) -> UIView! {
+  func viewForZoomingInScrollView(scrollView: UIScrollView) -> UIView? {
     return blockView
   }
   
-  func scrollViewDidZoom(scrollView: UIScrollView!) {
+  func scrollViewDidZoom(scrollView: UIScrollView) {
     centerScrollViewContents()
   }
 }
@@ -119,7 +135,10 @@ extension BlockViewController: BlockViewDelegate {
       while let file = directoryEnum?.nextObject() as? String {
         let filename = fabricsPath.stringByAppendingString(file)
         if let image = UIImage(contentsOfFile: filename) {
-          collectionViewController.array.append(image)
+          let fabric = Fabric()
+          fabric.name = file
+          fabric.image = image
+          collectionViewController.array.append(fabric)
         }
       }
       
@@ -133,8 +152,9 @@ extension BlockViewController: BlockViewDelegate {
 
 extension BlockViewController: CollectionViewControllerDelegate {
   func didSelectItem(item: AnyObject) {
-    println("didSelectItem")
-    if let fabricImage = item as? UIImage {
+    println("didSelectItem: \(item)")
+    if let fabric = item as? Fabric {
+    if let fabricImage = fabric.image  {
       if let selectedColor = selectedPatchColor {
         for (index, color) in enumerate(block.patchColors) {
           if color == selectedColor {
@@ -142,9 +162,11 @@ extension BlockViewController: CollectionViewControllerDelegate {
             let path = block.patches[index].path
             let fabricColor = UIColor(patternImage: fabricImage)
             block.patches[index].color = fabricColor
+            block.patches[index].fabric = fabric
           }
         }
         blockView.setNeedsDisplay()
+      }
       }
     }
   }
