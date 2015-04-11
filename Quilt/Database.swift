@@ -35,18 +35,12 @@ func createDB(name:String) -> Bool{
 }
 
 func createViews() {
-  database.viewNamed("quilts").setMapBlock("1") {
-    (document, emit) in
-    if document["type"] as? String == "Quilt" {
-      if let name = document["name"] as? [String] {
-        emit(document["name"], nil)
-      }
-    }
-  }
+  println("createViews")
   
   database.viewNamed("quiltBlocks").setMapBlock("1") {
     (document, emit) in
     if document["type"] as? String == "QB" {
+      println("updating QB View")
       emit(document["quiltID"], nil)
     }
   }
@@ -55,13 +49,53 @@ func createViews() {
     (document, emit) in
     if document["type"] as? String == "Block" {
       if let name = document["name"] as? String {
+        println("updating blocks View")
         emit(name, document)
       }
     }
   }
-  
+
+  database.viewNamed("quilts").setMapBlock("1") {
+    (document, emit) in
+    if document["type"] as? String == "Quilt" {
+      if let name = document["name"] as? String {
+        println("updating quilts View")
+        emit(name, document)
+      }
+    }
+  }
+
+  database.viewNamed("schemes").setMapBlock("1") {
+    (document, emit) in
+    if document["type"] as? String == "Scheme" {
+      if let name = document["name"] as? String {
+        println("updating schemes View")
+        emit(name, document)
+      }
+    }
+  }
+
 }
 
+func printAll() {
+  println("-- PRINTING ALL")
+  database.viewNamed("all").setMapBlock("2") {
+    (document, emit) in
+    if let object:AnyObject = document["name"] {
+      if let name = object as? String {
+        emit(name, document)
+      }
+    }
+  }
+  let query = database.viewNamed("all").createQuery()
+  var error:NSError?
+  let result = query.run(&error)
+  while let row = result?.nextRow() {
+    println("\(row.key) / \(row.value)")
+    println("Document: \(row.document)")
+  }
+  println("-- END ALL")
+}
 
 
 extension CBLView {

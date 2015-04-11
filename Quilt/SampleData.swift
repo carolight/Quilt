@@ -120,7 +120,8 @@ func setupQuilts() {
 
 
 func setupColorSchemes() {
-  let colorScheme = ColorScheme()
+  let colorScheme = Scheme()
+  colorScheme.name = "Good Karma"
   colorScheme.fabrics.append("jpg_good-karma/7216-11.jpg")
   colorScheme.fabrics.append("jpg_good-karma/7216-12.jpg")
   colorScheme.fabrics.append("jpg_good-karma/7216-13.jpg")
@@ -128,5 +129,6 @@ func setupColorSchemes() {
   colorScheme.fabrics.append("jpg_good-karma/7216-15.jpg")
   colorScheme.fabrics.append("jpg_good-karma/7216-16.jpg")
   
+  colorScheme.loadFabricImages()
   colorScheme.save()
 }

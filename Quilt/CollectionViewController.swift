@@ -19,35 +19,26 @@ enum AppState {
 let reuseIdentifier = "CollectionViewCell"
 
 class CollectionViewController: UICollectionViewController {
-
+  
   var array:[AnyObject] = []
   var delegate:CollectionViewControllerDelegate? = nil
   var appState:AppState = .Quilt
   
-    override func viewDidLoad() {
-        super.viewDidLoad()
-      
-      switch appState {
-      case .Quilt:
-        self.title = "Select Quilt"
-      case .Block:
-        self.title = "Select Block"
-      case .Fabric:
-        self.title = "Select Fabric"
-      }
-      let flowLayout = CollectionViewFlowLayout()
-      self.collectionView?.collectionViewLayout = flowLayout
-      self.collectionView?.contentInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
-
-
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    
+    switch appState {
+    case .Quilt:
+      self.title = "Select Quilt"
+    case .Block:
+      self.title = "Select Block"
+    case .Fabric:
+      self.title = "Select Fabric"
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
-  
+    let flowLayout = CollectionViewFlowLayout()
+    self.collectionView?.collectionViewLayout = flowLayout
+    self.collectionView?.contentInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
+  }
 }
 
 extension CollectionViewController: UICollectionViewDataSource {
@@ -62,7 +53,7 @@ extension CollectionViewController: UICollectionViewDataSource {
   
   override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
     let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! CollectionViewCell
-
+    
     var image:UIImage? = nil
     switch appState {
     case .Quilt:
@@ -79,10 +70,10 @@ extension CollectionViewController: UICollectionViewDataSource {
         image = fabric.image!
       }
     }
-//<<<<<<< Updated upstream
-//=======
-//    let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath)as! CollectionViewCell
-////>>>>>>> Stashed changes
+    //<<<<<<< Updated upstream
+    //=======
+    //    let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath)as! CollectionViewCell
+    ////>>>>>>> Stashed changes
     if let image = image {
       cell.imageView.image = image
     }
@@ -113,7 +104,7 @@ extension CollectionViewController: UICollectionViewDelegate {
       
       
       //TODO: instead of block, blockViewController should be showing UserBlock
-
+      
       presentViewController(navigationController, animated: true, completion: nil)
     case .Fabric:
       

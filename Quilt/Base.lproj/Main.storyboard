@@ -188,53 +188,18 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="chB-aC-a3D">
-                                <rect key="frame" x="16" y="20" width="288" height="501"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="mIu-vs-x6U">
-                                    <size key="itemSize" width="246" height="476"/>
-                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                </collectionViewFlowLayout>
-                                <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="Cell" id="eFs-9C-QEs" customClass="QuiltCollectionViewCell" customModule="Quilt" customModuleProvider="target">
-                                        <rect key="frame" x="21" y="64" width="246" height="476"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="246" height="476"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <view contentMode="scaleToFill" id="6v5-MW-y4P">
-                                                    <rect key="frame" x="8" y="10" width="230" height="400"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <subviews>
-                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="16r-5U-ygy">
-                                                            <rect key="frame" x="0.0" y="0.0" width="230" height="350"/>
-                                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                        </imageView>
-                                                    </subviews>
-                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                </view>
-                                            </subviews>
-                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        </view>
-                                        <color key="backgroundColor" red="0.1647058824" green="0.90980392160000001" blue="0.49803921569999998" alpha="1" colorSpace="calibratedRGB"/>
-                                        <connections>
-                                            <outlet property="imageView" destination="16r-5U-ygy" id="1np-P1-RMG"/>
-                                        </connections>
-                                    </collectionViewCell>
-                                </cells>
-                                <connections>
-                                    <outlet property="dataSource" destination="BYZ-38-t0r" id="HBr-gd-fgW"/>
-                                    <outlet property="delegate" destination="BYZ-38-t0r" id="tFB-bm-UmB"/>
-                                </connections>
-                            </collectionView>
                             <containerView opaque="NO" contentMode="scaleToFill" id="BU0-md-nTp">
-                                <rect key="frame" x="16" y="64" width="288" height="501"/>
+                                <rect key="frame" x="16" y="64" width="288" height="408"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <connections>
                                     <segue destination="8rg-gq-u6H" kind="embed" identifier="QuiltCollectionViewController" id="uhG-ux-Wd7"/>
+                                </connections>
+                            </containerView>
+                            <containerView opaque="NO" contentMode="scaleToFill" id="2Gs-Oz-pMN">
+                                <rect key="frame" x="16" y="489" width="288" height="66"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                <connections>
+                                    <segue destination="AfO-4L-7D5" kind="embed" id="ib7-Jb-pB2"/>
                                 </connections>
                             </containerView>
                         </subviews>
@@ -252,13 +217,54 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
-                    <connections>
-                        <outlet property="collectionView" destination="chB-aC-a3D" id="ThW-vh-kvO"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="694" y="336"/>
+        </scene>
+        <!--Scheme Collection View Controller-->
+        <scene sceneID="8Fc-Uc-Rag">
+            <objects>
+                <collectionViewController id="AfO-4L-7D5" customClass="SchemeCollectionViewController" customModule="Quilt" customModuleProvider="target" sceneMemberID="viewController">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="xfG-1h-M4e">
+                        <rect key="frame" x="0.0" y="0.0" width="288" height="66"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="1" green="0.90533066669999995" blue="0.78313135700000003" alpha="1" colorSpace="calibratedRGB"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="x3M-0D-trJ">
+                            <size key="itemSize" width="50" height="50"/>
+                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        </collectionViewFlowLayout>
+                        <cells>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="SchemeCollectionViewCell" id="5Na-cY-dpV" customClass="CollectionViewCell" customModule="Quilt" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="8" width="50" height="50"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                    <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="nc8-QI-hg1">
+                                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                        </imageView>
+                                    </subviews>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </view>
+                                <connections>
+                                    <outlet property="imageView" destination="nc8-QI-hg1" id="XaZ-cO-qzE"/>
+                                </connections>
+                            </collectionViewCell>
+                        </cells>
+                        <connections>
+                            <outlet property="dataSource" destination="AfO-4L-7D5" id="6Vz-dz-hNW"/>
+                            <outlet property="delegate" destination="AfO-4L-7D5" id="sIl-Aw-6kx"/>
+                        </connections>
+                    </collectionView>
+                </collectionViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="1U8-Hb-QAc" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="362" y="695"/>
         </scene>
         <!--Load View Controller-->
         <scene sceneID="ajh-c4-WKq">
@@ -280,7 +286,7 @@
             <objects>
                 <collectionViewController storyboardIdentifier="CollectionViewController" id="8rg-gq-u6H" customClass="CollectionViewController" customModule="Quilt" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="gHo-Ur-gBT">
-                        <rect key="frame" x="0.0" y="0.0" width="288" height="501"/>
+                        <rect key="frame" x="0.0" y="0.0" width="288" height="408"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="ReJ-1d-fSn">
                             <size key="itemSize" width="240" height="400"/>
