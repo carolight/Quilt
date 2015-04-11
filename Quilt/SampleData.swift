@@ -97,8 +97,11 @@ func setupQuilts() {
   while let row = result?.nextRow() {
     let documentID = row.documentID
     block.load(documentID)
+    println("found block: \(block.name)")
     break
   }
+  
+  println("result count: \(result.count)")
 
   let quiltBlock = QuiltBlock()
   quiltBlock.quilt = quilt
@@ -107,11 +110,23 @@ func setupQuilts() {
   quiltBlock.save()
   
   //update quilt matrix to point at new block
-  for column in 0..<blocksAcross {
-    for row in 0..<blocksDown {
-      quilt.quiltBlocksID[column][row] = quiltBlock.documentID!
+  for row in 0..<blocksDown {
+    for column in 0..<blocksAcross {
+      quilt.quiltBlocksID[row][column] = quiltBlock.documentID!
     }
   }
   quilt.update(quilt.documentID!)
 }
 
+
+func setupColorSchemes() {
+  let colorScheme = ColorScheme()
+  colorScheme.fabrics.append("jpg_good-karma/7216-11.jpg")
+  colorScheme.fabrics.append("jpg_good-karma/7216-12.jpg")
+  colorScheme.fabrics.append("jpg_good-karma/7216-13.jpg")
+  colorScheme.fabrics.append("jpg_good-karma/7216-14.jpg")
+  colorScheme.fabrics.append("jpg_good-karma/7216-15.jpg")
+  colorScheme.fabrics.append("jpg_good-karma/7216-16.jpg")
+  
+  colorScheme.save()
+}

@@ -13,8 +13,9 @@ class LoadViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
       
-      setupQuilts()
+      setupColorSchemes()
       loadBlocks()
+      setupQuilts()
 
     }
 

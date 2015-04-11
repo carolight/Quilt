@@ -33,16 +33,24 @@ class Quilt {
   //If it's a user quilt, it's a user block
   var quiltBlocksID:[[String]] = [[String]]()
   
+  init() {
+    for row in 0..<blocksDown {
+      let array = [String](count:blocksAcross, repeatedValue: " ")
+      quiltBlocksID.append(array)
+    }
+  }
+  
   func resetLinkedQuilts(oldBlocksAcross: Int, oldBlocksDown:Int) {
     var newQuiltBlocksID = [[String]]()
-    for column in 0..<blocksAcross {
-      let array = [String](count:blocksDown, repeatedValue: " ")
+    for row in 0..<blocksDown {
+      let array = [String](count:blocksAcross, repeatedValue: " ")
       newQuiltBlocksID.append(array)
     }
-    for column in 0..<blocksAcross {
-      for row in 0..<blocksDown {
+    for row in 0..<blocksDown {
+      for column in 0..<blocksAcross {
         if column < oldBlocksAcross && row < oldBlocksDown {
-          newQuiltBlocksID[column][row] = quiltBlocksID[column][row]
+          println("\(row) / \(column)")
+          newQuiltBlocksID[row][column] = quiltBlocksID[row][column]
         }
       }
     }
@@ -94,6 +102,7 @@ class Quilt {
   }
   
   func save() {
+    println("saving Quilt")
     let properties = ["type": "Quilt",
       "name": name,
       "blocksAcross": blocksAcross,
@@ -128,6 +137,7 @@ class Quilt {
   }
   
   func load(documentID:String) {
+    println("Loading Quilt: \(documentID)")
     self.documentID = documentID
     
     let document = database.documentWithID(documentID)
@@ -160,12 +170,11 @@ class Quilt {
   }
   
   func update(documentID:String) {
-    
+    println("updating Quilt: \(documentID)")
     var error:NSError?
     let document = database.documentWithID(documentID)
-    let retrievedProperties = document.properties as NSDictionary
-    var properties = retrievedProperties.copy() as! NSMutableDictionary
-    
+    let properties = NSMutableDictionary(dictionary: document.properties)
+  
     properties["type"] = "Quilt"
     properties["name"] = name
     properties["blocksAcross"] = blocksAcross

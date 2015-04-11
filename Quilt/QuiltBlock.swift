@@ -31,12 +31,12 @@ class QuiltBlock {
   
   
   func save() {
-    if let quilt = quilt {
-      if let block = block {
+    if let quiltDocumentID = quilt?.documentID {
+      if let blockDocumentID = block?.documentID {
         
         let properties:NSDictionary = ["type": "QB",
-          "quiltID": quilt.documentID!,
-          "blockID": block.documentID!,
+          "quiltID": quiltDocumentID,
+          "blockID": blockDocumentID,
           "column": column,
           "row": row,
           "blockFabrics": blockFabrics]

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		823EE5F11AD8ABAA00DDC338 /* ColorScheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 823EE5F01AD8ABAA00DDC338 /* ColorScheme.swift */; };
 		82455F571ACBA1F500973B40 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82455F561ACBA1F500973B40 /* AppDelegate.swift */; };
 		82455F591ACBA1F500973B40 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82455F581ACBA1F500973B40 /* ViewController.swift */; };
 		82455F5E1ACBA1F600973B40 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 82455F5D1ACBA1F600973B40 /* Images.xcassets */; };
@@ -60,6 +61,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		823EE5F01AD8ABAA00DDC338 /* ColorScheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorScheme.swift; sourceTree = "<group>"; };
 		82455F511ACBA1F500973B40 /* Quilt.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Quilt.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		82455F551ACBA1F500973B40 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		82455F561ACBA1F500973B40 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -227,6 +229,7 @@
 				82544D331AD4CB4A00CCA4B2 /* QuiltBlock.swift */,
 				825353C71ACE501400FEE2D9 /* Block.swift */,
 				825353C91ACE502100FEE2D9 /* Fabric.swift */,
+				823EE5F01AD8ABAA00DDC338 /* ColorScheme.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -378,6 +381,7 @@
 				82455F571ACBA1F500973B40 /* AppDelegate.swift in Sources */,
 				82FCF5A81ACE2127000FC779 /* FabricView.swift in Sources */,
 				82E943811ACCC9E400211608 /* BlockViewController.swift in Sources */,
+				823EE5F11AD8ABAA00DDC338 /* ColorScheme.swift in Sources */,
 				82455F771ACBA21300973B40 /* QuiltView.swift in Sources */,
 				82C3811C1AD3ADD000B85B39 /* CreateBlockViewController.swift in Sources */,
 				82C3811E1AD3AE9F00B85B39 /* CreateBlockView.swift in Sources */,

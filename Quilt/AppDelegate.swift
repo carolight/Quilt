@@ -20,6 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     println("Database: \(database)")
     createViews()
     
+    
     return true
   }
 
