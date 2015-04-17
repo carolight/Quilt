@@ -105,13 +105,6 @@ extension BlockViewController: UIScrollViewDelegate {
 
 extension BlockViewController: BlockViewDelegate {
   func blockViewShouldShowFabric(blockView: BlockView, location: CGPoint) {
-//    if let fabricViewController = storyboard?.instantiateViewControllerWithIdentifier("FabricViewController") as? FabricViewController {
-////      if let image = getBlockImage(location) {
-////        blockViewController.image = image
-////      }
-//      navigationController?.pushViewController(fabricViewController, animated: true)
-//    }
-    
     //test to see which one tapped
 
     for (index, patch) in enumerate(blockView.patches) {
@@ -120,8 +113,6 @@ extension BlockViewController: BlockViewDelegate {
         break
       }
     }
-    
-    
     if let collectionViewController = storyboard?.instantiateViewControllerWithIdentifier("CollectionViewController") as? CollectionViewController {
       collectionViewController.appState = .Fabric
       collectionViewController.delegate = self
@@ -143,8 +134,6 @@ extension BlockViewController: BlockViewDelegate {
       navigationController?.pushViewController(collectionViewController, animated: true)
       
     }
-
-
   }
 }
 

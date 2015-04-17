@@ -97,7 +97,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="CreateBlockEditCell" textLabel="WSz-nc-6Cf" style="IBUITableViewCellStyleDefault" id="83F-TX-W4b">
-                                <rect key="frame" x="0.0" y="22" width="320" height="44"/>
+                                <rect key="frame" x="0.0" y="86" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="83F-TX-W4b" id="3nk-Rn-1Kk">
                                     <rect key="frame" x="0.0" y="0.0" width="287" height="43"/>
@@ -310,8 +310,9 @@
             <objects>
                 <collectionViewController storyboardIdentifier="CollectionViewController" id="8rg-gq-u6H" customClass="CollectionViewController" customModule="Quilt" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="gHo-Ur-gBT">
-                        <rect key="frame" x="0.0" y="0.0" width="288" height="408"/>
+                        <rect key="frame" x="0.0" y="0.0" width="300" height="300"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="ReJ-1d-fSn">
                             <size key="itemSize" width="240" height="400"/>
                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -320,7 +321,7 @@
                         </collectionViewFlowLayout>
                         <cells>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CollectionViewCell" id="Xn1-Fw-iMr" customClass="CollectionViewCell" customModule="Quilt" customModuleProvider="target">
-                                <rect key="frame" x="24" y="0.0" width="240" height="400"/>
+                                <rect key="frame" x="30" y="0.0" width="240" height="400"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                     <rect key="frame" x="0.0" y="0.0" width="240" height="400"/>
@@ -330,12 +331,13 @@
                                             <rect key="frame" x="0.0" y="0.0" width="240" height="400"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="21X-MF-1TB">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="21X-MF-1TB">
                                                     <rect key="frame" x="0.0" y="0.0" width="240" height="400"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 </imageView>
                                             </subviews>
-                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
                                     </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -354,6 +356,30 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yNf-Br-92r" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1185" y="335.5"/>
+        </scene>
+        <!--Block Select View Controller-->
+        <scene sceneID="FPq-a2-a4s">
+            <objects>
+                <viewController storyboardIdentifier="BlockSelectViewController" id="2l6-hD-KI2" customClass="BlockSelectViewController" customModule="Quilt" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="cHY-Yo-MAm">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <containerView opaque="NO" contentMode="scaleToFill" id="7WX-OT-p9R">
+                                <rect key="frame" x="10" y="10" width="300" height="300"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <connections>
+                                    <segue destination="8rg-gq-u6H" kind="embed" identifier="BlockCollectionViewController" id="0EX-FM-CTb"/>
+                                </connections>
+                            </containerView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Q6u-ws-VWL" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1642" y="343"/>
         </scene>
         <!--Quilt-->
         <scene sceneID="6dt-Ao-uQf">
@@ -488,4 +514,7 @@
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
+    <inferredMetricsTieBreakers>
+        <segue reference="0EX-FM-CTb"/>
+    </inferredMetricsTieBreakers>
 </document>

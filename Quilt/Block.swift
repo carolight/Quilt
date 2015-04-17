@@ -16,8 +16,9 @@ class Block  {
   var patchColors:[Int] = []
   var documentID:String? = nil
   
-  func createImage() -> UIImage? {
-    var blockSize = CGSize(width: 100, height: 100)
+  func createImage(size: CGSize) -> UIImage? {
+//    var blockSize = CGSize(width: 100, height: 100)
+    let blockSize = size
     UIGraphicsBeginImageContextWithOptions(blockSize, true, 0)
     
     let context = UIGraphicsGetCurrentContext()
@@ -157,17 +158,12 @@ class Block  {
   }
   
   func loadFromDictionary(dictionary:NSDictionary) {
-//<<<<<<< Updated upstream
-//    name = dictionary["name"] as String
-//=======
     name = dictionary["name"] as! String
     if let imageData = dictionary["image"] as? NSData {
       if let image = UIImage(data: imageData, scale: UIScreen.mainScreen().scale) {
         self.image = image
       }
     }
-//>>>>>>> Stashed changes
-    
     if let patches = dictionary["patches"] as? [[String]] {
       for patch in patches {
         let newPatch = Patch()
@@ -178,14 +174,8 @@ class Block  {
         self.patches.append(newPatch)
       }
     }
-//<<<<<<< Updated upstream
-//    self.patchColors = dictionary["patchColors"] as [Int]
-//    
-//    self.image = createImage()
-//=======
     self.patchColors = dictionary["patchColors"] as! [Int]
-    self.image = createImage()
-//>>>>>>> Stashed changes
+    self.image = createImage(CGSize(width: 100, height: 100))
   }
 }
 

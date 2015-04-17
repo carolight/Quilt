@@ -101,7 +101,6 @@ class ViewController: UIViewController {
   }
   
   override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-    println(segue.identifier)
     if segue.identifier == "QuiltCollectionViewController" {
       if let collectionViewController = segue.destinationViewController as? CollectionViewController {
         self.collectionViewController = collectionViewController

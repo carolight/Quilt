@@ -40,7 +40,16 @@ class CollectionViewController: UICollectionViewController {
     let flowLayout = CollectionViewFlowLayout()
     self.collectionView?.collectionViewLayout = flowLayout
     self.collectionView?.contentInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
+
+//    println("Height: \(flowLayout.itemSize.height)")
+//    if let collectionView = self.collectionView {
+//      flowLayout.itemSize.width = collectionView.bounds.width
+//      flowLayout.itemSize.height = collectionView.bounds.height + 20
+//    }
+//    println("Height: \(flowLayout.itemSize.height)")
   }
+  
+  
 }
 
 extension CollectionViewController: UICollectionViewDataSource {
@@ -84,8 +93,11 @@ extension CollectionViewController: UICollectionViewDataSource {
       }
     case .Block:
       if let block = array[indexPath.row] as? Block {
-        image = block.image
-        cell.imageView.frame = CGRect(origin: CGPoint(x: 5, y: 5), size: CGSize(width: 240, height: 240))
+//        image = block.image
+        
+        //TODO: - should this be created or be stock block image?
+        let size = min(cell.contentView.bounds.width, cell.contentView.bounds.height)
+        image = block.createImage(CGSize(width: size, height: size))
       }
     default:
       if let fabric = array[indexPath.row] as? Fabric {
@@ -97,7 +109,14 @@ extension CollectionViewController: UICollectionViewDataSource {
     }
     
     return cell
+  }
+
+  func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
     
+    //TODO: this shouldn't be here, but not sure where to set it
+    self.collectionView?.contentInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+    return CGSizeMake(collectionView.bounds.size.width - 20 , collectionView.bounds.size.height - 20)
+  
   }
 }
 

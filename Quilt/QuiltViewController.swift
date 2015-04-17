@@ -132,20 +132,7 @@ extension QuiltViewController: UIScrollViewDelegate {
 
 extension QuiltViewController: QuiltViewDelegate {
   func quiltViewShouldShowBlock(quiltView: QuiltView, location:CGPoint) {
-    if let collectionViewController = storyboard?.instantiateViewControllerWithIdentifier("CollectionViewController") as? CollectionViewController {
-      collectionViewController.appState = .Block
-      
-      blocks = []
-      
-      let query = database.viewNamed("blocks").createQuery()
-      var error:NSError?
-      let result = query.run(&error)
-      while let row = result?.nextRow() {
-        let block = Block()
-        block.load(row.documentID)
-        collectionViewController.array.append(block)
-      }
-      
+    if let collectionViewController = storyboard?.instantiateViewControllerWithIdentifier("BlockSelectViewController") as? BlockSelectViewController {
       navigationController?.pushViewController(collectionViewController, animated: true)
       
     }

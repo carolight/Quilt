@@ -117,7 +117,7 @@ class CreateBlockViewController: UIViewController {
     var block = Block()
     block.name = blockName.text
     block.patches = createBlockView.patches
-    block.image = block.createImage()
+    block.image = block.createImage(CGSize(width: 100, height: 100))
 
     for (index, patch) in enumerate(block.patches) {
       block.patchColors.append(index)
