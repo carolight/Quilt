@@ -97,7 +97,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="CreateBlockEditCell" textLabel="WSz-nc-6Cf" style="IBUITableViewCellStyleDefault" id="83F-TX-W4b">
-                                <rect key="frame" x="0.0" y="86" width="320" height="44"/>
+                                <rect key="frame" x="0.0" y="22" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="83F-TX-W4b" id="3nk-Rn-1Kk">
                                     <rect key="frame" x="0.0" y="0.0" width="287" height="43"/>
@@ -195,28 +195,52 @@
                                     <segue destination="8rg-gq-u6H" kind="embed" identifier="QuiltCollectionViewController" id="uhG-ux-Wd7"/>
                                 </connections>
                             </containerView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="fWQ-dX-qqd">
+                                <rect key="frame" x="82" y="510" width="157" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <containerView opaque="NO" contentMode="scaleToFill" id="2Gs-Oz-pMN">
                                 <rect key="frame" x="16" y="489" width="288" height="66"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <connections>
-                                    <segue destination="AfO-4L-7D5" kind="embed" id="ib7-Jb-pB2"/>
+                                    <segue destination="AfO-4L-7D5" kind="embed" identifier="SchemeCollectionViewController" id="ib7-Jb-pB2"/>
                                 </connections>
                             </containerView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" id="n4R-E8-4JD">
+                        <nil key="title"/>
                         <barButtonItem key="leftBarButtonItem" systemItem="organize" id="Fbu-ar-PXS">
                             <connections>
                                 <segue destination="lwI-YO-fr5" kind="push" id="uIP-Of-L8U"/>
                             </connections>
                         </barButtonItem>
+                        <segmentedControl key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="PGT-7I-gdK">
+                            <rect key="frame" x="89" y="8" width="143" height="29"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <segments>
+                                <segment title="My Quilts"/>
+                                <segment title="Library"/>
+                            </segments>
+                            <connections>
+                                <action selector="quiltSegmentedControlDidChange:" destination="BYZ-38-t0r" eventType="valueChanged" id="2Go-0O-zlZ"/>
+                            </connections>
+                        </segmentedControl>
                         <barButtonItem key="rightBarButtonItem" title="Load" id="Nn0-dl-brv">
                             <connections>
                                 <segue destination="vLP-jW-Pek" kind="push" id="eqU-VY-Aon"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="quiltSegmentedControl" destination="PGT-7I-gdK" id="CTx-XQ-qeN"/>
+                        <outlet property="quiltTitleLabel" destination="fWQ-dX-qqd" id="Fnz-Vs-hFb"/>
+                        <outlet property="schemeContainerView" destination="2Gs-Oz-pMN" id="Adi-KH-i7W"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>

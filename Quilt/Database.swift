@@ -35,12 +35,10 @@ func createDB(name:String) -> Bool{
 }
 
 func createViews() {
-  println("createViews")
   
   database.viewNamed("quiltBlocks").setMapBlock("1") {
     (document, emit) in
     if document["type"] as? String == "QB" {
-      println("updating QB View")
       emit(document["quiltID"], nil)
     }
   }
@@ -49,7 +47,6 @@ func createViews() {
     (document, emit) in
     if document["type"] as? String == "Block" {
       if let name = document["name"] as? String {
-        println("updating blocks View")
         emit(name, document)
       }
     }
@@ -59,7 +56,6 @@ func createViews() {
     (document, emit) in
     if document["type"] as? String == "Quilt" {
       if let name = document["name"] as? String {
-        println("updating quilts View")
         emit(name, document)
       }
     }

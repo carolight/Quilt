@@ -88,8 +88,6 @@ class CreateBlockPointTableViewController: UITableViewController {
     */
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-      println(segue.destinationViewController)
-      println(sender)
       let controller = segue.destinationViewController as! CreateBlockPatchEditViewController
       controller.delegate = self
       let cell = sender as! UITableViewCell
@@ -107,7 +105,6 @@ class CreateBlockPointTableViewController: UITableViewController {
 
 extension CreateBlockPointTableViewController: CreateBlockPatchEditViewControllerDelegate {
   func createBlockPatchEditViewControllerDidUpdate(point: CGPoint, indexPath:NSIndexPath) {
-    println("did update")
     let patch = patches[indexPath.section]
     var patchPoint = patch.points[indexPath.row]
     patchPoint.x = point.x

@@ -34,9 +34,6 @@ class QuiltCollectionViewCell: UICollectionViewCell {
   
   func handleTap(gesture: UITapGestureRecognizer) {
     println("tap")
-    
-    println(gesture.locationInView(gesture.view))
-  
   }
 
   func handleSwipe(gesture: UISwipeGestureRecognizer) {

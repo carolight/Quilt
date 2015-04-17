@@ -8,12 +8,15 @@
 
 import UIKit
 
+protocol SchemeCollectionViewControllerDelegate {
+  func didSelectColorScheme(scheme:Scheme)
+}
 
 class SchemeCollectionViewController: UICollectionViewController {
   
   var colors:[UIColor] = []
   var schemes:[Scheme] = []
-  
+  var delegate: SchemeCollectionViewControllerDelegate? = nil
   var selectedScheme = 0
   
   override func viewDidLoad() {
@@ -32,6 +35,7 @@ class SchemeCollectionViewController: UICollectionViewController {
     let result = query.run(&error)
     while let row = result?.nextRow() {
       let scheme = Scheme()
+      println("loading scheme in viewDidLoad")
       scheme.load(row.documentID)
       schemes.append(scheme)
     }
@@ -64,6 +68,14 @@ class SchemeCollectionViewController: UICollectionViewController {
       cell.contentView.layer.borderWidth = 1.0
     }
     return cell
+  }
+  
+  override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+    let scheme = schemes[indexPath.row]
+    selectedScheme = indexPath.row
+    collectionView.reloadData()
+    delegate?.didSelectColorScheme(scheme)
+    
   }
   
   

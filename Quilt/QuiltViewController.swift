@@ -13,42 +13,31 @@ class QuiltViewController: UIViewController {
   var quilt:Quilt!
   
   var quiltBlocks:[QuiltBlock] = []
+  var currentScheme:Scheme!
   
   @IBOutlet weak var scrollView: UIScrollView!
   
   
   @IBOutlet weak var quiltView: QuiltView!
   
-//  func useDatabase() {
-//    database.viewNamed("blockName").setMapBlock("2") {
-//      (document, emit) in
-//      if document["type"] as? String == "Block" {
-//        if let object:AnyObject = document["name"] {
-//          if let name = object as? String {
-//            emit(name, document)
-//          }
-//        }
-//      }
-//    }
-//  }
-  
   func createNewQuilt() {
-    let newQuilt = quilt.copy()
+    let newQuilt = quilt.copy(currentScheme)
     newQuilt.name = "Mine"
     newQuilt.library = false
+    newQuilt.schemeID = currentScheme.documentID
+    
     //newQuilt has already been saved once
     newQuilt.update(newQuilt.documentID!)
-    
-    
-    
     self.quilt = newQuilt
-
   }
   
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    createNewQuilt()
+    
+    if self.quilt.library {
+      createNewQuilt()
+    }
     
     quiltView.image = quilt.image
     quiltView.delegate = self
@@ -64,43 +53,28 @@ class QuiltViewController: UIViewController {
     let scaleHeight = scrollViewFrame.size.height / scrollView.contentSize.height
     let minScale = min(scaleWidth, scaleHeight);
     scrollView.minimumZoomScale = minScale;
-    println("min: \(minScale)")
-    println("Image: \(quilt.image?.size)")
-    println(scrollView.bounds)
     // 5
     scrollView.maximumZoomScale = 2.0
     scrollView.zoomScale = minScale;
     
     self.automaticallyAdjustsScrollViewInsets = false
     
-    createViews()
-    
-    println("here")
-    //display blocks on quilt
-    let query = database.viewNamed("quiltBlocks").createQuery()
-    println(quilt.documentID)
-    query.startKey = quilt.documentID
-    query.endKey = quilt.documentID
-    var error:NSError?
-    let result = query.run(&error)
-    while let row = result?.nextRow() {
-      let quiltBlock = QuiltBlock()
-      quiltBlock.load(row.documentID)
-      let imageView = UIImageView(image: quiltBlock.image)
-      let x = quiltBlock.column * 100
-      let y = quiltBlock.row * 100
-      let frame = CGRect(origin: CGPoint(x: x, y: y), size: CGSize(width: 100, height: 100))
-      imageView.frame = frame
-      quiltView.addSubview(imageView)
+    //show blocks from quilt matrix
+    for row in 0..<quilt.blocksDown {
+      for column in 0..<quilt.blocksAcross {
+        let quiltBlock = QuiltBlock()
+        quiltBlock.load(quilt.quiltBlocksID[row][column])
+        let imageView = UIImageView(image: quiltBlock.image)
+        let x = column * 100
+        let y = row * 100
+        let frame = CGRect(origin: CGPoint(x: x, y: y), size: CGSize(width: 100, height: 100))
+        imageView.frame = frame
+        quiltView.addSubview(imageView)
+        
+        imageView.layer.borderColor = UIColor.blackColor().CGColor
+        imageView.layer.borderWidth = 3
+      }
     }
-    println(query)
-    println("query done")
-
-  }
-  
-  override func didReceiveMemoryWarning() {
-    super.didReceiveMemoryWarning()
-    // Dispose of any resources that can be recreated.
   }
   
   func scrollViewDoubleTapped(recognizer: UITapGestureRecognizer) {
@@ -167,7 +141,6 @@ extension QuiltViewController: QuiltViewDelegate {
       var error:NSError?
       let result = query.run(&error)
       while let row = result?.nextRow() {
-        println("\(row.key) / \(row.value)")
         let block = Block()
         block.load(row.documentID)
         collectionViewController.array.append(block)
@@ -200,8 +173,6 @@ extension QuiltViewController: QuiltViewDelegate {
   
   @IBAction func exitBlockSave(segue:UIStoryboardSegue) {
     println("save")
-    println(segue.sourceViewController)
-    
   }
   
 }

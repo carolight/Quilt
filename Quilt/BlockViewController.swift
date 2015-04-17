@@ -73,7 +73,7 @@ class BlockViewController: UIViewController {
 
   @IBAction func btnCancel(sender: AnyObject) {
     println("cancel")
-    dismissViewControllerAnimated(true, completion: nil)
+//    dismissViewControllerAnimated(true, completion: nil)
   }
   @IBAction func btnSave(sender: AnyObject) {
     println("save")
@@ -89,7 +89,7 @@ class BlockViewController: UIViewController {
     //update quilt block in file
     //update quilt image
     
-    dismissViewControllerAnimated(true, completion: nil)
+//    dismissViewControllerAnimated(true, completion: nil)
   }
 }
 
@@ -116,8 +116,6 @@ extension BlockViewController: BlockViewDelegate {
 
     for (index, patch) in enumerate(blockView.patches) {
       if patch.path.containsPoint(location) {
-        println("found")
-        println(block.patchColors[index])
         selectedPatchColor = block.patchColors[index]
         break
       }
@@ -152,7 +150,6 @@ extension BlockViewController: BlockViewDelegate {
 
 extension BlockViewController: CollectionViewControllerDelegate {
   func didSelectItem(item: AnyObject) {
-    println("didSelectItem: \(item)")
     if let fabric = item as? Fabric {
     if let fabricImage = fabric.image  {
       if let selectedColor = selectedPatchColor {

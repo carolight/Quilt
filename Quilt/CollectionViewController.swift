@@ -24,6 +24,8 @@ class CollectionViewController: UICollectionViewController {
   var delegate:CollectionViewControllerDelegate? = nil
   var appState:AppState = .Quilt
   
+  var selectedScheme:Scheme? = nil
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     
@@ -58,7 +60,27 @@ extension CollectionViewController: UICollectionViewDataSource {
     switch appState {
     case .Quilt:
       if let quilt = array[indexPath.row] as? Quilt {
-        image = quilt.image
+        if quilt.library {
+          var scheme = selectedScheme
+          
+          if scheme == nil {
+            //get first color scheme
+            let query = database.viewNamed("schemes").createQuery()
+            var error:NSError?
+            let result = query.run(&error)
+            scheme = Scheme()
+            while let row = result?.nextRow() {
+              scheme!.load(row.documentID)
+              break
+            }
+          }
+          
+          if let scheme = scheme {
+            image = quilt.buildLibraryQuiltImage(cell.imageView.bounds.size, scheme: scheme)
+          }
+        } else {
+          image = quilt.buildUserQuiltImage(cell.imageView.bounds.size)
+        }
       }
     case .Block:
       if let block = array[indexPath.row] as? Block {
@@ -70,10 +92,6 @@ extension CollectionViewController: UICollectionViewDataSource {
         image = fabric.image!
       }
     }
-    //<<<<<<< Updated upstream
-    //=======
-    //    let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath)as! CollectionViewCell
-    ////>>>>>>> Stashed changes
     if let image = image {
       cell.imageView.image = image
     }
@@ -91,6 +109,21 @@ extension CollectionViewController: UICollectionViewDelegate {
       let quiltViewController = storyboard?.instantiateViewControllerWithIdentifier("QuiltViewController") as! QuiltViewController
       let quilt = array[indexPath.row] as! Quilt
       quiltViewController.quilt = quilt
+      
+      //TODO: - selectedScheme is not being updated initially
+      if selectedScheme == nil {
+        //get first color scheme
+        let query = database.viewNamed("schemes").createQuery()
+        var error:NSError?
+        let result = query.run(&error)
+        selectedScheme = Scheme()
+        while let row = result?.nextRow() {
+          selectedScheme!.load(row.documentID)
+          break
+        }
+      }
+
+      quiltViewController.currentScheme = selectedScheme
       navigationController?.pushViewController(quiltViewController, animated: true)
     case .Block:
       
@@ -99,7 +132,6 @@ extension CollectionViewController: UICollectionViewDelegate {
       blockViewController.title = "Block"
       let block = array[indexPath.row] as! Block
       
-      println("selected block: \(block.name)")
       blockViewController.block = block
       
       
@@ -114,6 +146,10 @@ extension CollectionViewController: UICollectionViewDelegate {
       navigationController?.popViewControllerAnimated(true)
       
     }
+  }
+  
+  override func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
+    //TODO: Change title and center
   }
 }
 

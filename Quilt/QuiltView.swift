@@ -30,8 +30,6 @@ class QuiltView: UIView {
   }
   
     override func drawRect(rect: CGRect) {
-      println("drawrect")
-      println(image.size)
       image.drawInRect(rect)
       
       for path in paths {
@@ -47,7 +45,6 @@ class QuiltView: UIView {
   }
   
   func handleTap(gesture:UITapGestureRecognizer) {
-    println("tap")
     var location = gesture.locationInView(self)
     var scale:CGFloat = self.bounds.width / image.size.width
     location.x = location.x / scale
@@ -55,8 +52,6 @@ class QuiltView: UIView {
     
     for path in paths {
       if path.containsPoint(location) {
-        println(path.bounds)
-        
         delegate?.quiltViewShouldShowBlock(self, location:location)
       }
     }

@@ -8,6 +8,7 @@
 
 import UIKit
 
+
 class CollectionViewFlowLayout: UICollectionViewFlowLayout {
   
   required init(coder: NSCoder) {

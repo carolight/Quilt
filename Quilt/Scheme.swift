@@ -39,6 +39,7 @@ class Scheme {
     newRevision.setAttachmentNamed("image.png", withContentType: "image/png", content: imageData)
     assert(newRevision.save(&error) != nil)
 
+    self.documentID = document.documentID
   }
   
   func load(documentID:String) {
@@ -65,6 +66,7 @@ class Scheme {
   func loadFabricImages() {
     var fabricsPath = NSBundle.mainBundle().resourcePath!
     fabricsPath = fabricsPath.stringByAppendingString("/fabrics/")
+    fabricImages = []
     for fabric in fabrics {
       let filename = fabricsPath.stringByAppendingPathComponent(fabric)
       if let image = UIImage(contentsOfFile: filename) {

@@ -28,7 +28,6 @@ class BlockView: UIView {
 
     override func drawRect(rect: CGRect) {
       
-      println("drawing block")
       image.drawInRect(rect)
       let width = self.bounds.width
       let height = self.bounds.height
@@ -77,7 +76,6 @@ class BlockView: UIView {
 
   
   func handleTap(gesture: UITapGestureRecognizer) {
-    println("tapped block")
     let location = gesture.locationInView(self)
     delegate?.blockViewShouldShowFabric(self, location:location)
     

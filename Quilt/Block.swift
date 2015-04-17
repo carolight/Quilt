@@ -40,6 +40,7 @@ class Block  {
   }
   
   func save() {
+    println("Block save")
     let properties = ["type": "Block",
                       "name": name]
     
@@ -49,13 +50,18 @@ class Block  {
     if document.putProperties(properties, error: &error) == nil {
       println("couldn't save new item \(error?.localizedDescription)")
     }
+    println("Block now saved")
+    
+    if let image = image {
+      var newRevision = document.currentRevision.createRevision()
+      let imageData = UIImagePNGRepresentation(image)
+      newRevision.setAttachmentNamed("image.png", withContentType: "image/png", content: imageData)
+      assert(newRevision.save(&error) != nil)
+    } else {
+      assertionFailure("Block Image missing")
+    }
     
     var newRevision = document.currentRevision.createRevision()
-    let imageData = UIImagePNGRepresentation(image)
-    newRevision.setAttachmentNamed("image.png", withContentType: "image/png", content: imageData)
-    assert(newRevision.save(&error) != nil)
-    
-    newRevision = document.currentRevision.createRevision()
     
     var newPatches:[[String]] = []
     var newPatch:[String] = []
