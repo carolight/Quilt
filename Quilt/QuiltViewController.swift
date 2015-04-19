@@ -15,10 +15,11 @@ class QuiltViewController: UIViewController {
   var quiltBlocks:[QuiltBlock] = []
   var currentScheme:Scheme!
   
+  var currentQuiltMatrixID:Int = 0 // This is the entry into the quiltMatrix
+  
   @IBOutlet weak var scrollView: UIScrollView!
-  
-  
-  @IBOutlet weak var quiltView: QuiltView!
+  @IBOutlet weak var quiltView: UIView!
+  @IBOutlet weak var switchBlocks: UISwitch!
   
   func createNewQuilt() {
     let newQuilt = quilt.copy(currentScheme)
@@ -35,14 +36,13 @@ class QuiltViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     
+    let scheme = Scheme()
+    scheme.load(quilt.schemeID!)
+    gSelectedScheme = scheme
+    
     if self.quilt.library {
       createNewQuilt()
     }
-    
-    quiltView.image = quilt.image
-    quiltView.delegate = self
-    quiltView.paths = quilt.blockPaths
-    quiltView.blockSize = quilt.blockSize
     
     scrollView.delegate = self
     
@@ -60,21 +60,75 @@ class QuiltViewController: UIViewController {
     self.automaticallyAdjustsScrollViewInsets = false
     
     //show blocks from quilt matrix
-    for row in 0..<quilt.blocksDown {
-      for column in 0..<quilt.blocksAcross {
-        let quiltBlock = QuiltBlock()
-        quiltBlock.load(quilt.quiltBlocksID[row][column])
-        let imageView = UIImageView(image: quiltBlock.image)
-        let x = column * 100
-        let y = row * 100
-        let frame = CGRect(origin: CGPoint(x: x, y: y), size: CGSize(width: 100, height: 100))
-        imageView.frame = frame
-        quiltView.addSubview(imageView)
-        
-        imageView.layer.borderColor = UIColor.blackColor().CGColor
-        imageView.layer.borderWidth = 3
-      }
+    
+    quilt.cellVisitor {
+      (location:QuiltMatrix) in
+      let quiltBlock = QuiltBlock()
+      quiltBlock.load(self.quilt[location])
+      let imageView = UIImageView(image: quiltBlock.image)
+      let x = location.column * 100
+      let y = location.row * 100
+      let frame = CGRect(origin: CGPoint(x: x, y: y), size: CGSize(width: 100, height: 100))
+      imageView.frame = frame
+      self.quiltView.addSubview(imageView)
+      
+      imageView.layer.borderColor = UIColor.blackColor().CGColor
+      imageView.layer.borderWidth = 3
+      
+      //add matrix entry point
+      imageView.tag = location.row * 1000 + location.column
+      
+      let tap = UITapGestureRecognizer(target: self, action: "handleBlockTap:")
+      imageView.addGestureRecognizer(tap)
+      imageView.userInteractionEnabled = true
     }
+    
+//    for row in 0..<quilt.blocksDown {
+//      for column in 0..<quilt.blocksAcross {
+//        let quiltBlock = QuiltBlock()
+//        quiltBlock.load(quilt[row, column])
+//        let imageView = UIImageView(image: quiltBlock.image)
+//        let x = column * 100
+//        let y = row * 100
+//        let frame = CGRect(origin: CGPoint(x: x, y: y), size: CGSize(width: 100, height: 100))
+//        imageView.frame = frame
+//        quiltView.addSubview(imageView)
+//        
+//        imageView.layer.borderColor = UIColor.blackColor().CGColor
+//        imageView.layer.borderWidth = 3
+//        
+//        //add matrix entry point
+//        imageView.tag = row * 1000 + column
+//        
+//        let tap = UITapGestureRecognizer(target: self, action: "handleBlockTap:")
+//        imageView.addGestureRecognizer(tap)
+//        imageView.userInteractionEnabled = true
+//      }
+//    }
+  }
+  
+  func handleBlockTap(gesture:UITapGestureRecognizer) {
+    if let view = gesture.view {
+      let column = view.tag % gMatrixMultiplier
+      let row = (view.tag - column) / gMatrixMultiplier
+      println("Column: \(column), Row: \(row)")
+      
+      let blockID = quilt[row, column]
+      let block = Block()
+      block.load(blockID)
+      
+      currentQuiltMatrixID = view.tag
+      
+      if let controller = storyboard?.instantiateViewControllerWithIdentifier("BlockSelectViewController") as? BlockSelectViewController {
+        controller.currentQuilt = quilt
+        controller.currentBlock = block
+        controller.quiltMatrixID = view.tag
+        navigationController?.pushViewController(controller, animated: true)
+        
+      }
+
+    }
+    
   }
   
   func scrollViewDoubleTapped(recognizer: UITapGestureRecognizer) {
@@ -118,6 +172,60 @@ class QuiltViewController: UIViewController {
     quiltView.frame = contentsFrame
   }
   
+  @IBAction func exitBlockCancel(segue:UIStoryboardSegue) {
+    println("exitBlockCancel")
+  }
+  
+  @IBAction func exitBlockSave(segue:UIStoryboardSegue) {
+    println("exitBlockSave")
+    
+    //TODO: If switchBlocks is on then all blocks with same ID must be updated
+    
+    if let controller = segue.sourceViewController as? BlockViewController {
+      let quiltBlock = controller.quiltBlock
+      quiltBlock.image = quiltBlock.buildUserQuiltBlockImage(CGSize(width: 100, height: 100), showPaths: false)
+      if let documentID = quiltBlock.documentID {
+        quiltBlock.update(documentID)
+      } else {
+        quiltBlock.save()
+      }
+      let column = currentQuiltMatrixID % gMatrixMultiplier
+      let row = (currentQuiltMatrixID - column) / gMatrixMultiplier
+
+      if self.switchBlocks.on {
+        let documentID = quilt[row, column]
+        
+        quilt.cellVisitor {
+          (location: QuiltMatrix) in
+          if self.quilt[location] == documentID {
+            self.quilt[location] = quiltBlock.documentID!
+            let tag = row * gMatrixMultiplier + column
+            if let imageView = self.quiltView.viewWithTag(tag) as? UIImageView {
+              imageView.image = quiltBlock.image
+            }
+          }
+        }
+//        for row in 0..<quilt.blocksDown {
+//          for column in 0..<quilt.blocksAcross {
+//            if quilt[row, column] == documentID {
+//              quilt[row, column] = quiltBlock.documentID!
+//              let tag = row * gMatrixMultiplier + column
+//              if let imageView = quiltView.viewWithTag(tag) as? UIImageView {
+//                imageView.image = quiltBlock.image
+//              }
+//            }
+//          }
+//        }
+      } else {
+        quilt[row, column] = quiltBlock.documentID!
+        if let imageView = quiltView.viewWithTag(currentQuiltMatrixID) as? UIImageView {
+          imageView.image = quiltBlock.image
+        }
+      }
+    }
+  }
+
+  
 }
 
 extension QuiltViewController: UIScrollViewDelegate {
@@ -128,39 +236,5 @@ extension QuiltViewController: UIScrollViewDelegate {
   func scrollViewDidZoom(scrollView: UIScrollView) {
     centerScrollViewContents()
   }
-}
-
-extension QuiltViewController: QuiltViewDelegate {
-  func quiltViewShouldShowBlock(quiltView: QuiltView, location:CGPoint) {
-    if let collectionViewController = storyboard?.instantiateViewControllerWithIdentifier("BlockSelectViewController") as? BlockSelectViewController {
-      navigationController?.pushViewController(collectionViewController, animated: true)
-      
-    }
-  }
-  
-  func getBlockImage(location:CGPoint) -> UIImage? {
-    let blockSize = CGSize(width: 100, height: 100)
-    let rect = CGRect(origin: location, size: blockSize)
-    
-    UIGraphicsBeginImageContextWithOptions(quiltView.bounds.size, true, 1)
-    let context = UIGraphicsGetCurrentContext()
-    self.quilt.image!.drawInRect(quiltView.bounds)
-    let quiltImage = UIGraphicsGetImageFromCurrentImageContext()
-    UIGraphicsEndImageContext()
-    
-    let imageRef = CGImageCreateWithImageInRect(quiltImage.CGImage, rect)
-    let image = UIImage(CGImage: imageRef)
-    return image
-    
-  }
-  
-  @IBAction func exitBlockCancel(segue:UIStoryboardSegue) {
-    println("cancel")
-  }
-  
-  @IBAction func exitBlockSave(segue:UIStoryboardSegue) {
-    println("save")
-  }
-  
 }
 

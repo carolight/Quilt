@@ -9,7 +9,22 @@
 import Foundation
 import UIKit
 
+enum quiltCellState {
+  case Empty, Block, UserBlock
+}
+
+struct QuiltMatrix {
+  let row: Int, column: Int
+  
+  init(row:Int, column: Int) {
+    self.row = row
+    self.column = column
+  }
+}
+
 class Quilt {
+  private var cells: [String]
+  
   var name:String = " "
   var image:UIImage? = nil
   var blockPaths: [UIBezierPath] = []
@@ -32,29 +47,74 @@ class Quilt {
   //A two dimensional array of the quilt blocks
   //preallocated and pointing at the block used
   //If it's a user quilt, it's a user block
-  var quiltBlocksID:[[String]] = [[String]]()
+//  var quiltBlocksID:[[String]] = [[String]]()
   
   init() {
-    for row in 0..<blocksDown {
-      let array = [String](count:blocksAcross, repeatedValue: " ")
-      quiltBlocksID.append(array)
+//    for row in 0..<blocksDown {
+//      let array = [String](count:blocksAcross, repeatedValue: " ")
+//      quiltBlocksID.append(array)
+//    }
+    
+    cells = Array(count: blocksAcross * blocksDown, repeatedValue: " ")
+    
+  }
+  
+  subscript(location: QuiltMatrix) -> String {
+    get {
+        assert(isWithinBounds(location), "row or column index is out of bounds")
+      return cells[location.row * blocksAcross + location.column]
+    }
+    set {
+      assert(isWithinBounds(location), "row or column index is out of bounds")
+      cells[location.row * blocksAcross + location.column] = newValue
     }
   }
   
-  func resetLinkedQuilts(oldBlocksAcross: Int, oldBlocksDown:Int) {
-    var newQuiltBlocksID = [[String]]()
-    for row in 0..<blocksDown {
-      let array = [String](count:blocksAcross, repeatedValue: " ")
-      newQuiltBlocksID.append(array)
+  subscript(row: Int, column: Int) -> String {
+    get {
+      return self[QuiltMatrix(row: row, column: column)]
     }
+    set {
+      self[QuiltMatrix(row: row, column: column)] = newValue
+    }
+  }
+  
+  func isWithinBounds(location: QuiltMatrix) -> Bool {
+    return location.row >= 0 && location.row < blocksDown &&
+            location.column >= 0 && location.column < blocksAcross
+  }
+  
+  func cellVisitor(function: (QuiltMatrix) -> ()) {
     for row in 0..<blocksDown {
       for column in 0..<blocksAcross {
-        if column < oldBlocksAcross && row < oldBlocksDown {
-          newQuiltBlocksID[row][column] = quiltBlocksID[row][column]
-        }
+        let location = QuiltMatrix(row: row, column: column)
+        function(location)
       }
     }
-    quiltBlocksID = newQuiltBlocksID
+  }
+  
+  func clearQuilt() {
+    cellVisitor { self[$0] = " " }
+  }
+  
+  func resetLinkedQuilts(oldBlocksAcross: Int, oldBlocksDown:Int) {
+    return
+    
+    //TODO: when blocks across or down are changed, array needs to be
+    //initialised
+//    var newQuiltBlocksID = [[String]]()
+//    for row in 0..<blocksDown {
+//      let array = [String](count:blocksAcross, repeatedValue: " ")
+//      newQuiltBlocksID.append(array)
+//    }
+//    for row in 0..<blocksDown {
+//      for column in 0..<blocksAcross {
+//        if column < oldBlocksAcross && row < oldBlocksDown {
+//          newQuiltBlocksID[row][column] = quiltBlocksID[row][column]
+//        }
+//      }
+//    }
+//    quiltBlocksID = newQuiltBlocksID
   }
   
   func copy(scheme:Scheme) -> Quilt {
@@ -81,23 +141,29 @@ class Quilt {
       quiltBlock.load(row.documentID)
       let newQuiltBlock = QuiltBlock()
       newQuiltBlock.quiltID = newQuilt.documentID
-      newQuiltBlock.blockID = quiltBlock.documentID
+      newQuiltBlock.blockID = quiltBlock.blockID
       newQuiltBlock.column = quiltBlock.column
       newQuiltBlock.row = quiltBlock.row
       newQuiltBlock.blockFabrics = quiltBlock.blockFabrics
       
-      newQuiltBlock.image = quiltBlock.buildLibraryQuiltBlockImage(CGSize(width: 100, height: 100), scheme: scheme)
+      let blockSize = CGSize(width: 100, height: 100)
+      newQuiltBlock.image = newQuiltBlock.block?.buildLibraryQuiltBlockImage(blockSize, scheme: scheme, showPaths: false)
       
       newQuiltBlock.save()
       
       //update quilt matrix to point at new block
-      for row in 0..<blocksDown {
-        for column in 0..<blocksAcross {
-          if self.quiltBlocksID[row][column] == quiltBlock.documentID {
-            newQuilt.quiltBlocksID[row][column] = newQuiltBlock.documentID!
-          }
+      cellVisitor {
+        if self[$0] == quiltBlock.documentID {
+          newQuilt[$0] = newQuiltBlock.documentID!
         }
       }
+//      for row in 0..<blocksDown {
+//        for column in 0..<blocksAcross {
+//          if self.quiltBlocksID[row][column] == quiltBlock.documentID {
+//            newQuilt.quiltBlocksID[row][column] = newQuiltBlock.documentID!
+//          }
+//        }
+//      }
     }
     
     //newQuilt is updated with other details on return
@@ -113,7 +179,9 @@ class Quilt {
         "blocksDown": blocksDown,
         "library":library,
         "schemeID":schemeID,
-        "quiltBlocksID": quiltBlocksID]
+//        "quiltBlocksID": quiltBlocksID,
+        "cells": cells
+      ]
       
       
       
@@ -164,10 +232,13 @@ class Quilt {
       self.library = library
     }
     
-    if let quiltBlocksID = document["quiltBlocksID"] as? [[String]] {
-      self.quiltBlocksID = quiltBlocksID
-    }
+//    if let quiltBlocksID = document["quiltBlocksID"] as? [[String]] {
+//      self.quiltBlocksID = quiltBlocksID
+//    }
     
+    if let cells = document["cells"] as? [String] {
+      self.cells = cells
+    }
     if let schemeID = document["schemeID"] as? String {
       self.schemeID = schemeID
     } else {
@@ -201,7 +272,8 @@ class Quilt {
     properties["blocksAcross"] = blocksAcross
     properties["blocksDown"] = blocksDown
     properties["library"] = library
-    properties["quiltBlocksID"] = quiltBlocksID
+//    properties["quiltBlocksID"] = quiltBlocksID
+    properties["cells"] = cells
     properties["schemeID"] = schemeID
     
     if document.putProperties(properties as [NSObject : AnyObject], error: &error) == nil {
@@ -220,9 +292,10 @@ class Quilt {
     
   }
   
-  func buildLibraryQuiltImage(size:CGSize, scheme:Scheme) -> UIImage {
+  func buildLibraryQuiltImage(quiltSize:CGSize, scheme:Scheme, showPaths:Bool) -> UIImage {
     
-    let blockSize = size.width / CGFloat(blocksAcross)
+    let blockWidth = quiltSize.width / CGFloat(blocksAcross)
+    let blockSize = CGSize(width: blockWidth, height: blockWidth)
     
     var quiltBlocks:[QuiltBlock] = []
     
@@ -234,33 +307,47 @@ class Quilt {
     while let row = result?.nextRow() {
       let quiltBlock = QuiltBlock()
       quiltBlock.load(row.documentID)
-      quiltBlock.image = quiltBlock.buildLibraryQuiltBlockImage(CGSize(width:blockSize, height:blockSize), scheme: scheme)
+      quiltBlock.image = quiltBlock.block?.buildLibraryQuiltBlockImage(blockSize, scheme: scheme, showPaths: showPaths)
       
       quiltBlocks.append(quiltBlock)
     }
     println("buildLibraryQuiltImage - loaded \(quiltBlocks.count) blocks")
     
     
-    UIGraphicsBeginImageContextWithOptions(size, true, 0.0)
+    UIGraphicsBeginImageContextWithOptions(quiltSize, true, 0.0)
     let context = UIGraphicsGetCurrentContext()
     UIColor.whiteColor().setFill()
-    CGContextFillRect(context, CGRect(origin: CGPointZero, size: size))
+    CGContextFillRect(context, CGRect(origin: CGPointZero, size: blockSize))
     
     
-    var blockRect = CGRect(origin: CGPointZero, size: CGSize(width: blockSize, height: blockSize))
-    for row in 0..<self.blocksDown {
-      for column in 0..<self.blocksAcross {
-        let blockID = self.quiltBlocksID[row][column]
-        for quiltBlock in quiltBlocks {
-          if quiltBlock.documentID == blockID {
-            blockRect.origin.x = CGFloat(column) * blockSize
-            blockRect.origin.y = CGFloat(row) * blockSize
-            quiltBlock.image?.drawInRect(blockRect)
-            break
-          }
+    var blockRect = CGRect(origin: CGPointZero, size: blockSize)
+    
+    cellVisitor {
+      (location: QuiltMatrix) in
+      let blockID = self[location]
+      for quiltBlock in quiltBlocks {
+        if quiltBlock.documentID == blockID {
+          blockRect.origin.x = CGFloat(location.column) * blockWidth
+          blockRect.origin.y = CGFloat(location.row) * blockWidth
+          quiltBlock.image?.drawInRect(blockRect)
+          break
         }
       }
+      
     }
+//    for row in 0..<self.blocksDown {
+//      for column in 0..<self.blocksAcross {
+//        let blockID = self[row, column]
+//        for quiltBlock in quiltBlocks {
+//          if quiltBlock.documentID == blockID {
+//            blockRect.origin.x = CGFloat(column) * blockWidth
+//            blockRect.origin.y = CGFloat(row) * blockWidth
+//            quiltBlock.image?.drawInRect(blockRect)
+//            break
+//          }
+//        }
+//      }
+//    }
     var image = UIGraphicsGetImageFromCurrentImageContext()
     UIGraphicsEndImageContext()
     return image
@@ -293,19 +380,32 @@ class Quilt {
     CGContextFillRect(context, CGRect(origin: CGPointZero, size: size))
     
     var blockRect = CGRect(origin: CGPointZero, size: CGSize(width: blockSize, height: blockSize))
-    for row in 0..<self.blocksDown {
-      for column in 0..<self.blocksAcross {
-        let blockID = self.quiltBlocksID[row][column]
-        for quiltBlock in quiltBlocks {
-          if quiltBlock.documentID == blockID {
-            blockRect.origin.x = CGFloat(column) * blockSize
-            blockRect.origin.y = CGFloat(row) * blockSize
-            quiltBlock.image?.drawInRect(blockRect)
-            break
-          }
+    
+    cellVisitor {
+      (location: QuiltMatrix) in
+      let blockID = self[location]
+      for quiltBlock in quiltBlocks {
+        if quiltBlock.documentID == blockID {
+          blockRect.origin.x = CGFloat(location.column) * blockSize
+          blockRect.origin.y = CGFloat(location.row) * blockSize
+          quiltBlock.image?.drawInRect(blockRect)
+          break
         }
       }
     }
+//    for row in 0..<self.blocksDown {
+//      for column in 0..<self.blocksAcross {
+//        let blockID = self[row, column]
+//        for quiltBlock in quiltBlocks {
+//          if quiltBlock.documentID == blockID {
+//            blockRect.origin.x = CGFloat(column) * blockSize
+//            blockRect.origin.y = CGFloat(row) * blockSize
+//            quiltBlock.image?.drawInRect(blockRect)
+//            break
+//          }
+//        }
+//      }
+//    }
     var image = UIGraphicsGetImageFromCurrentImageContext()
     UIGraphicsEndImageContext()
     return image

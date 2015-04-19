@@ -111,7 +111,6 @@ class LoadViewController: UIViewController {
     UIGraphicsEndImageContext()
     
     quilt.image = image
-    quilts.append(quilt)
     quilt.save()
     
     
@@ -138,11 +137,14 @@ class LoadViewController: UIViewController {
     quiltBlock.save()
     
     //update quilt matrix to point at new block
-    for row in 0..<blocksDown {
-      for column in 0..<blocksAcross {
-        quilt.quiltBlocksID[row][column] = quiltBlock.documentID!
-      }
+    quilt.cellVisitor {
+      quilt[$0] = quiltBlock.documentID!
     }
+//    for row in 0..<blocksDown {
+//      for column in 0..<blocksAcross {
+//        quilt.quiltBlocksID[row][column] = quiltBlock.documentID!
+//      }
+//    }
     quilt.update(quilt.documentID!)
   }
   

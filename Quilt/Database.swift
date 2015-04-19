@@ -38,7 +38,7 @@ func createViews() {
   
   database.viewNamed("quiltBlocks").setMapBlock("1") {
     (document, emit) in
-    if document["type"] as? String == "QB" {
+    if document["type"] as? String == "Block" && document["library"] as? Bool == false {
       emit(document["quiltID"], nil)
     }
   }

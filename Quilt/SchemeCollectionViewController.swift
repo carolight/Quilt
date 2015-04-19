@@ -35,11 +35,9 @@ class SchemeCollectionViewController: UICollectionViewController {
     let result = query.run(&error)
     while let row = result?.nextRow() {
       let scheme = Scheme()
-      println("loading scheme in viewDidLoad")
       scheme.load(row.documentID)
       schemes.append(scheme)
     }
-
   }
   
   override func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
@@ -63,6 +61,7 @@ class SchemeCollectionViewController: UICollectionViewController {
     if indexPath.row == selectedScheme {
       cell.contentView.layer.borderColor = UIColor.redColor().CGColor
       cell.contentView.layer.borderWidth = 2.0
+      gSelectedScheme = scheme
     } else {
       cell.contentView.layer.borderColor = UIColor.blackColor().CGColor
       cell.contentView.layer.borderWidth = 1.0
@@ -73,9 +72,9 @@ class SchemeCollectionViewController: UICollectionViewController {
   override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
     let scheme = schemes[indexPath.row]
     selectedScheme = indexPath.row
+    gSelectedScheme = scheme
     collectionView.reloadData()
     delegate?.didSelectColorScheme(scheme)
-    
   }
   
   

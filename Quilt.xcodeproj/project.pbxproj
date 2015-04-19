@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		8222610D1AE0A2A80066DE17 /* BlockSelectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8222610C1AE0A2A80066DE17 /* BlockSelectViewController.swift */; };
+		8222610F1AE1DEAE0066DE17 /* Global.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8222610E1AE1DEAE0066DE17 /* Global.swift */; };
 		823EE5F11AD8ABAA00DDC338 /* Scheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 823EE5F01AD8ABAA00DDC338 /* Scheme.swift */; };
 		823EE5F31AD8C36900DDC338 /* SchemeCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 823EE5F21AD8C36900DDC338 /* SchemeCollectionViewController.swift */; };
 		82455F571ACBA1F500973B40 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82455F561ACBA1F500973B40 /* AppDelegate.swift */; };
@@ -15,14 +16,12 @@
 		82455F5E1ACBA1F600973B40 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 82455F5D1ACBA1F600973B40 /* Images.xcassets */; };
 		82455F611ACBA1F600973B40 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 82455F5F1ACBA1F600973B40 /* LaunchScreen.xib */; };
 		82455F6D1ACBA1F600973B40 /* QuiltTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82455F6C1ACBA1F600973B40 /* QuiltTests.swift */; };
-		82455F771ACBA21300973B40 /* QuiltView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82455F761ACBA21300973B40 /* QuiltView.swift */; };
 		82455F7B1ACBB97A00973B40 /* QuiltCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82455F7A1ACBB97A00973B40 /* QuiltCollectionViewCell.swift */; };
 		82455F7D1ACBBAC600973B40 /* CollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82455F7C1ACBBAC600973B40 /* CollectionViewFlowLayout.swift */; };
 		825353C41ACE47EC00FEE2D9 /* blocks in Resources */ = {isa = PBXBuildFile; fileRef = 825353C31ACE47EC00FEE2D9 /* blocks */; };
 		825353C61ACE500800FEE2D9 /* Quilt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 825353C51ACE500800FEE2D9 /* Quilt.swift */; };
 		825353C81ACE501400FEE2D9 /* Block.swift in Sources */ = {isa = PBXBuildFile; fileRef = 825353C71ACE501400FEE2D9 /* Block.swift */; };
 		825353CA1ACE502100FEE2D9 /* Fabric.swift in Sources */ = {isa = PBXBuildFile; fileRef = 825353C91ACE502100FEE2D9 /* Fabric.swift */; };
-		825353CD1ACE509C00FEE2D9 /* SampleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 825353CC1ACE509C00FEE2D9 /* SampleData.swift */; };
 		82544D341AD4CB4A00CCA4B2 /* QuiltBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82544D331AD4CB4A00CCA4B2 /* QuiltBlock.swift */; };
 		82544D391AD4E05100CCA4B2 /* LoadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82544D381AD4E05100CCA4B2 /* LoadViewController.swift */; };
 		82C381091AD36CF500B85B39 /* CouchbaseLite.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82C381081AD36CF500B85B39 /* CouchbaseLite.framework */; };
@@ -64,6 +63,7 @@
 
 /* Begin PBXFileReference section */
 		8222610C1AE0A2A80066DE17 /* BlockSelectViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockSelectViewController.swift; sourceTree = "<group>"; };
+		8222610E1AE1DEAE0066DE17 /* Global.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Global.swift; sourceTree = "<group>"; };
 		823EE5F01AD8ABAA00DDC338 /* Scheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Scheme.swift; sourceTree = "<group>"; };
 		823EE5F21AD8C36900DDC338 /* SchemeCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SchemeCollectionViewController.swift; sourceTree = "<group>"; };
 		82455F511ACBA1F500973B40 /* Quilt.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Quilt.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -75,14 +75,12 @@
 		82455F661ACBA1F600973B40 /* QuiltTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = QuiltTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		82455F6B1ACBA1F600973B40 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		82455F6C1ACBA1F600973B40 /* QuiltTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuiltTests.swift; sourceTree = "<group>"; };
-		82455F761ACBA21300973B40 /* QuiltView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuiltView.swift; sourceTree = "<group>"; };
 		82455F7A1ACBB97A00973B40 /* QuiltCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuiltCollectionViewCell.swift; sourceTree = "<group>"; };
 		82455F7C1ACBBAC600973B40 /* CollectionViewFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewFlowLayout.swift; sourceTree = "<group>"; };
 		825353C31ACE47EC00FEE2D9 /* blocks */ = {isa = PBXFileReference; lastKnownFileType = folder; name = blocks; path = images/blocks; sourceTree = "<group>"; };
 		825353C51ACE500800FEE2D9 /* Quilt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Quilt.swift; sourceTree = "<group>"; };
 		825353C71ACE501400FEE2D9 /* Block.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Block.swift; sourceTree = "<group>"; };
 		825353C91ACE502100FEE2D9 /* Fabric.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Fabric.swift; sourceTree = "<group>"; };
-		825353CC1ACE509C00FEE2D9 /* SampleData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SampleData.swift; sourceTree = "<group>"; };
 		82544D331AD4CB4A00CCA4B2 /* QuiltBlock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuiltBlock.swift; sourceTree = "<group>"; };
 		82544D381AD4E05100CCA4B2 /* LoadViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadViewController.swift; sourceTree = "<group>"; };
 		82C381081AD36CF500B85B39 /* CouchbaseLite.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = CouchbaseLite.framework; sourceTree = "<group>"; };
@@ -160,16 +158,15 @@
 			isa = PBXGroup;
 			children = (
 				82455F561ACBA1F500973B40 /* AppDelegate.swift */,
+				8222610E1AE1DEAE0066DE17 /* Global.swift */,
 				82FCF5AF1ACE3C4A000FC779 /* Main.storyboard */,
 				82C381191AD36E0400B85B39 /* Database.swift */,
-				825353CC1ACE509C00FEE2D9 /* SampleData.swift */,
 				82455F581ACBA1F500973B40 /* ViewController.swift */,
 				82455F7C1ACBBAC600973B40 /* CollectionViewFlowLayout.swift */,
 				82FCF5AB1ACE29D2000FC779 /* CollectionViewController.swift */,
 				82FCF5AD1ACE2A88000FC779 /* CollectionViewCell.swift */,
 				82455F7A1ACBB97A00973B40 /* QuiltCollectionViewCell.swift */,
 				82E9437E1ACBFC5100211608 /* QuiltViewController.swift */,
-				82455F761ACBA21300973B40 /* QuiltView.swift */,
 				8222610C1AE0A2A80066DE17 /* BlockSelectViewController.swift */,
 				82E943801ACCC9E400211608 /* BlockViewController.swift */,
 				82E943821ACCCA0A00211608 /* BlockView.swift */,
@@ -382,14 +379,12 @@
 				82C3811A1AD36E0400B85B39 /* Database.swift in Sources */,
 				82455F591ACBA1F500973B40 /* ViewController.swift in Sources */,
 				82FCF5AA1ACE2134000FC779 /* FabricViewController.swift in Sources */,
-				825353CD1ACE509C00FEE2D9 /* SampleData.swift in Sources */,
 				825353CA1ACE502100FEE2D9 /* Fabric.swift in Sources */,
 				82455F571ACBA1F500973B40 /* AppDelegate.swift in Sources */,
 				823EE5F31AD8C36900DDC338 /* SchemeCollectionViewController.swift in Sources */,
 				82FCF5A81ACE2127000FC779 /* FabricView.swift in Sources */,
 				82E943811ACCC9E400211608 /* BlockViewController.swift in Sources */,
 				823EE5F11AD8ABAA00DDC338 /* Scheme.swift in Sources */,
-				82455F771ACBA21300973B40 /* QuiltView.swift in Sources */,
 				82C3811C1AD3ADD000B85B39 /* CreateBlockViewController.swift in Sources */,
 				82C3811E1AD3AE9F00B85B39 /* CreateBlockView.swift in Sources */,
 				82E9437F1ACBFC5100211608 /* QuiltViewController.swift in Sources */,
@@ -397,6 +392,7 @@
 				82455F7B1ACBB97A00973B40 /* QuiltCollectionViewCell.swift in Sources */,
 				8222610D1AE0A2A80066DE17 /* BlockSelectViewController.swift in Sources */,
 				82FCF5AC1ACE29D2000FC779 /* CollectionViewController.swift in Sources */,
+				8222610F1AE1DEAE0066DE17 /* Global.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

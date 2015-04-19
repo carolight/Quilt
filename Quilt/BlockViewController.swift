@@ -6,11 +6,16 @@
 //  Copyright (c) 2015 Caroline Begbie. All rights reserved.
 //
 
+
+//For when user selects block in BlockSelectViewController.
+//In this screen, a User Block is always worked on
+
 import UIKit
 
 class BlockViewController: UIViewController {
   
-  var block:Block!
+  var quiltBlock:QuiltBlock!
+  var block: Block!
   
   var selectedPatchColor:Int? = nil
   
@@ -22,7 +27,11 @@ class BlockViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
   
-      blockView.image = block.image
+      blockView.image = quiltBlock.image
+      
+      block = Block()
+      block.load(quiltBlock.blockID!)
+      
       blockView.delegate = self
       blockView.patches = block.patches
       blockView.patchColors = block.patchColors
@@ -140,20 +149,29 @@ extension BlockViewController: BlockViewDelegate {
 extension BlockViewController: CollectionViewControllerDelegate {
   func didSelectItem(item: AnyObject) {
     if let fabric = item as? Fabric {
-    if let fabricImage = fabric.image  {
-      if let selectedColor = selectedPatchColor {
-        for (index, color) in enumerate(block.patchColors) {
-          if color == selectedColor {
-            
-            let path = block.patches[index].path
-            let fabricColor = UIColor(patternImage: fabricImage)
-            block.patches[index].color = fabricColor
-            block.patches[index].fabric = fabric
+      if let fabricImage = fabric.image  {
+        if let selectedColor = selectedPatchColor {
+          for (index, color) in enumerate(block.patchColors) {
+            if color == selectedColor {
+              let path = block.patches[index].path
+              let fabricColor = UIColor(patternImage: fabricImage)
+              block.patches[index].color = fabricColor
+              block.patches[index].fabric = fabric
+            }
           }
+          blockView.setNeedsDisplay()
         }
-        blockView.setNeedsDisplay()
-      }
       }
     }
+  }
+  
+  func didScrollToItem(item: AnyObject) {
+    if let block = item as? Block {
+      println("did scroll to \(block.name)")
+    }
+  }
+
+  func didBeginDragging() {
+  
   }
 }

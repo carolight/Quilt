@@ -50,6 +50,7 @@ class QuiltBlock {
     didSet {
       blockFabrics = []
       if let block = block {
+        name = "My \(block.name)"
         for patch in block.patches {
           blockFabrics.append(" ")
         }
@@ -59,25 +60,28 @@ class QuiltBlock {
   }
   var row:Int = 0
   var column:Int = 0
-  var image:UIImage? = nil
   var blockFabrics:[String] = []
   
-  var documentID: String? = nil
   var outline: UIBezierPath? = nil
-  
+  var image: UIImage? = nil
+  var name:String = "User Block"
   var quiltID:String? = nil
   var blockID:String? = nil
+  var library = false
+  var documentID:String? = nil
   
   func save() {
     println("QuiltBlock save")
     if let quiltDocumentID = quiltID {
       if let blockDocumentID = blockID {
         
-        let properties:NSDictionary = ["type": "QB",
+        let properties:NSDictionary = ["type": "Block",
           "quiltID": quiltDocumentID,
           "blockID": blockDocumentID,
+          "name": name,
           "column": column,
           "row": row,
+          "library": library,
           "blockFabrics": blockFabrics]
         
         let document = database.createDocument()
@@ -106,14 +110,14 @@ class QuiltBlock {
     
     var error:NSError?
     let document = database.documentWithID(documentID)
-    let retrievedProperties = document.properties as NSDictionary
-    var properties = retrievedProperties.copy() as! NSMutableDictionary
+    let properties = NSMutableDictionary(dictionary: document.properties)
     
-    properties["type"] = "QB"
+    properties["type"] = "Block"
     properties["quiltID"] = quiltID
     properties["blockID"] = blockID
     properties["column"] = column
     properties["row"] = row
+    properties["library"] = library
     properties["blockFabrics"] = blockFabrics
     
     if document.putProperties(properties as [NSObject : AnyObject], error: &error) == nil {
@@ -137,17 +141,18 @@ class QuiltBlock {
       blockID = document["blockID"] as? String,
       blockFabrics = document["blockFabrics"] as? [String]
     {
-//      let quilt = Quilt()
-//      quilt.load(quiltID)
-//      self.quilt = quilt
-//      
-//      let block = Block()
-//      block.load(blockID)
-//      self.block = block
       
       self.quiltID = quiltID
       self.blockID = blockID
       self.blockFabrics = blockFabrics
+    }
+    
+    if let name = document["name"] as? String {
+      self.name = name
+    }
+    
+    if let library = document["library"] as? Bool {
+      self.library = library
     }
     
     let revision = document.currentRevision
@@ -161,30 +166,56 @@ class QuiltBlock {
     
   }
   
-  func buildLibraryQuiltBlockImage(size:CGSize, scheme:Scheme) -> UIImage? {
-
-    scheme.loadFabricImages()
+  func buildUserQuiltBlockImage(size:CGSize, showPaths:Bool) -> UIImage? {
     
-    if let block = self.block {
+    var fabricsPath = NSBundle.mainBundle().resourcePath!
+    fabricsPath = fabricsPath.stringByAppendingString("/fabrics/")
+    var fabricImages:[UIImage] = []
+    for fabric in blockFabrics {
+      let filename = fabricsPath.stringByAppendingPathComponent(fabric)
+      if let image = UIImage(contentsOfFile: filename) {
+        fabricImages.append(image)
+      }
+    }
+
+    if let block = block {
       UIGraphicsBeginImageContextWithOptions(size, true, 0.0)
       let context = UIGraphicsGetCurrentContext()
       UIColor.whiteColor().setFill()
       CGContextFillRect(context, CGRect(origin: CGPointZero, size: size))
       
+      var useSchemeFabrics = false
+      if block.patchColors.count > fabricImages.count {
+        useSchemeFabrics = true
+        let scheme = gSelectedScheme
+        if scheme.fabricImages.count < scheme.fabrics.count {
+          scheme.loadFabricImages()
+        }
+      }
+      
       for (index, patch) in enumerate(block.patches) {
         var first = true
         var path = patch.createPath(size)
-        
         let colorIndex = block.patchColors[index]
         
-        let index = colorIndex % scheme.fabricImages.count
-        
-        let image = scheme.fabricImages[index]
-        
-        UIColor(patternImage: image).setFill()
-
-        
-        path.fill()
+        var image:UIImage? = nil
+        if useSchemeFabrics {
+          let scheme = gSelectedScheme
+          let index = colorIndex % scheme.fabricImages.count
+          image = scheme.fabricImages[index]
+        } else {
+          let index = colorIndex % fabricImages.count
+          image = fabricImages[index]
+        }
+        if let image = image {
+          UIColor(patternImage: image).setFill()
+          path.fill()
+        }
+        if showPaths {
+          UIColor.blackColor().setStroke()
+          path.lineWidth = 2.0
+          path.stroke()
+        }
       }
       
       
@@ -194,6 +225,8 @@ class QuiltBlock {
     }
     return nil
   }
+  
+  
   
   
 }

@@ -10,6 +10,8 @@ import UIKit
 
 protocol CollectionViewControllerDelegate {
   func didSelectItem(item:AnyObject)
+  func didScrollToItem(item:AnyObject)
+  func didBeginDragging()
 }
 
 enum AppState {
@@ -49,7 +51,6 @@ class CollectionViewController: UICollectionViewController {
 //    println("Height: \(flowLayout.itemSize.height)")
   }
   
-  
 }
 
 extension CollectionViewController: UICollectionViewDataSource {
@@ -85,7 +86,7 @@ extension CollectionViewController: UICollectionViewDataSource {
           }
           
           if let scheme = scheme {
-            image = quilt.buildLibraryQuiltImage(cell.imageView.bounds.size, scheme: scheme)
+            image = quilt.buildLibraryQuiltImage(cell.imageView.bounds.size, scheme: scheme, showPaths:false)
           }
         } else {
           image = quilt.buildUserQuiltImage(cell.imageView.bounds.size)
@@ -97,7 +98,17 @@ extension CollectionViewController: UICollectionViewDataSource {
         
         //TODO: - should this be created or be stock block image?
         let size = min(cell.contentView.bounds.width, cell.contentView.bounds.height)
-        image = block.createImage(CGSize(width: size, height: size))
+        let blockSize = CGSize(width: size, height: size)
+        
+        if block.library {
+          image = block.createImage(CGSize(width: size, height: size))
+          image = block.buildLibraryQuiltBlockImage(blockSize, scheme: gSelectedScheme, showPaths: true)
+        } else {
+          let quiltBlock = QuiltBlock()
+          quiltBlock.load(block.documentID!)
+          image = quiltBlock.buildUserQuiltBlockImage(blockSize, showPaths:true)
+          
+        }
       }
     default:
       if let fabric = array[indexPath.row] as? Fabric {
@@ -146,17 +157,9 @@ extension CollectionViewController: UICollectionViewDelegate {
       navigationController?.pushViewController(quiltViewController, animated: true)
     case .Block:
       
-      let navigationController = storyboard?.instantiateViewControllerWithIdentifier("BlockNavigationController") as! UINavigationController
-      let blockViewController = navigationController.viewControllers[0] as! BlockViewController
-      blockViewController.title = "Block"
       let block = array[indexPath.row] as! Block
+      delegate?.didSelectItem(block)
       
-      blockViewController.block = block
-      
-      
-      //TODO: instead of block, blockViewController should be showing UserBlock
-      
-      presentViewController(navigationController, animated: true, completion: nil)
     case .Fabric:
       
       let fabric = array[indexPath.row] as! Fabric
@@ -167,8 +170,32 @@ extension CollectionViewController: UICollectionViewDelegate {
     }
   }
   
+  override func scrollViewWillBeginDragging(scrollView: UIScrollView) {
+    switch appState {
+    case .Block:
+      delegate?.didBeginDragging()
+    default:()
+    }
+  }
+  
   override func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
     //TODO: Change title and center
+    
+    if let collectionView = self.collectionView {
+      for cell in collectionView.visibleCells() {
+        if let cell = cell as? UICollectionViewCell {
+          let indexPath = collectionView.indexPathForCell(cell)
+          switch appState {
+          case .Block:
+            if let block = self.array[indexPath!.row] as? Block {
+              delegate?.didScrollToItem(block)
+            }
+          default: ()
+          }
+        }
+      }
+    }
   }
+
 }
 

@@ -15,6 +15,7 @@ class Block  {
   var patches:[Patch] = []
   var patchColors:[Int] = []
   var documentID:String? = nil
+  var library: Bool = true
   
   func createImage(size: CGSize) -> UIImage? {
 //    var blockSize = CGSize(width: 100, height: 100)
@@ -43,12 +44,13 @@ class Block  {
   func save() {
     println("Block save")
     let properties = ["type": "Block",
+                      "library": library,
                       "name": name]
     
     let document = database.createDocument()
     var error:NSError?
     
-    if document.putProperties(properties, error: &error) == nil {
+    if document.putProperties(properties as [NSObject : AnyObject], error: &error) == nil {
       println("couldn't save new item \(error?.localizedDescription)")
     }
     println("Block now saved")
@@ -89,6 +91,53 @@ class Block  {
 
   }
   
+  
+  func update(documentID:String) {
+    println("updating Quilt: \(documentID)")
+    var error:NSError?
+    let document = database.documentWithID(documentID)
+    let properties = NSMutableDictionary(dictionary: document.properties)
+    
+    properties["type"] = "Block"
+    properties["name"] = name
+    properties["library"] = library
+    
+    if document.putProperties(properties as [NSObject : AnyObject], error: &error) == nil {
+      println("couldn't save new item \(error?.localizedDescription)")
+    }
+    
+    if let image = image {
+      var newRevision = document.currentRevision.createRevision()
+      let imageData = UIImagePNGRepresentation(image)
+      newRevision.setAttachmentNamed("image.png", withContentType: "image/png", content: imageData)
+      assert(newRevision.save(&error) != nil)
+    } else {
+      assertionFailure("Block Image missing")
+    }
+    
+    var newRevision = document.currentRevision.createRevision()
+    
+    var newPatches:[[String]] = []
+    var newPatch:[String] = []
+    for patch in patches {
+      newPatch = []
+      for point in patch.points {
+        let newPoint = NSStringFromCGPoint(point)
+        newPatch.append(newPoint)
+      }
+      newPatches.append(newPatch)
+    }
+    if newPatches.count > 0 {
+      let patchesData = NSKeyedArchiver.archivedDataWithRootObject(newPatches)
+      newRevision.setAttachmentNamed("patchPoints", withContentType: "CGPoint", content: patchesData)
+      assert(newRevision.save(&error) != nil)
+    }
+    
+    newRevision = document.currentRevision.createRevision()
+    let colorData = NSKeyedArchiver.archivedDataWithRootObject(patchColors)
+    newRevision.setAttachmentNamed("patchColors", withContentType: "Int", content: colorData)
+    assert(newRevision.save(&error) != nil)
+  }
 
 
   func load(documentID:String) {
@@ -98,12 +147,17 @@ class Block  {
       self.name = name
     }
     
+    if let library = document["library"] as? Bool {
+      self.library = library
+    }
+    
     let revision = document.currentRevision
     if let imageData = revision.attachmentNamed("image.png") {
       if let image = UIImage(data: imageData.content, scale: UIScreen.mainScreen().scale) {
         self.image = image
       }
     }
+    
     
     if let patchesData = revision.attachmentNamed("patchPoints") {
       if let data = patchesData.content {
@@ -159,6 +213,7 @@ class Block  {
   
   func loadFromDictionary(dictionary:NSDictionary) {
     name = dictionary["name"] as! String
+    library = true
     if let imageData = dictionary["image"] as? NSData {
       if let image = UIImage(data: imageData, scale: UIScreen.mainScreen().scale) {
         self.image = image
@@ -177,6 +232,38 @@ class Block  {
     self.patchColors = dictionary["patchColors"] as! [Int]
     self.image = createImage(CGSize(width: 100, height: 100))
   }
+  
+  func buildLibraryQuiltBlockImage(size:CGSize, scheme:Scheme, showPaths:Bool) -> UIImage? {
+    
+    scheme.loadFabricImages()
+    
+    UIGraphicsBeginImageContextWithOptions(size, true, 0.0)
+    let context = UIGraphicsGetCurrentContext()
+    UIColor.whiteColor().setFill()
+    CGContextFillRect(context, CGRect(origin: CGPointZero, size: size))
+    
+    for (index, patch) in enumerate(self.patches) {
+      var first = true
+      var path = patch.createPath(size)
+      let colorIndex = self.patchColors[index]
+      let index = colorIndex % scheme.fabricImages.count
+      let image = scheme.fabricImages[index]
+      UIColor(patternImage: image).setFill()
+      
+      path.fill()
+      
+      if showPaths {
+        UIColor.blackColor().setStroke()
+        path.lineWidth = 2.0
+        path.stroke()
+      }
+    }
+    
+    var image = UIGraphicsGetImageFromCurrentImageContext()
+    UIGraphicsEndImageContext()
+    return image
+  }
+
 }
 
 class Patch {
@@ -201,4 +288,7 @@ class Patch {
     path.closePath()
     return path
   }
+  
+
+  
 }

@@ -393,19 +393,31 @@
                                 <rect key="frame" x="40" y="69" width="240" height="400"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" id="4i5-gm-rwo" customClass="QuiltView" customModule="Quilt" customModuleProvider="target">
+                                    <view contentMode="scaleToFill" id="4i5-gm-rwo">
                                         <rect key="frame" x="0.0" y="0.0" width="480" height="800"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" red="1" green="0.90533066669999995" blue="0.78313135700000003" alpha="1" colorSpace="calibratedRGB"/>
                                     </view>
                                 </subviews>
                             </scrollView>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" id="3HF-O0-MlO">
+                                <rect key="frame" x="231" y="517" width="51" height="31"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </switch>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="All Blocks" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="3eu-Vv-HLE">
+                                <rect key="frame" x="217" y="494" width="76" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <connections>
-                        <outlet property="quiltView" destination="4i5-gm-rwo" id="fyg-Rk-XT8"/>
+                        <outlet property="quiltView" destination="4i5-gm-rwo" id="bEQ-iU-F3v"/>
                         <outlet property="scrollView" destination="cIQ-QR-Dnb" id="ofr-HJ-tG4"/>
+                        <outlet property="switchBlocks" destination="3HF-O0-MlO" id="U23-iv-iPr"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DQV-E6-jn0" userLabel="First Responder" sceneMemberID="firstResponder"/>
