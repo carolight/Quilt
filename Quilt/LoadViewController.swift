@@ -106,7 +106,6 @@ class LoadViewController: UIViewController {
     UIGraphicsEndImageContext()
     
     quilt.image = image
-    quilt.save()
     
     
     // setup new quilt blocks
@@ -125,22 +124,51 @@ class LoadViewController: UIViewController {
     
     println("result count: \(result.count)")
     
-    let quiltBlock = QuiltBlock()
-    quiltBlock.quiltID = quilt.documentID
-    quiltBlock.blockID = block.documentID
-    quiltBlock.image = block.image
-    quiltBlock.save()
+//    let newBlock = block.copy()
+//    newBlock.library = false
+//    newBlock.quiltID = quilt.documentID
+//    newBlock.save()
+//    
+    //update quilt matrix to point at new block
+    quilt.cellVisitor {
+      quilt[$0] = block.documentID!
+    }
+    quilt.image = quilt.buildLibraryQuiltImage(gQuiltThumbnailSize, scheme: gSelectedScheme, showPaths: false)
+    quilt.save()
+    
+    
+    ///-------Second quilt
+    
+    quilt = Quilt()
+    quilt.blocksAcross = blocksAcross
+    quilt.blocksDown = blocksDown
+    
+    quilt.name = "untitled 2"
+    quilt.blockSize = blockSize
+    quilt.library = true
+    quilt.schemeID = defaultSchemeID
+    
+    block = Block()
+    var count = 0
+    let result2 = query.run(&error)
+
+    while let row = result2?.nextRow() {
+      if count == 1 {
+        let documentID = row.documentID
+        block.load(documentID)
+        println("found block: \(block.name)")
+        break
+      }
+      count++
+    }
     
     //update quilt matrix to point at new block
     quilt.cellVisitor {
-      quilt[$0] = quiltBlock.documentID!
+      quilt[$0] = block.documentID!
     }
-//    for row in 0..<blocksDown {
-//      for column in 0..<blocksAcross {
-//        quilt.quiltBlocksID[row][column] = quiltBlock.documentID!
-//      }
-//    }
-    quilt.update(quilt.documentID!)
+    quilt.image = quilt.buildLibraryQuiltImage(gQuiltThumbnailSize, scheme: gSelectedScheme, showPaths: false)
+    quilt.save()
+
   }
   
   

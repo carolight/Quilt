@@ -23,6 +23,7 @@ class CollectionViewFlowLayout: UICollectionViewFlowLayout {
   
   
 //  http://stackoverflow.com/a/22696037/359578
+// sets view to be one at a time and centered
 
   override func targetContentOffsetForProposedContentOffset(proposedContentOffset:CGPoint, withScrollingVelocity:CGPoint) -> CGPoint {
     

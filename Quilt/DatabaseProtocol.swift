@@ -27,3 +27,10 @@ func gSave(properties:NSDictionary) -> CBLDocument {
   }
   return document
 }
+
+func gUpdate(document: CBLDocument, properties:NSDictionary) {
+  var error:NSError?
+  if document.putProperties(properties as [NSObject : AnyObject], error: &error) == nil {
+    println("couldn't save new item \(error?.localizedDescription)")
+  }
+}

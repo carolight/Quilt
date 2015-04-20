@@ -32,7 +32,6 @@ class Quilt {
   var blockSize:CGSize = CGSizeZero
   var quiltSize:CGSize = CGSizeZero
   var library:Bool = false
-  var schemeID:String? = nil
   var documentID:String? = nil
   var blocksAcross: Int = 5 {
     didSet {
@@ -45,19 +44,32 @@ class Quilt {
     }
   }
   
-  //A two dimensional array of the quilt blocks
-  //preallocated and pointing at the block used
-  //If it's a user quilt, it's a user block
-//  var quiltBlocksID:[[String]] = [[String]]()
+  var borderWidth:CGFloat = 0
+  var sashingWidth: CGFloat = 0
   
+  //Scheme
+  var schemeID:String? = nil
+  var _scheme:Scheme? = nil
+  var scheme:Scheme? {
+    get {
+      if let schemeID = self.schemeID {
+        if _scheme == nil {
+          _scheme = Scheme()
+          _scheme!.load(schemeID)
+        }
+      } else {
+        return nil
+      }
+      return _scheme!
+    }
+    set {
+      _scheme = newValue
+      schemeID = newValue?.documentID
+    }
+  }
+
   init() {
-//    for row in 0..<blocksDown {
-//      let array = [String](count:blocksAcross, repeatedValue: " ")
-//      quiltBlocksID.append(array)
-//    }
-    
     self.blocks = Array(count: blocksAcross * blocksDown, repeatedValue: " ")
-    
   }
   
   subscript(location: QuiltMatrix) -> String {
@@ -95,6 +107,7 @@ class Quilt {
   }
   
   func clearQuilt() {
+    //clears all block pointers
     cellVisitor { self[$0] = " " }
   }
   
@@ -126,210 +139,134 @@ class Quilt {
     newQuilt.quiltSize = self.quiltSize
     newQuilt.library = self.library
     newQuilt.documentID = self.documentID
-    newQuilt.schemeID = scheme.documentID
+    newQuilt.scheme = scheme
     newQuilt.blocksAcross = self.blocksAcross
     newQuilt.blocksDown = self.blocksDown
-    
-    //need to save to get document id to save in user blocks
-    newQuilt.save()
-    //copy quilt blocks to user blocks
-    let query = database.viewNamed("quiltBlocks").createQuery()
-    var error:NSError?
-    let result = query.run(&error)
-    while let row = result?.nextRow() {
-      let quiltBlock = QuiltBlock()
-      quiltBlock.load(row.documentID)
-      let newQuiltBlock = QuiltBlock()
-      newQuiltBlock.quiltID = newQuilt.documentID
-      newQuiltBlock.blockID = quiltBlock.blockID
-      newQuiltBlock.column = quiltBlock.column
-      newQuiltBlock.row = quiltBlock.row
-      newQuiltBlock.blockFabrics = quiltBlock.blockFabrics
-      
-      let blockSize = CGSize(width: 100, height: 100)
-      newQuiltBlock.image = newQuiltBlock.block?.buildLibraryQuiltBlockImage(blockSize, scheme: scheme, showPaths: false)
-      
-      newQuiltBlock.save()
-      
-      //update quilt matrix to point at new block
-      cellVisitor {
-        if self[$0] == quiltBlock.documentID {
-          newQuilt[$0] = newQuiltBlock.documentID!
-        }
-      }
-//      for row in 0..<blocksDown {
-//        for column in 0..<blocksAcross {
-//          if self.quiltBlocksID[row][column] == quiltBlock.documentID {
-//            newQuilt.quiltBlocksID[row][column] = newQuiltBlock.documentID!
-//          }
+    newQuilt.borderWidth = self.borderWidth
+    newQuilt.sashingWidth = self.sashingWidth
+    newQuilt.blocks = self.blocks
+//    //need to save to get document id to save in user blocks
+//    newQuilt.save()
+//    //copy quilt blocks to user blocks
+//    let query = database.viewNamed("quiltBlocks").createQuery()
+//    query.startKey = self.documentID
+//    query.endKey = self.documentID
+//    
+//    var error:NSError?
+//    let result = query.run(&error)
+//    while let row = result?.nextRow() {
+//      let block = Block()
+//      block.load(row.documentID)
+//      let newBlock = block.copy()
+//      newBlock.quiltID = newQuilt.documentID
+//      newBlock.save()
+//      
+//      //update quilt matrix to point at new block
+//      cellVisitor {
+//        if self[$0] == block.documentID {
+//          newQuilt[$0] = newBlock.documentID!
 //        }
 //      }
-    }
+//      //TODO: This also copies blocks that may be redundant ie not used in quilt
+//    }
     
     //newQuilt is updated with other details on return
     return newQuilt
   }
   
-//  func save() {
-//    if let schemeID = schemeID {
-//      println("saving Quilt")
-//      let properties = ["type": "Quilt",
-//        "name": name,
-//        "blocksAcross": blocksAcross,
-//        "blocksDown": blocksDown,
-//        "library":library,
-//        "schemeID":schemeID,
-////        "quiltBlocksID": quiltBlocksID,
-//        "blocks": blocks
-//      ]
-//      
-//      
-//      
-//      
-//      let document = database.createDocument()
-//      var error:NSError?
-//      
-//      if document.putProperties(properties as [NSObject : AnyObject], error: &error) == nil {
-//        println("couldn't save new item \(error?.localizedDescription)")
-//      }
-//      
-//      //TODO: - might not need quilt image
-//      
-//      var newRevision = document.currentRevision.createRevision()
-//      let imageData = UIImagePNGRepresentation(image)
-//      newRevision.setAttachmentNamed("image.png", withContentType: "image/png", content: imageData)
-//      assert(newRevision.save(&error) != nil)
-//      
-//      newRevision = document.currentRevision.createRevision()
-//      let blockPathsData = NSKeyedArchiver.archivedDataWithRootObject(blockPaths)
-//      newRevision.setAttachmentNamed("blockPaths", withContentType: "UIBezierPath", content: blockPathsData)
-//      assert(newRevision.save(&error) != nil)
-//      
-//      documentID = document.documentID
-//    } else {
-//      assert(schemeID != nil, "ERROR! SchemeID is missing")
-//    }
-//  }
-  
-  
-  func buildLibraryQuiltImage(quiltSize:CGSize, scheme:Scheme, showPaths:Bool) -> UIImage {
+  func buildLibraryQuiltImage(quiltSize:CGSize, scheme:Scheme?, showPaths:Bool) -> UIImage {
     
     let blockWidth = quiltSize.width / CGFloat(blocksAcross)
     let blockSize = CGSize(width: blockWidth, height: blockWidth)
     
-    var quiltBlocks:[QuiltBlock] = []
-    
-    let query = database.viewNamed("quiltBlocks").createQuery()
-    query.startKey = self.documentID
-    query.endKey = self.documentID
-    var error:NSError?
-    let result = query.run(&error)
-    while let row = result?.nextRow() {
-      let quiltBlock = QuiltBlock()
-      quiltBlock.load(row.documentID)
-      quiltBlock.image = quiltBlock.block?.buildLibraryQuiltBlockImage(blockSize, scheme: scheme, showPaths: showPaths)
-      
-      quiltBlocks.append(quiltBlock)
+    var blockIDs = Set<String>()
+
+    cellVisitor {
+      blockIDs.insert(self[$0])
     }
-    println("buildLibraryQuiltImage - loaded \(quiltBlocks.count) blocks")
     
+    var blocks:[Block] = []
+    for blockID in blockIDs {
+      let block = Block()
+      block.load(blockID)
+      if block.library {
+        block.image = block.buildLibraryQuiltBlockImage(blockSize, scheme: scheme!, showPaths: showPaths)
+      } else {
+        block.image = block.buildUserQuiltBlockImage(blockSize, showPaths: false)
+      }
+      blocks.append(block)
+    }
+    println("buildLibraryQuiltImage - loaded \(blocks.count) blocks")
     
     UIGraphicsBeginImageContextWithOptions(quiltSize, true, 0.0)
     let context = UIGraphicsGetCurrentContext()
     UIColor.whiteColor().setFill()
     CGContextFillRect(context, CGRect(origin: CGPointZero, size: blockSize))
-    
-    
+
     var blockRect = CGRect(origin: CGPointZero, size: blockSize)
     
     cellVisitor {
       (location: QuiltMatrix) in
-      let blockID = self[location]
-      for quiltBlock in quiltBlocks {
-        if quiltBlock.documentID == blockID {
+      let currentBlockID = self[location]
+      for block in blocks {
+        if currentBlockID == block.documentID {
           blockRect.origin.x = CGFloat(location.column) * blockWidth
           blockRect.origin.y = CGFloat(location.row) * blockWidth
-          quiltBlock.image?.drawInRect(blockRect)
+          block.image?.drawInRect(blockRect)
           break
         }
       }
-      
     }
-//    for row in 0..<self.blocksDown {
-//      for column in 0..<self.blocksAcross {
-//        let blockID = self[row, column]
-//        for quiltBlock in quiltBlocks {
-//          if quiltBlock.documentID == blockID {
-//            blockRect.origin.x = CGFloat(column) * blockWidth
-//            blockRect.origin.y = CGFloat(row) * blockWidth
-//            quiltBlock.image?.drawInRect(blockRect)
-//            break
-//          }
-//        }
-//      }
-//    }
+    
     var image = UIGraphicsGetImageFromCurrentImageContext()
     UIGraphicsEndImageContext()
     return image
   }
   
   
-  func buildUserQuiltImage(size:CGSize) -> UIImage {
-    
-    let blockSize = size.width / CGFloat(blocksAcross)
-    
-    var quiltBlocks:[QuiltBlock] = []
-    
-    let query = database.viewNamed("quiltBlocks").createQuery()
-    query.startKey = self.documentID
-    query.endKey = self.documentID
-    var error:NSError?
-    let result = query.run(&error)
-    while let row = result?.nextRow() {
-      let quiltBlock = QuiltBlock()
-      quiltBlock.load(row.documentID)
-      quiltBlocks.append(quiltBlock)
-      
-    }
-    println("buildUserQuiltImage - loaded \(quiltBlocks.count) blocks")
-    
-    
-    UIGraphicsBeginImageContextWithOptions(size, true, 0.0)
-    let context = UIGraphicsGetCurrentContext()
-    UIColor.whiteColor().setFill()
-    CGContextFillRect(context, CGRect(origin: CGPointZero, size: size))
-    
-    var blockRect = CGRect(origin: CGPointZero, size: CGSize(width: blockSize, height: blockSize))
-    
-    cellVisitor {
-      (location: QuiltMatrix) in
-      let blockID = self[location]
-      for quiltBlock in quiltBlocks {
-        if quiltBlock.documentID == blockID {
-          blockRect.origin.x = CGFloat(location.column) * blockSize
-          blockRect.origin.y = CGFloat(location.row) * blockSize
-          quiltBlock.image?.drawInRect(blockRect)
-          break
-        }
-      }
-    }
-//    for row in 0..<self.blocksDown {
-//      for column in 0..<self.blocksAcross {
-//        let blockID = self[row, column]
-//        for quiltBlock in quiltBlocks {
-//          if quiltBlock.documentID == blockID {
-//            blockRect.origin.x = CGFloat(column) * blockSize
-//            blockRect.origin.y = CGFloat(row) * blockSize
-//            quiltBlock.image?.drawInRect(blockRect)
-//            break
-//          }
+//  func buildUserQuiltImage(size:CGSize) -> UIImage {
+//    
+//    let blockSize = size.width / CGFloat(blocksAcross)
+//    
+//    var quiltBlocks:[Block] = []
+//    
+//    let query = database.viewNamed("quiltBlocks").createQuery()
+//    query.startKey = self.documentID
+//    query.endKey = self.documentID
+//    var error:NSError?
+//    let result = query.run(&error)
+//    while let row = result?.nextRow() {
+//      let quiltBlock = Block()
+//      quiltBlock.load(row.documentID)
+//      quiltBlocks.append(quiltBlock)
+//      
+//    }
+//    println("buildUserQuiltImage - loaded \(quiltBlocks.count) blocks")
+//    
+//    
+//    UIGraphicsBeginImageContextWithOptions(size, true, 0.0)
+//    let context = UIGraphicsGetCurrentContext()
+//    UIColor.whiteColor().setFill()
+//    CGContextFillRect(context, CGRect(origin: CGPointZero, size: size))
+//    
+//    var blockRect = CGRect(origin: CGPointZero, size: CGSize(width: blockSize, height: blockSize))
+//    
+//    cellVisitor {
+//      (location: QuiltMatrix) in
+//      let blockID = self[location]
+//      for quiltBlock in quiltBlocks {
+//        if quiltBlock.documentID == blockID {
+//          blockRect.origin.x = CGFloat(location.column) * blockSize
+//          blockRect.origin.y = CGFloat(location.row) * blockSize
+//          quiltBlock.image?.drawInRect(blockRect)
+//          break
 //        }
 //      }
 //    }
-    var image = UIGraphicsGetImageFromCurrentImageContext()
-    UIGraphicsEndImageContext()
-    return image
-  }
+//    var image = UIGraphicsGetImageFromCurrentImageContext()
+//    UIGraphicsEndImageContext()
+//    return image
+//  }
 }
 
 extension Quilt: DatabaseProtocol {
@@ -343,7 +280,9 @@ extension Quilt: DatabaseProtocol {
         "library":library,
         "schemeID":schemeID,
         //        "quiltBlocksID": quiltBlocksID,
-        "blocks": blocks
+        "blocks": blocks,
+        "borderWidth": borderWidth,
+        "sashingWidth": sashingWidth
       ]
       let document = gSave(properties)
       var error:NSError?
@@ -381,10 +320,6 @@ extension Quilt: DatabaseProtocol {
       self.library = library
     }
     
-    //    if let quiltBlocksID = document["quiltBlocksID"] as? [[String]] {
-    //      self.quiltBlocksID = quiltBlocksID
-    //    }
-    
     if let blocks = document["blocks"] as? [String] {
       self.blocks = blocks
     }
@@ -392,6 +327,13 @@ extension Quilt: DatabaseProtocol {
       self.schemeID = schemeID
     } else {
       assert(schemeID != nil, "ERROR! SchemeID is missing")
+    }
+    
+    if let borderWidth = document["borderWidth"] as? CGFloat {
+      self.borderWidth = borderWidth
+    }
+    if let sashingWidth = document["sashingWidth"] as? CGFloat {
+      self.sashingWidth = sashingWidth
     }
     
     let revision = document.currentRevision
@@ -413,9 +355,10 @@ extension Quilt: DatabaseProtocol {
     properties["blocksAcross"] = blocksAcross
     properties["blocksDown"] = blocksDown
     properties["library"] = library
-    //    properties["quiltBlocksID"] = quiltBlocksID
     properties["blocks"] = self.blocks
     properties["schemeID"] = schemeID
+    properties["borderWidth"] = borderWidth
+    properties["sashingWidth"] = sashingWidth
     
     if document.putProperties(properties as [NSObject : AnyObject], error: &error) == nil {
       println("couldn't save new item \(error?.localizedDescription)")

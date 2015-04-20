@@ -42,15 +42,7 @@ class CollectionViewController: UICollectionViewController {
     let flowLayout = CollectionViewFlowLayout()
     self.collectionView?.collectionViewLayout = flowLayout
     self.collectionView?.contentInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
-
-//    println("Height: \(flowLayout.itemSize.height)")
-//    if let collectionView = self.collectionView {
-//      flowLayout.itemSize.width = collectionView.bounds.width
-//      flowLayout.itemSize.height = collectionView.bounds.height + 20
-//    }
-//    println("Height: \(flowLayout.itemSize.height)")
   }
-  
 }
 
 extension CollectionViewController: UICollectionViewDataSource {
@@ -71,42 +63,26 @@ extension CollectionViewController: UICollectionViewDataSource {
     case .Quilt:
       if let quilt = array[indexPath.row] as? Quilt {
         if quilt.library {
-          var scheme = selectedScheme
-          
+          var scheme = gSelectedScheme!
+          image = quilt.buildLibraryQuiltImage(cell.imageView.bounds.size, scheme: scheme, showPaths:false)
+        }
+        else {
+          var scheme = quilt.scheme
           if scheme == nil {
-            //get first color scheme
-            let query = database.viewNamed("schemes").createQuery()
-            var error:NSError?
-            let result = query.run(&error)
-            scheme = Scheme()
-            while let row = result?.nextRow() {
-              scheme!.load(row.documentID)
-              break
-            }
+            scheme = gSelectedScheme!
           }
-          
-          if let scheme = scheme {
-            image = quilt.buildLibraryQuiltImage(cell.imageView.bounds.size, scheme: scheme, showPaths:false)
-          }
-        } else {
-          image = quilt.buildUserQuiltImage(cell.imageView.bounds.size)
+          image = quilt.buildLibraryQuiltImage(cell.imageView.bounds.size, scheme: scheme, showPaths:false)
         }
       }
     case .Block:
       if let block = array[indexPath.row] as? Block {
-//        image = block.image
-        
-        //TODO: - should this be created or be stock block image?
         let size = min(cell.contentView.bounds.width, cell.contentView.bounds.height)
         let blockSize = CGSize(width: size, height: size)
         
         if block.library {
-          image = block.createImage(CGSize(width: size, height: size))
-          image = block.buildLibraryQuiltBlockImage(blockSize, scheme: gSelectedScheme, showPaths: true)
+          image = block.buildLibraryQuiltBlockImage(blockSize, scheme: gSelectedScheme!, showPaths: true)
         } else {
-          let quiltBlock = QuiltBlock()
-          quiltBlock.load(block.documentID!)
-          image = quiltBlock.buildUserQuiltBlockImage(blockSize, showPaths:true)
+          image = block.buildUserQuiltBlockImage(blockSize, showPaths:true)
           
         }
       }

@@ -12,7 +12,7 @@ class QuiltViewController: UIViewController {
   
   var quilt:Quilt!
   
-  var quiltBlocks:[QuiltBlock] = []
+  var quiltBlocks:[Block] = []
   var currentScheme:Scheme!
   
   var currentQuiltMatrixID:Int = 0 // This is the entry into the quiltMatrix
@@ -25,27 +25,22 @@ class QuiltViewController: UIViewController {
     let newQuilt = quilt.copy(currentScheme)
     newQuilt.name = "Mine"
     newQuilt.library = false
-    newQuilt.schemeID = currentScheme.documentID
     
-    //newQuilt has already been saved once
-    newQuilt.update(newQuilt.documentID!)
+    newQuilt.save()
     self.quilt = newQuilt
+    
+    println("Created new quilt")
   }
   
   
   override func viewDidLoad() {
     super.viewDidLoad()
     
-    let scheme = Scheme()
-    scheme.load(quilt.schemeID!)
-    gSelectedScheme = scheme
-    
     if self.quilt.library {
       createNewQuilt()
     }
     
     scrollView.delegate = self
-    
     scrollView.contentSize = quiltView.bounds.size
     
     let scrollViewFrame = scrollView.frame
@@ -53,58 +48,54 @@ class QuiltViewController: UIViewController {
     let scaleHeight = scrollViewFrame.size.height / scrollView.contentSize.height
     let minScale = min(scaleWidth, scaleHeight);
     scrollView.minimumZoomScale = minScale;
-    // 5
     scrollView.maximumZoomScale = 2.0
     scrollView.zoomScale = minScale;
     
     self.automaticallyAdjustsScrollViewInsets = false
     
     //show blocks from quilt matrix
+    var blockIDs = Set<String>()
     
     quilt.cellVisitor {
-      (location:QuiltMatrix) in
-      let quiltBlock = QuiltBlock()
-      quiltBlock.load(self.quilt[location])
-      let imageView = UIImageView(image: quiltBlock.image)
-      let x = location.column * 100
-      let y = location.row * 100
-      let frame = CGRect(origin: CGPoint(x: x, y: y), size: CGSize(width: 100, height: 100))
-      imageView.frame = frame
-      self.quiltView.addSubview(imageView)
-      
-      imageView.layer.borderColor = UIColor.blackColor().CGColor
-      imageView.layer.borderWidth = 3
-      
-      //add matrix entry point
-      imageView.tag = location.row * 1000 + location.column
-      
-      let tap = UITapGestureRecognizer(target: self, action: "handleBlockTap:")
-      imageView.addGestureRecognizer(tap)
-      imageView.userInteractionEnabled = true
+      blockIDs.insert(self.quilt[$0])
     }
-    
-//    for row in 0..<quilt.blocksDown {
-//      for column in 0..<quilt.blocksAcross {
-//        let quiltBlock = QuiltBlock()
-//        quiltBlock.load(quilt[row, column])
-//        let imageView = UIImageView(image: quiltBlock.image)
-//        let x = column * 100
-//        let y = row * 100
-//        let frame = CGRect(origin: CGPoint(x: x, y: y), size: CGSize(width: 100, height: 100))
-//        imageView.frame = frame
-//        quiltView.addSubview(imageView)
-//        
-//        imageView.layer.borderColor = UIColor.blackColor().CGColor
-//        imageView.layer.borderWidth = 3
-//        
-//        //add matrix entry point
-//        imageView.tag = row * 1000 + column
-//        
-//        let tap = UITapGestureRecognizer(target: self, action: "handleBlockTap:")
-//        imageView.addGestureRecognizer(tap)
-//        imageView.userInteractionEnabled = true
-//      }
-//    }
+    let blockSize = CGSize(width: 100, height: 100)
+
+    var blocks:[Block] = []
+    for blockID in blockIDs {
+      let block = Block()
+      block.load(blockID)
+      if block.library {
+        block.image = block.buildLibraryQuiltBlockImage(blockSize, scheme: self.quilt.scheme!, showPaths: false)
+      } else {
+        block.image = block.buildUserQuiltBlockImage(blockSize, showPaths: false)
+      }
+      blocks.append(block)
+    }
+
+    quilt.cellVisitor {
+      (location:QuiltMatrix) in
+      for block in blocks {
+        if self.quilt[location] == block.documentID {
+          let imageView = UIImageView(image: block.image)
+          let x = location.column * 100
+          let y = location.row * 100
+          let frame = CGRect(origin: CGPoint(x: x, y: y), size: CGSize(width: 100, height: 100))
+          imageView.frame = frame
+          self.quiltView.addSubview(imageView)
+          
+          imageView.layer.borderColor = UIColor.blackColor().CGColor
+          imageView.layer.borderWidth = 3
+          
+          //add matrix entry point
+          imageView.tag = location.row * 1000 + location.column
+          
+          let tap = UITapGestureRecognizer(target: self, action: "handleBlockTap:")
+          imageView.addGestureRecognizer(tap)
+          imageView.userInteractionEnabled = true
+        }
+      }
+    }
   }
   
   func handleBlockTap(gesture:UITapGestureRecognizer) {
@@ -182,7 +173,7 @@ class QuiltViewController: UIViewController {
     //TODO: If switchBlocks is on then all blocks with same ID must be updated
     
     if let controller = segue.sourceViewController as? BlockViewController {
-      let quiltBlock = controller.quiltBlock
+      let quiltBlock = controller.block
       quiltBlock.image = quiltBlock.buildUserQuiltBlockImage(CGSize(width: 100, height: 100), showPaths: false)
       if let documentID = quiltBlock.documentID {
         quiltBlock.update(documentID)
@@ -205,17 +196,6 @@ class QuiltViewController: UIViewController {
             }
           }
         }
-//        for row in 0..<quilt.blocksDown {
-//          for column in 0..<quilt.blocksAcross {
-//            if quilt[row, column] == documentID {
-//              quilt[row, column] = quiltBlock.documentID!
-//              let tag = row * gMatrixMultiplier + column
-//              if let imageView = quiltView.viewWithTag(tag) as? UIImageView {
-//                imageView.image = quiltBlock.image
-//              }
-//            }
-//          }
-//        }
       } else {
         quilt[row, column] = quiltBlock.documentID!
         if let imageView = quiltView.viewWithTag(currentQuiltMatrixID) as? UIImageView {

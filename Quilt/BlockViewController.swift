@@ -14,7 +14,6 @@ import UIKit
 
 class BlockViewController: UIViewController {
   
-  var quiltBlock:QuiltBlock!
   var block: Block!
   
   var selectedPatchColor:Int? = nil
@@ -27,10 +26,7 @@ class BlockViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
   
-      blockView.image = quiltBlock.image
-      
-      block = Block()
-      block.load(quiltBlock.blockID!)
+      blockView.image = block.image
       
       blockView.delegate = self
       blockView.patches = block.patches

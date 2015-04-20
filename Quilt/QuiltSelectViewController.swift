@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class QuiltSelectViewController: UIViewController {
   
   @IBOutlet var quiltSegmentedControl:UISegmentedControl!
   
@@ -84,20 +84,6 @@ class ViewController: UIViewController {
       checkQuiltType()
       collectionViewController.collectionView?.reloadData()
     }
-//    if let schemeCollectionViewController = schemeCollectionViewController {
-//      schemeCollectionViewController.schemes = []
-//      let query = database.viewNamed("schemes").createQuery()
-//      var error:NSError?
-//      let result = query.run(&error)
-//      while let row = result?.nextRow() {
-//        let scheme = Scheme()
-//        println("loading scheme from viewWillAppear")
-//        scheme.load(row.documentID)
-//        schemeCollectionViewController.schemes.append(scheme)
-//      }
-//
-//      schemeCollectionViewController.collectionView?.reloadData()
-//    }
   }
   
   override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -119,12 +105,10 @@ class ViewController: UIViewController {
     schemeContainerView.hidden = !isLibraryQuilt
     loadQuiltsArray()
     collectionViewController?.collectionView?.reloadData()
-    
   }
-
 }
 
-extension ViewController: SchemeCollectionViewControllerDelegate {
+extension QuiltSelectViewController: SchemeCollectionViewControllerDelegate {
   func didSelectColorScheme(scheme: Scheme) {
     self.collectionViewController?.selectedScheme = scheme
     self.collectionViewController?.collectionView?.reloadData()
