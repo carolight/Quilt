@@ -99,14 +99,9 @@ class LoadViewController: UIViewController {
         rect.origin.y = CGFloat(row) * blockSize.height + borderWidth
         path = UIBezierPath(rect: rect)
         UIColor.yellowColor().setFill()
-        //      path.stroke()
         path.fill()
-        quilt.blockPaths.append(path)
-        
       }
     }
-    
-    
     let image = UIGraphicsGetImageFromCurrentImageContext()
     UIGraphicsEndImageContext()
     

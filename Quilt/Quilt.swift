@@ -23,11 +23,12 @@ struct QuiltMatrix {
 }
 
 class Quilt {
-  private var cells: [String]
+  private var blocks: [String]
   
+  var type:CollectionType = .Quilt
+
   var name:String = " "
   var image:UIImage? = nil
-  var blockPaths: [UIBezierPath] = []
   var blockSize:CGSize = CGSizeZero
   var quiltSize:CGSize = CGSizeZero
   var library:Bool = false
@@ -55,18 +56,18 @@ class Quilt {
 //      quiltBlocksID.append(array)
 //    }
     
-    cells = Array(count: blocksAcross * blocksDown, repeatedValue: " ")
+    self.blocks = Array(count: blocksAcross * blocksDown, repeatedValue: " ")
     
   }
   
   subscript(location: QuiltMatrix) -> String {
     get {
         assert(isWithinBounds(location), "row or column index is out of bounds")
-      return cells[location.row * blocksAcross + location.column]
+      return self.blocks[location.row * blocksAcross + location.column]
     }
     set {
       assert(isWithinBounds(location), "row or column index is out of bounds")
-      cells[location.row * blocksAcross + location.column] = newValue
+      self.blocks[location.row * blocksAcross + location.column] = newValue
     }
   }
   
@@ -121,7 +122,6 @@ class Quilt {
     var newQuilt = Quilt()
     newQuilt.name = self.name
     newQuilt.image = self.image
-    newQuilt.blockPaths = self.blockPaths
     newQuilt.blockSize = self.blockSize
     newQuilt.quiltSize = self.quiltSize
     newQuilt.library = self.library
@@ -170,127 +170,47 @@ class Quilt {
     return newQuilt
   }
   
-  func save() {
-    if let schemeID = schemeID {
-      println("saving Quilt")
-      let properties = ["type": "Quilt",
-        "name": name,
-        "blocksAcross": blocksAcross,
-        "blocksDown": blocksDown,
-        "library":library,
-        "schemeID":schemeID,
-//        "quiltBlocksID": quiltBlocksID,
-        "cells": cells
-      ]
-      
-      
-      
-      
-      let document = database.createDocument()
-      var error:NSError?
-      
-      if document.putProperties(properties as [NSObject : AnyObject], error: &error) == nil {
-        println("couldn't save new item \(error?.localizedDescription)")
-      }
-      
-      //TODO: - might not need quilt image
-      
-      var newRevision = document.currentRevision.createRevision()
-      let imageData = UIImagePNGRepresentation(image)
-      newRevision.setAttachmentNamed("image.png", withContentType: "image/png", content: imageData)
-      assert(newRevision.save(&error) != nil)
-      
-      newRevision = document.currentRevision.createRevision()
-      let blockPathsData = NSKeyedArchiver.archivedDataWithRootObject(blockPaths)
-      newRevision.setAttachmentNamed("blockPaths", withContentType: "UIBezierPath", content: blockPathsData)
-      assert(newRevision.save(&error) != nil)
-      
-      documentID = document.documentID
-    } else {
-      assert(schemeID != nil, "ERROR! SchemeID is missing")
-    }
-  }
-  
-  func load(documentID:String) {
-    println("Loading Quilt: \(documentID)")
-    self.documentID = documentID
-    
-    let document = database.documentWithID(documentID)
-    if let name = document["name"] as? String {
-      self.name = name
-    }
-    
-    if let blocksAcross = document["blocksAcross"] as? Int {
-      self.blocksAcross = blocksAcross
-    }
-    
-    if let blocksDown = document["blocksDown"] as? Int {
-      self.blocksDown = blocksDown
-    }
-    
-    if let library = document["library"] as? Bool {
-      self.library = library
-    }
-    
-//    if let quiltBlocksID = document["quiltBlocksID"] as? [[String]] {
-//      self.quiltBlocksID = quiltBlocksID
+//  func save() {
+//    if let schemeID = schemeID {
+//      println("saving Quilt")
+//      let properties = ["type": "Quilt",
+//        "name": name,
+//        "blocksAcross": blocksAcross,
+//        "blocksDown": blocksDown,
+//        "library":library,
+//        "schemeID":schemeID,
+////        "quiltBlocksID": quiltBlocksID,
+//        "blocks": blocks
+//      ]
+//      
+//      
+//      
+//      
+//      let document = database.createDocument()
+//      var error:NSError?
+//      
+//      if document.putProperties(properties as [NSObject : AnyObject], error: &error) == nil {
+//        println("couldn't save new item \(error?.localizedDescription)")
+//      }
+//      
+//      //TODO: - might not need quilt image
+//      
+//      var newRevision = document.currentRevision.createRevision()
+//      let imageData = UIImagePNGRepresentation(image)
+//      newRevision.setAttachmentNamed("image.png", withContentType: "image/png", content: imageData)
+//      assert(newRevision.save(&error) != nil)
+//      
+//      newRevision = document.currentRevision.createRevision()
+//      let blockPathsData = NSKeyedArchiver.archivedDataWithRootObject(blockPaths)
+//      newRevision.setAttachmentNamed("blockPaths", withContentType: "UIBezierPath", content: blockPathsData)
+//      assert(newRevision.save(&error) != nil)
+//      
+//      documentID = document.documentID
+//    } else {
+//      assert(schemeID != nil, "ERROR! SchemeID is missing")
 //    }
-    
-    if let cells = document["cells"] as? [String] {
-      self.cells = cells
-    }
-    if let schemeID = document["schemeID"] as? String {
-      self.schemeID = schemeID
-    } else {
-      assert(schemeID != nil, "ERROR! SchemeID is missing")
-    }
-    
-    let revision = document.currentRevision
-    if let imageData = revision.attachmentNamed("image.png") {
-      if let image = UIImage(data: imageData.content, scale: UIScreen.mainScreen().scale) {
-        self.image = image
-      }
-    }
-    
-    if let blockPathsData = revision.attachmentNamed("blockPaths") {
-      if let data = blockPathsData.content {
-        if let array = NSKeyedUnarchiver.unarchiveObjectWithData(data) as? [UIBezierPath] {
-          self.blockPaths = array
-        }
-      }
-    }
-  }
+//  }
   
-  func update(documentID:String) {
-    println("updating Quilt: \(documentID)")
-    var error:NSError?
-    let document = database.documentWithID(documentID)
-    let properties = NSMutableDictionary(dictionary: document.properties)
-    
-    properties["type"] = "Quilt"
-    properties["name"] = name
-    properties["blocksAcross"] = blocksAcross
-    properties["blocksDown"] = blocksDown
-    properties["library"] = library
-//    properties["quiltBlocksID"] = quiltBlocksID
-    properties["cells"] = cells
-    properties["schemeID"] = schemeID
-    
-    if document.putProperties(properties as [NSObject : AnyObject], error: &error) == nil {
-      println("couldn't save new item \(error?.localizedDescription)")
-    }
-    
-    var newRevision = document.currentRevision.createRevision()
-    let imageData = UIImagePNGRepresentation(image)
-    newRevision.setAttachmentNamed("image.png", withContentType: "image/png", content: imageData)
-    assert(newRevision.save(&error) != nil)
-    
-    newRevision = document.currentRevision.createRevision()
-    let blockPathsData = NSKeyedArchiver.archivedDataWithRootObject(blockPaths)
-    newRevision.setAttachmentNamed("blockPaths", withContentType: "UIBezierPath", content: blockPathsData)
-    assert(newRevision.save(&error) != nil)
-    
-  }
   
   func buildLibraryQuiltImage(quiltSize:CGSize, scheme:Scheme, showPaths:Bool) -> UIImage {
     
@@ -410,6 +330,102 @@ class Quilt {
     UIGraphicsEndImageContext()
     return image
   }
+}
 
+extension Quilt: DatabaseProtocol {
+  func save() {
+    if let schemeID = schemeID {
+      println("saving Quilt")
+      let properties = ["type": "Quilt",
+        "name": name,
+        "blocksAcross": blocksAcross,
+        "blocksDown": blocksDown,
+        "library":library,
+        "schemeID":schemeID,
+        //        "quiltBlocksID": quiltBlocksID,
+        "blocks": blocks
+      ]
+      let document = gSave(properties)
+      var error:NSError?
+
+      var newRevision = document.currentRevision.createRevision()
+      let imageData = UIImagePNGRepresentation(image)
+      newRevision.setAttachmentNamed("image.png", withContentType: "image/png", content: imageData)
+      assert(newRevision.save(&error) != nil)
+      
+      documentID = document.documentID
+    } else {
+      assert(schemeID != nil, "ERROR! SchemeID is missing")
+    }
+    
+  }
   
+  func load(documentID:String) {
+    println("Loading Quilt: \(documentID)")
+    self.documentID = documentID
+    
+    let document = database.documentWithID(documentID)
+    if let name = document["name"] as? String {
+      self.name = name
+    }
+    
+    if let blocksAcross = document["blocksAcross"] as? Int {
+      self.blocksAcross = blocksAcross
+    }
+    
+    if let blocksDown = document["blocksDown"] as? Int {
+      self.blocksDown = blocksDown
+    }
+    
+    if let library = document["library"] as? Bool {
+      self.library = library
+    }
+    
+    //    if let quiltBlocksID = document["quiltBlocksID"] as? [[String]] {
+    //      self.quiltBlocksID = quiltBlocksID
+    //    }
+    
+    if let blocks = document["blocks"] as? [String] {
+      self.blocks = blocks
+    }
+    if let schemeID = document["schemeID"] as? String {
+      self.schemeID = schemeID
+    } else {
+      assert(schemeID != nil, "ERROR! SchemeID is missing")
+    }
+    
+    let revision = document.currentRevision
+    if let imageData = revision.attachmentNamed("image.png") {
+      if let image = UIImage(data: imageData.content, scale: UIScreen.mainScreen().scale) {
+        self.image = image
+      }
+    }
+  }
+  
+  func update(documentID:String) {
+    println("updating Quilt: \(documentID)")
+    var error:NSError?
+    let document = database.documentWithID(documentID)
+    let properties = NSMutableDictionary(dictionary: document.properties)
+    
+    properties["type"] = "Quilt"
+    properties["name"] = name
+    properties["blocksAcross"] = blocksAcross
+    properties["blocksDown"] = blocksDown
+    properties["library"] = library
+    //    properties["quiltBlocksID"] = quiltBlocksID
+    properties["blocks"] = self.blocks
+    properties["schemeID"] = schemeID
+    
+    if document.putProperties(properties as [NSObject : AnyObject], error: &error) == nil {
+      println("couldn't save new item \(error?.localizedDescription)")
+    }
+    
+    var newRevision = document.currentRevision.createRevision()
+    let imageData = UIImagePNGRepresentation(image)
+    newRevision.setAttachmentNamed("image.png", withContentType: "image/png", content: imageData)
+    assert(newRevision.save(&error) != nil)
+    
+  }
+
 }
