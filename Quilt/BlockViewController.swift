@@ -21,41 +21,40 @@ class BlockViewController: UIViewController {
   @IBOutlet weak var blockView: BlockView!
   
   @IBOutlet weak var scrollView: UIScrollView!
-
   
-    override func viewDidLoad() {
-        super.viewDidLoad()
-  
-      blockView.image = block.image
-      
-      blockView.delegate = self
-      blockView.patches = block.patches
-      blockView.patchColors = block.patchColors
-      
-      scrollView.delegate = self
-      
-      scrollView.contentSize = blockView.bounds.size
-      
-      let scrollViewFrame = scrollView.frame
-      let scaleWidth = scrollViewFrame.size.width / scrollView.contentSize.width
-      let scaleHeight = scrollViewFrame.size.height / scrollView.contentSize.height
-      let minScale = min(scaleWidth, scaleHeight);
-      scrollView.minimumZoomScale = minScale;
-      
-      // 5
-      scrollView.maximumZoomScale = 2.0
-      scrollView.zoomScale = minScale;
-      
-      self.automaticallyAdjustsScrollViewInsets = false
-
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
+  override func viewDidLoad() {
+    super.viewDidLoad()
     
-
+    blockView.image = block.image
+    
+    blockView.delegate = self
+    blockView.patches = block.patches
+    blockView.patchColors = block.patchColors
+    
+    scrollView.delegate = self
+    
+    scrollView.contentSize = blockView.bounds.size
+    
+    let scrollViewFrame = scrollView.frame
+    let scaleWidth = scrollViewFrame.size.width / scrollView.contentSize.width
+    let scaleHeight = scrollViewFrame.size.height / scrollView.contentSize.height
+    let minScale = min(scaleWidth, scaleHeight);
+    scrollView.minimumZoomScale = minScale;
+    
+    // 5
+    scrollView.maximumZoomScale = 2.0
+    scrollView.zoomScale = minScale;
+    
+    self.automaticallyAdjustsScrollViewInsets = false
+    
+  }
+  
+  override func didReceiveMemoryWarning() {
+    super.didReceiveMemoryWarning()
+    // Dispose of any resources that can be recreated.
+  }
+  
+  
   func centerScrollViewContents() {
     return
     let boundsSize = scrollView.bounds.size
@@ -75,27 +74,27 @@ class BlockViewController: UIViewController {
     
     blockView.frame = contentsFrame
   }
-
-  @IBAction func btnCancel(sender: AnyObject) {
-    println("cancel")
-//    dismissViewControllerAnimated(true, completion: nil)
-  }
-  @IBAction func btnSave(sender: AnyObject) {
-    println("save")
-    
-    UIGraphicsBeginImageContextWithOptions(blockView.bounds.size, view.opaque, 0.0)
-    blockView.drawViewHierarchyInRect(blockView.bounds, afterScreenUpdates: true)
-    let image = UIGraphicsGetImageFromCurrentImageContext()
-    UIGraphicsEndImageContext()
-
-    block.image = image
-    
-    //create image
-    //update quilt block in file
-    //update quilt image
-    
-//    dismissViewControllerAnimated(true, completion: nil)
-  }
+  
+  //  @IBAction func btnCancel(sender: AnyObject) {
+  //    println("cancel")
+  ////    dismissViewControllerAnimated(true, completion: nil)
+  //  }
+  //  @IBAction func btnSave(sender: AnyObject) {
+  //    println("xx save")
+  //
+  //    UIGraphicsBeginImageContextWithOptions(blockView.bounds.size, view.opaque, 0.0)
+  //    blockView.drawViewHierarchyInRect(blockView.bounds, afterScreenUpdates: true)
+  //    let image = UIGraphicsGetImageFromCurrentImageContext()
+  //    UIGraphicsEndImageContext()
+  //
+  //    block.image = image
+  //
+  //    //create image
+  //    //update quilt block in file
+  //    //update quilt image
+  //
+  ////    dismissViewControllerAnimated(true, completion: nil)
+  //  }
 }
 
 extension BlockViewController: UIScrollViewDelegate {
@@ -111,7 +110,7 @@ extension BlockViewController: UIScrollViewDelegate {
 extension BlockViewController: BlockViewDelegate {
   func blockViewShouldShowFabric(blockView: BlockView, location: CGPoint) {
     //test to see which one tapped
-
+    
     for (index, patch) in enumerate(blockView.patches) {
       if patch.path.containsPoint(location) {
         selectedPatchColor = block.patchColors[index]
@@ -121,7 +120,7 @@ extension BlockViewController: BlockViewDelegate {
     if let collectionViewController = storyboard?.instantiateViewControllerWithIdentifier("CollectionViewController") as? CollectionViewController {
       collectionViewController.appState = .Fabric
       collectionViewController.delegate = self
-
+      
       var fabricsPath = NSBundle.mainBundle().resourcePath!
       fabricsPath = fabricsPath.stringByAppendingString("/fabrics/")
       let manager = NSFileManager.defaultManager()
@@ -144,6 +143,9 @@ extension BlockViewController: BlockViewDelegate {
 
 extension BlockViewController: CollectionViewControllerDelegate {
   func didSelectItem(item: AnyObject) {
+    if block.blockFabrics.count < block.patches.count {
+      block.blockFabrics = [String](count: block.patches.count, repeatedValue: " ")
+    }
     if let fabric = item as? Fabric {
       if let fabricImage = fabric.image  {
         if let selectedColor = selectedPatchColor {
@@ -153,6 +155,8 @@ extension BlockViewController: CollectionViewControllerDelegate {
               let fabricColor = UIColor(patternImage: fabricImage)
               block.patches[index].color = fabricColor
               block.patches[index].fabric = fabric
+              
+              block.blockFabrics[index] = fabric.name
             }
           }
           blockView.setNeedsDisplay()
@@ -166,8 +170,8 @@ extension BlockViewController: CollectionViewControllerDelegate {
       println("did scroll to \(block.name)")
     }
   }
-
-  func didBeginDragging() {
   
+  func didBeginDragging() {
+    
   }
 }

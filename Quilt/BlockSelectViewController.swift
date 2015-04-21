@@ -74,19 +74,20 @@ extension BlockSelectViewController: CollectionViewControllerDelegate {
       let navigationController = storyboard?.instantiateViewControllerWithIdentifier("BlockNavigationController") as! UINavigationController
       let blockViewController = navigationController.viewControllers[0] as! BlockViewController
       
-      let quiltBlock = Block()
-      if block.library {
-        //TODO: copy block to quiltBlock
-        quiltBlock.documentID = nil
-        quiltBlock.name = block.name
-        quiltBlock.quiltID = currentQuilt.documentID
-        quiltBlock.library = false
-        quiltBlock.image = quiltBlock.buildUserQuiltBlockImage(CGSize(width: 100, height: 100), showPaths: false)
-
-      } else {
-        quiltBlock.load(block.documentID!)
-      }
-      blockViewController.block = quiltBlock
+//      let quiltBlock = Block()
+//      if block.library {
+//        //TODO: copy block to quiltBlock
+//        quiltBlock.documentID = nil
+//        quiltBlock.name = block.name
+//        quiltBlock.quiltID = currentQuilt.documentID
+//        quiltBlock.library = false
+//        quiltBlock.image = quiltBlock.buildUserQuiltBlockImage(CGSize(width: 100, height: 100), showPaths: false)
+//
+//      } else {
+//        quiltBlock.load(block.documentID!)
+//      }
+//      blockViewController.block = quiltBlock
+      blockViewController.block = block
       blockViewController.title = block.name
       presentViewController(navigationController, animated: true, completion: nil)
     }

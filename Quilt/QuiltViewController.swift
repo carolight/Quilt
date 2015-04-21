@@ -16,6 +16,8 @@ class QuiltViewController: UIViewController {
   var currentScheme:Scheme!
   
   var currentQuiltMatrixID:Int = 0 // This is the entry into the quiltMatrix
+                                   // It's tag which is multiplier * row + column + 1
+                                   // The + 1 is needed to stop view.tag being zero
   
   @IBOutlet weak var scrollView: UIScrollView!
   @IBOutlet weak var quiltView: UIView!
@@ -88,7 +90,7 @@ class QuiltViewController: UIViewController {
           imageView.layer.borderWidth = 3
           
           //add matrix entry point
-          imageView.tag = location.row * 1000 + location.column
+          imageView.tag = location.row * 1000 + (location.column + 1)
           
           let tap = UITapGestureRecognizer(target: self, action: "handleBlockTap:")
           imageView.addGestureRecognizer(tap)
@@ -100,8 +102,8 @@ class QuiltViewController: UIViewController {
   
   func handleBlockTap(gesture:UITapGestureRecognizer) {
     if let view = gesture.view {
-      let column = view.tag % gMatrixMultiplier
-      let row = (view.tag - column) / gMatrixMultiplier
+      let column = (view.tag - 1) % gMatrixMultiplier
+      let row = (view.tag - 1 - column) / gMatrixMultiplier
       println("Column: \(column), Row: \(row)")
       
       let blockID = quilt[row, column]
@@ -180,8 +182,8 @@ class QuiltViewController: UIViewController {
       } else {
         quiltBlock.save()
       }
-      let column = currentQuiltMatrixID % gMatrixMultiplier
-      let row = (currentQuiltMatrixID - column) / gMatrixMultiplier
+      let column = (currentQuiltMatrixID - 1) % gMatrixMultiplier
+      let row = (currentQuiltMatrixID - 1 - column) / gMatrixMultiplier
 
       if self.switchBlocks.on {
         let documentID = quilt[row, column]
@@ -190,13 +192,15 @@ class QuiltViewController: UIViewController {
           (location: QuiltMatrix) in
           if self.quilt[location] == documentID {
             self.quilt[location] = quiltBlock.documentID!
-            let tag = row * gMatrixMultiplier + column
+            let tag = location.row * gMatrixMultiplier + (location.column + 1)
+            println("tag: \(tag)")
             if let imageView = self.quiltView.viewWithTag(tag) as? UIImageView {
               imageView.image = quiltBlock.image
             }
           }
         }
       } else {
+        println("saving \(column) : \(row)")
         quilt[row, column] = quiltBlock.documentID!
         if let imageView = quiltView.viewWithTag(currentQuiltMatrixID) as? UIImageView {
           imageView.image = quiltBlock.image
