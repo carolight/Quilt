@@ -179,7 +179,8 @@ class Block  {
       let context = UIGraphicsGetCurrentContext()
       UIColor.whiteColor().setFill()
       CGContextFillRect(context, CGRect(origin: CGPointZero, size: size))
-      
+
+    //TODO: This code is duplicated in BlockView
       var useSchemeFabrics = false
       if self.patchColors.count > fabricImages.count {
         useSchemeFabrics = true

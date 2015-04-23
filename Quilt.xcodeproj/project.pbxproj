@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		821F9C201AE748480080B220 /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 821F9C1E1AE748480080B220 /* Main_iPad.storyboard */; };
 		8222610D1AE0A2A80066DE17 /* BlockSelectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8222610C1AE0A2A80066DE17 /* BlockSelectViewController.swift */; };
 		8222610F1AE1DEAE0066DE17 /* Global.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8222610E1AE1DEAE0066DE17 /* Global.swift */; };
 		823EE5F11AD8ABAA00DDC338 /* Scheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 823EE5F01AD8ABAA00DDC338 /* Scheme.swift */; };
@@ -63,6 +64,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		821F9C1F1AE748480080B220 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPad.storyboard; sourceTree = "<group>"; };
 		8222610C1AE0A2A80066DE17 /* BlockSelectViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockSelectViewController.swift; sourceTree = "<group>"; };
 		8222610E1AE1DEAE0066DE17 /* Global.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Global.swift; sourceTree = "<group>"; };
 		823EE5F01AD8ABAA00DDC338 /* Scheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Scheme.swift; sourceTree = "<group>"; };
@@ -162,6 +164,7 @@
 				82455F561ACBA1F500973B40 /* AppDelegate.swift */,
 				8222610E1AE1DEAE0066DE17 /* Global.swift */,
 				82FCF5AF1ACE3C4A000FC779 /* Main.storyboard */,
+				821F9C1E1AE748480080B220 /* Main_iPad.storyboard */,
 				82C381191AD36E0400B85B39 /* Database.swift */,
 				82455F581ACBA1F500973B40 /* QuiltSelectViewController.swift */,
 				82455F7C1ACBBAC600973B40 /* CollectionViewFlowLayout.swift */,
@@ -347,6 +350,7 @@
 				825353C41ACE47EC00FEE2D9 /* blocks in Resources */,
 				82ED3B6A1AD34FC90049EB87 /* quilt2.jpg in Resources */,
 				82FCF5B11ACE3C4A000FC779 /* Main.storyboard in Resources */,
+				821F9C201AE748480080B220 /* Main_iPad.storyboard in Resources */,
 				82ED3B691AD34FC90049EB87 /* quilt1.jpg in Resources */,
 				82ED3B6C1AD34FC90049EB87 /* quilt4.jpg in Resources */,
 				82ED3B711AD352E50049EB87 /* fabrics in Resources */,
@@ -419,6 +423,14 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		821F9C1E1AE748480080B220 /* Main_iPad.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				821F9C1F1AE748480080B220 /* Base */,
+			);
+			name = Main_iPad.storyboard;
+			sourceTree = "<group>";
+		};
 		82455F5F1ACBA1F600973B40 /* LaunchScreen.xib */ = {
 			isa = PBXVariantGroup;
 			children = (

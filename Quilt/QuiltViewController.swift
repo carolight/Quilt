@@ -175,16 +175,45 @@ class QuiltViewController: UIViewController {
     //TODO: If switchBlocks is on then all blocks with same ID must be updated
     
     if let controller = segue.sourceViewController as? BlockViewController {
-      let quiltBlock = controller.block
+      var quiltBlock = controller.block
       quiltBlock.image = quiltBlock.buildUserQuiltBlockImage(CGSize(width: 100, height: 100), showPaths: false)
-      if let documentID = quiltBlock.documentID {
-        quiltBlock.update(documentID)
-      } else {
-        quiltBlock.save()
-      }
+      
       let column = (currentQuiltMatrixID - 1) % gMatrixMultiplier
       let row = (currentQuiltMatrixID - 1 - column) / gMatrixMultiplier
 
+      var shouldCreateNewBlock = quiltBlock.library
+      if !shouldCreateNewBlock {
+        //should create new block is all blocks is off and 
+        //if the original block is used by other blocks
+        //otherwise write over original block
+        
+        if !switchBlocks.on {
+          quilt.cellVisitor {
+            (location: QuiltMatrix) in
+            if location.row != row && location.column != column {
+              if quiltBlock.documentID == self.quilt[location] {
+                shouldCreateNewBlock = true
+                return
+              }
+            }
+          }
+        }
+      }
+    
+      if shouldCreateNewBlock {
+        let newBlock = quiltBlock.copy()
+        newBlock.library = false
+        newBlock.quiltID = quilt.documentID
+        newBlock.save()
+        quiltBlock = newBlock
+      } else {
+        if let documentID = quiltBlock.documentID {
+          quiltBlock.update(documentID)
+        } else {
+          quiltBlock.save()
+        }
+      }
+      
       if self.switchBlocks.on {
         let documentID = quilt[row, column]
         
@@ -206,9 +235,10 @@ class QuiltViewController: UIViewController {
           imageView.image = quiltBlock.image
         }
       }
+      quilt.update(quilt.documentID!)
     }
   }
-
+  
   
 }
 

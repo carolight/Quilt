@@ -222,7 +222,7 @@ class Quilt {
     UIGraphicsEndImageContext()
     return image
   }
-  
+}
   
 //  func buildUserQuiltImage(size:CGSize) -> UIImage {
 //    
@@ -267,7 +267,7 @@ class Quilt {
 //    UIGraphicsEndImageContext()
 //    return image
 //  }
-}
+//}
 
 extension Quilt: DatabaseProtocol {
   func save() {

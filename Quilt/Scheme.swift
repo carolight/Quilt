@@ -96,13 +96,18 @@ extension Scheme: DatabaseProtocol {
       self.fabrics = fabrics
     }
     
-    let revision = document.currentRevision
-    if let imageData = revision.attachmentNamed("image.png") {
-      if let image = UIImage(data: imageData.content, scale: UIScreen.mainScreen().scale) {
-        self.image = image
+    if let revision = document.currentRevision {
+      if let imageData = revision.attachmentNamed("image.png") {
+        if let image = UIImage(data: imageData.content, scale: UIScreen.mainScreen().scale) {
+          self.image = image
+        }
       }
     }
     
+    if image == nil {
+      println("Error: Scheme Image is missing")
+
+    }
   }
 
   func update(documentID: String) {

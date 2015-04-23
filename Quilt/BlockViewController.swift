@@ -27,6 +27,8 @@ class BlockViewController: UIViewController {
     
     blockView.image = block.image
     
+    blockView.loadPatchColors(fromBlock: block)
+    
     blockView.delegate = self
     blockView.patches = block.patches
     blockView.patchColors = block.patchColors
