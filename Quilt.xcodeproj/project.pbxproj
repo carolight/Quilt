@@ -27,6 +27,7 @@
 		82544D341AD4CB4A00CCA4B2 /* QuiltBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82544D331AD4CB4A00CCA4B2 /* QuiltBlock.swift */; };
 		82544D391AD4E05100CCA4B2 /* LoadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82544D381AD4E05100CCA4B2 /* LoadViewController.swift */; };
 		827C3BF21AFB08EB007D3D19 /* BlockCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 827C3BF11AFB08EB007D3D19 /* BlockCollectionViewController.swift */; };
+		827C3BF41AFB0D4B007D3D19 /* ToolbarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 827C3BF31AFB0D4B007D3D19 /* ToolbarViewController.swift */; };
 		8298099F1AEA26C50056F685 /* Patch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8298099E1AEA26C50056F685 /* Patch.swift */; };
 		82C381091AD36CF500B85B39 /* CouchbaseLite.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82C381081AD36CF500B85B39 /* CouchbaseLite.framework */; };
 		82C3810C1AD36D7A00B85B39 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82C3810B1AD36D7A00B85B39 /* CFNetwork.framework */; };
@@ -85,6 +86,7 @@
 		82544D331AD4CB4A00CCA4B2 /* QuiltBlock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuiltBlock.swift; sourceTree = "<group>"; };
 		82544D381AD4E05100CCA4B2 /* LoadViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadViewController.swift; sourceTree = "<group>"; };
 		827C3BF11AFB08EB007D3D19 /* BlockCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockCollectionViewController.swift; sourceTree = "<group>"; };
+		827C3BF31AFB0D4B007D3D19 /* ToolbarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolbarViewController.swift; sourceTree = "<group>"; };
 		8298099E1AEA26C50056F685 /* Patch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Patch.swift; sourceTree = "<group>"; };
 		82C381081AD36CF500B85B39 /* CouchbaseLite.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = CouchbaseLite.framework; sourceTree = "<group>"; };
 		82C3810B1AD36D7A00B85B39 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
@@ -159,6 +161,7 @@
 				8222610E1AE1DEAE0066DE17 /* Global.swift */,
 				82FCF5AF1ACE3C4A000FC779 /* Main.storyboard */,
 				82C381191AD36E0400B85B39 /* Database.swift */,
+				827C3BF31AFB0D4B007D3D19 /* ToolbarViewController.swift */,
 				82455F581ACBA1F500973B40 /* QuiltSelectViewController.swift */,
 				82455F7C1ACBBAC600973B40 /* CollectionViewFlowLayout.swift */,
 				82FCF5AB1ACE29D2000FC779 /* CollectionViewController.swift */,
@@ -369,6 +372,7 @@
 				82FCF5A81ACE2127000FC779 /* FabricView.swift in Sources */,
 				82E943811ACCC9E400211608 /* BlockViewController.swift in Sources */,
 				824A0D591AF701A8002E51E5 /* FabricCollectionViewController.swift in Sources */,
+				827C3BF41AFB0D4B007D3D19 /* ToolbarViewController.swift in Sources */,
 				823EE5F11AD8ABAA00DDC338 /* Scheme.swift in Sources */,
 				82C3811C1AD3ADD000B85B39 /* CreateBlockViewController.swift in Sources */,
 				82C3811E1AD3AE9F00B85B39 /* CreateBlockView.swift in Sources */,

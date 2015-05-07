@@ -23,6 +23,8 @@ class QuiltViewController: UIViewController {
   @IBOutlet weak var quiltView: UIView!
   @IBOutlet weak var switchBlocks: UISwitch!
   
+  var toolbar: ToolbarViewController!
+  
   func createNewQuilt() {
     let newQuilt = quilt.copy(currentScheme)
     newQuilt.name = "Mine"
@@ -101,27 +103,43 @@ class QuiltViewController: UIViewController {
   }
   
   func handleBlockTap(gesture:UITapGestureRecognizer) {
-    if let view = gesture.view {
-      let column = (view.tag - 1) % gMatrixMultiplier
-      let row = (view.tag - 1 - column) / gMatrixMultiplier
-      println("Column: \(column), Row: \(row)")
-      
-      let blockID = quilt[row, column]
-      let block = Block()
-      block.load(blockID)
-      
-      currentQuiltMatrixID = view.tag
-      
-//      if let controller = storyboard?.instantiateViewControllerWithIdentifier("BlockSelectViewController") as? BlockSelectViewController {
+    
+    switch toolbar.currentTool {
+    case .Block:
+      println("block")
+      if let view = gesture.view {
+        let column = (view.tag - 1) % gMatrixMultiplier
+        let row = (view.tag - 1 - column) / gMatrixMultiplier
+        println("Column: \(column), Row: \(row)")
+        
+        let blockID = quilt[row, column]
+        let block = Block()
+        block.load(blockID)
+        
+        currentQuiltMatrixID = view.tag
+        
+        //      if let controller = storyboard?.instantiateViewControllerWithIdentifier("BlockSelectViewController") as? BlockSelectViewController {
         if let controller = storyboard?.instantiateViewControllerWithIdentifier("BlockViewController") as? BlockViewController {
-//        controller.currentQuilt = quilt
-        controller.block = block
-//        controller.quiltMatrixID = view.tag
-        navigationController?.pushViewController(controller, animated: true)
+          //        controller.currentQuilt = quilt
+          controller.block = block
+          //        controller.quiltMatrixID = view.tag
+          navigationController?.pushViewController(controller, animated: true)
+          
+        }
         
       }
-
+    case .Options:
+      println("options")
+    case .Rotate:
+      println("rotate")
+    case .FlipHorizontal:
+      println("horiz")
+    case .FlipVertical:
+      println("vertical")
     }
+    
+    
+    
     
   }
   
@@ -240,7 +258,14 @@ class QuiltViewController: UIViewController {
     }
   }
   
-  
+  override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    if segue.identifier == "QuiltToToolbar" {
+      if let controller = segue.destinationViewController as? ToolbarViewController {
+        controller.delegate = self
+        toolbar = controller
+      }
+    }
+  }
 }
 
 extension QuiltViewController: UIScrollViewDelegate {
@@ -253,3 +278,24 @@ extension QuiltViewController: UIScrollViewDelegate {
   }
 }
 
+extension QuiltViewController: ToolbarViewControllerDelegate {
+  func toolBlock() {
+    println("toolBlock")
+  }
+  
+  func toolOptions() {
+    println("toolOptions")
+  }
+  
+  func toolFlipBlockHorizontal() {
+    println("flip horizontal")
+  }
+  
+  func toolFlipBlockVertical() {
+    println("flip vertical")
+  }
+  
+  func toolRotateBlock() {
+    println("rotate block")
+  }
+}
