@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>name</key>
+	<string>Umpty</string>
+	<key>patchColors</key>
+	<array>
+		<integer>0</integer>
+		<integer>1</integer>
+		<integer>2</integer>
+		<integer>1</integer>
+		<integer>0</integer>
+		<integer>2</integer>
+		<integer>2</integer>
+		<integer>1</integer>
+		<integer>0</integer>
+		<integer>2</integer>
+		<integer>0</integer>
+		<integer>1</integer>
+	</array>
+	<key>patches</key>
+	<array>
+		<array>
+			<string>{0.333, 0.0}</string>
+			<string>{0.0, 0.333}</string>
+			<string>{0.5, 0.5}</string>
+		</array>
+		<array>
+			<string>{0.0, 0.0}</string>
+			<string>{0.0, 0.333}</string>
+			<string>{0.333, 0.0}</string>
+		</array>
+		<array>
+			<string>{0.333, 0.0}</string>
+			<string>{0.666, 0.0}</string>
+			<string>{0.5, 0.5}</string>
+		</array>
+		<array>
+			<string>{0.666, 0.0}</string>
+			<string>{1, 0.0}</string>
+			<string>{1, 0.333}</string>
+		</array>
+		<array>
+			<string>{0.666, 0.0}</string>
+			<string>{1, 0.333}</string>
+			<string>{0.5, 0.5}</string>
+		</array>
+		<array>
+			<string>{0.0, 0.333}</string>
+			<string>{0.5, 0.5}</string>
+			<string>{0.0, 0.666}</string>
+		</array>
+		<array>
+			<string>{0.5, 0.5}</string>
+			<string>{1, 0.333}</string>
+			<string>{1, 0.666}</string>
+		</array>
+		<array>
+			<string>{0.0, 0.666}</string>
+			<string>{0.333, 1}</string>
+			<string>{0.0, 1}</string>
+		</array>
+		<array>
+			<string>{0.0, 0.666}</string>
+			<string>{0.5, 0.5}</string>
+			<string>{0.333, 1}</string>
+		</array>
+		<array>
+			<string>{0.333, 1}</string>
+			<string>{0.5, 0.5}</string>
+			<string>{0.666, 1}</string>
+		</array>
+		<array>
+			<string>{0.5, 0.5}</string>
+			<string>{1, 0.666}</string>
+			<string>{0.666, 1}</string>
+		</array>
+		<array>
+			<string>{0.666, 1}</string>
+			<string>{1, 0.666}</string>
+			<string>{1, 1}</string>
+		</array>
+	</array>
+</dict>
+</plist>

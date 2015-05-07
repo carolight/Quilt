@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		821F9C201AE748480080B220 /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 821F9C1E1AE748480080B220 /* Main_iPad.storyboard */; };
 		8222610D1AE0A2A80066DE17 /* BlockSelectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8222610C1AE0A2A80066DE17 /* BlockSelectViewController.swift */; };
 		8222610F1AE1DEAE0066DE17 /* Global.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8222610E1AE1DEAE0066DE17 /* Global.swift */; };
 		823EE5F11AD8ABAA00DDC338 /* Scheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 823EE5F01AD8ABAA00DDC338 /* Scheme.swift */; };
@@ -20,12 +19,15 @@
 		82455F6D1ACBA1F600973B40 /* QuiltTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82455F6C1ACBA1F600973B40 /* QuiltTests.swift */; };
 		82455F7B1ACBB97A00973B40 /* QuiltCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82455F7A1ACBB97A00973B40 /* QuiltCollectionViewCell.swift */; };
 		82455F7D1ACBBAC600973B40 /* CollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82455F7C1ACBBAC600973B40 /* CollectionViewFlowLayout.swift */; };
+		824A0D591AF701A8002E51E5 /* FabricCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 824A0D581AF701A8002E51E5 /* FabricCollectionViewController.swift */; };
 		825353C41ACE47EC00FEE2D9 /* blocks in Resources */ = {isa = PBXBuildFile; fileRef = 825353C31ACE47EC00FEE2D9 /* blocks */; };
 		825353C61ACE500800FEE2D9 /* Quilt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 825353C51ACE500800FEE2D9 /* Quilt.swift */; };
 		825353C81ACE501400FEE2D9 /* Block.swift in Sources */ = {isa = PBXBuildFile; fileRef = 825353C71ACE501400FEE2D9 /* Block.swift */; };
 		825353CA1ACE502100FEE2D9 /* Fabric.swift in Sources */ = {isa = PBXBuildFile; fileRef = 825353C91ACE502100FEE2D9 /* Fabric.swift */; };
 		82544D341AD4CB4A00CCA4B2 /* QuiltBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82544D331AD4CB4A00CCA4B2 /* QuiltBlock.swift */; };
 		82544D391AD4E05100CCA4B2 /* LoadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82544D381AD4E05100CCA4B2 /* LoadViewController.swift */; };
+		827C3BF21AFB08EB007D3D19 /* BlockCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 827C3BF11AFB08EB007D3D19 /* BlockCollectionViewController.swift */; };
+		8298099F1AEA26C50056F685 /* Patch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8298099E1AEA26C50056F685 /* Patch.swift */; };
 		82C381091AD36CF500B85B39 /* CouchbaseLite.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82C381081AD36CF500B85B39 /* CouchbaseLite.framework */; };
 		82C3810C1AD36D7A00B85B39 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82C3810B1AD36D7A00B85B39 /* CFNetwork.framework */; };
 		82C3810E1AD36D7F00B85B39 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82C3810D1AD36D7F00B85B39 /* Security.framework */; };
@@ -40,11 +42,6 @@
 		82E9437F1ACBFC5100211608 /* QuiltViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82E9437E1ACBFC5100211608 /* QuiltViewController.swift */; };
 		82E943811ACCC9E400211608 /* BlockViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82E943801ACCC9E400211608 /* BlockViewController.swift */; };
 		82E943831ACCCA0A00211608 /* BlockView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82E943821ACCCA0A00211608 /* BlockView.swift */; };
-		82ED3B691AD34FC90049EB87 /* quilt1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 82ED3B641AD34FC90049EB87 /* quilt1.jpg */; };
-		82ED3B6A1AD34FC90049EB87 /* quilt2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 82ED3B651AD34FC90049EB87 /* quilt2.jpg */; };
-		82ED3B6B1AD34FC90049EB87 /* quilt3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 82ED3B661AD34FC90049EB87 /* quilt3.jpg */; };
-		82ED3B6C1AD34FC90049EB87 /* quilt4.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 82ED3B671AD34FC90049EB87 /* quilt4.jpg */; };
-		82ED3B6D1AD34FC90049EB87 /* quilt5.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 82ED3B681AD34FC90049EB87 /* quilt5.jpg */; };
 		82ED3B711AD352E50049EB87 /* fabrics in Resources */ = {isa = PBXBuildFile; fileRef = 82ED3B701AD352E50049EB87 /* fabrics */; };
 		82FCF5A81ACE2127000FC779 /* FabricView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82FCF5A71ACE2127000FC779 /* FabricView.swift */; };
 		82FCF5AA1ACE2134000FC779 /* FabricViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82FCF5A91ACE2134000FC779 /* FabricViewController.swift */; };
@@ -64,7 +61,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		821F9C1F1AE748480080B220 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPad.storyboard; sourceTree = "<group>"; };
 		8222610C1AE0A2A80066DE17 /* BlockSelectViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockSelectViewController.swift; sourceTree = "<group>"; };
 		8222610E1AE1DEAE0066DE17 /* Global.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Global.swift; sourceTree = "<group>"; };
 		823EE5F01AD8ABAA00DDC338 /* Scheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Scheme.swift; sourceTree = "<group>"; };
@@ -81,12 +77,15 @@
 		82455F6C1ACBA1F600973B40 /* QuiltTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuiltTests.swift; sourceTree = "<group>"; };
 		82455F7A1ACBB97A00973B40 /* QuiltCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuiltCollectionViewCell.swift; sourceTree = "<group>"; };
 		82455F7C1ACBBAC600973B40 /* CollectionViewFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewFlowLayout.swift; sourceTree = "<group>"; };
+		824A0D581AF701A8002E51E5 /* FabricCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FabricCollectionViewController.swift; sourceTree = "<group>"; };
 		825353C31ACE47EC00FEE2D9 /* blocks */ = {isa = PBXFileReference; lastKnownFileType = folder; name = blocks; path = images/blocks; sourceTree = "<group>"; };
 		825353C51ACE500800FEE2D9 /* Quilt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Quilt.swift; sourceTree = "<group>"; };
 		825353C71ACE501400FEE2D9 /* Block.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Block.swift; sourceTree = "<group>"; };
 		825353C91ACE502100FEE2D9 /* Fabric.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Fabric.swift; sourceTree = "<group>"; };
 		82544D331AD4CB4A00CCA4B2 /* QuiltBlock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuiltBlock.swift; sourceTree = "<group>"; };
 		82544D381AD4E05100CCA4B2 /* LoadViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadViewController.swift; sourceTree = "<group>"; };
+		827C3BF11AFB08EB007D3D19 /* BlockCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockCollectionViewController.swift; sourceTree = "<group>"; };
+		8298099E1AEA26C50056F685 /* Patch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Patch.swift; sourceTree = "<group>"; };
 		82C381081AD36CF500B85B39 /* CouchbaseLite.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = CouchbaseLite.framework; sourceTree = "<group>"; };
 		82C3810B1AD36D7A00B85B39 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		82C3810D1AD36D7F00B85B39 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
@@ -102,11 +101,6 @@
 		82E9437E1ACBFC5100211608 /* QuiltViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuiltViewController.swift; sourceTree = "<group>"; };
 		82E943801ACCC9E400211608 /* BlockViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockViewController.swift; sourceTree = "<group>"; };
 		82E943821ACCCA0A00211608 /* BlockView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockView.swift; sourceTree = "<group>"; };
-		82ED3B641AD34FC90049EB87 /* quilt1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = quilt1.jpg; sourceTree = "<group>"; };
-		82ED3B651AD34FC90049EB87 /* quilt2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = quilt2.jpg; sourceTree = "<group>"; };
-		82ED3B661AD34FC90049EB87 /* quilt3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = quilt3.jpg; sourceTree = "<group>"; };
-		82ED3B671AD34FC90049EB87 /* quilt4.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = quilt4.jpg; sourceTree = "<group>"; };
-		82ED3B681AD34FC90049EB87 /* quilt5.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = quilt5.jpg; sourceTree = "<group>"; };
 		82ED3B701AD352E50049EB87 /* fabrics */ = {isa = PBXFileReference; lastKnownFileType = folder; name = fabrics; path = images/fabrics; sourceTree = "<group>"; };
 		82FCF5A71ACE2127000FC779 /* FabricView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FabricView.swift; sourceTree = "<group>"; };
 		82FCF5A91ACE2134000FC779 /* FabricViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FabricViewController.swift; sourceTree = "<group>"; };
@@ -164,7 +158,6 @@
 				82455F561ACBA1F500973B40 /* AppDelegate.swift */,
 				8222610E1AE1DEAE0066DE17 /* Global.swift */,
 				82FCF5AF1ACE3C4A000FC779 /* Main.storyboard */,
-				821F9C1E1AE748480080B220 /* Main_iPad.storyboard */,
 				82C381191AD36E0400B85B39 /* Database.swift */,
 				82455F581ACBA1F500973B40 /* QuiltSelectViewController.swift */,
 				82455F7C1ACBBAC600973B40 /* CollectionViewFlowLayout.swift */,
@@ -172,9 +165,11 @@
 				82FCF5AD1ACE2A88000FC779 /* CollectionViewCell.swift */,
 				82455F7A1ACBB97A00973B40 /* QuiltCollectionViewCell.swift */,
 				82E9437E1ACBFC5100211608 /* QuiltViewController.swift */,
+				827C3BF11AFB08EB007D3D19 /* BlockCollectionViewController.swift */,
 				8222610C1AE0A2A80066DE17 /* BlockSelectViewController.swift */,
 				82E943801ACCC9E400211608 /* BlockViewController.swift */,
 				82E943821ACCCA0A00211608 /* BlockView.swift */,
+				824A0D581AF701A8002E51E5 /* FabricCollectionViewController.swift */,
 				82FCF5A91ACE2134000FC779 /* FabricViewController.swift */,
 				82FCF5A71ACE2127000FC779 /* FabricView.swift */,
 				823EE5F21AD8C36900DDC338 /* SchemeCollectionViewController.swift */,
@@ -217,19 +212,6 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		82455F7E1ACBC44400973B40 /* quiltImages */ = {
-			isa = PBXGroup;
-			children = (
-				82ED3B641AD34FC90049EB87 /* quilt1.jpg */,
-				82ED3B651AD34FC90049EB87 /* quilt2.jpg */,
-				82ED3B661AD34FC90049EB87 /* quilt3.jpg */,
-				82ED3B671AD34FC90049EB87 /* quilt4.jpg */,
-				82ED3B681AD34FC90049EB87 /* quilt5.jpg */,
-			);
-			name = quiltImages;
-			path = images;
-			sourceTree = "<group>";
-		};
 		825353CB1ACE505400FEE2D9 /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -239,6 +221,7 @@
 				825353C71ACE501400FEE2D9 /* Block.swift */,
 				825353C91ACE502100FEE2D9 /* Fabric.swift */,
 				823EE5F01AD8ABAA00DDC338 /* Scheme.swift */,
+				8298099E1AEA26C50056F685 /* Patch.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -262,7 +245,6 @@
 			children = (
 				82ED3B701AD352E50049EB87 /* fabrics */,
 				825353C31ACE47EC00FEE2D9 /* blocks */,
-				82455F7E1ACBC44400973B40 /* quiltImages */,
 			);
 			name = Images;
 			sourceTree = "<group>";
@@ -348,16 +330,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				825353C41ACE47EC00FEE2D9 /* blocks in Resources */,
-				82ED3B6A1AD34FC90049EB87 /* quilt2.jpg in Resources */,
 				82FCF5B11ACE3C4A000FC779 /* Main.storyboard in Resources */,
-				821F9C201AE748480080B220 /* Main_iPad.storyboard in Resources */,
-				82ED3B691AD34FC90049EB87 /* quilt1.jpg in Resources */,
-				82ED3B6C1AD34FC90049EB87 /* quilt4.jpg in Resources */,
 				82ED3B711AD352E50049EB87 /* fabrics in Resources */,
 				82455F611ACBA1F600973B40 /* LaunchScreen.xib in Resources */,
-				82ED3B6D1AD34FC90049EB87 /* quilt5.jpg in Resources */,
 				82455F5E1ACBA1F600973B40 /* Images.xcassets in Resources */,
-				82ED3B6B1AD34FC90049EB87 /* quilt3.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -392,6 +368,7 @@
 				823EE5F31AD8C36900DDC338 /* SchemeCollectionViewController.swift in Sources */,
 				82FCF5A81ACE2127000FC779 /* FabricView.swift in Sources */,
 				82E943811ACCC9E400211608 /* BlockViewController.swift in Sources */,
+				824A0D591AF701A8002E51E5 /* FabricCollectionViewController.swift in Sources */,
 				823EE5F11AD8ABAA00DDC338 /* Scheme.swift in Sources */,
 				82C3811C1AD3ADD000B85B39 /* CreateBlockViewController.swift in Sources */,
 				82C3811E1AD3AE9F00B85B39 /* CreateBlockView.swift in Sources */,
@@ -399,7 +376,9 @@
 				82544D341AD4CB4A00CCA4B2 /* QuiltBlock.swift in Sources */,
 				82455F7B1ACBB97A00973B40 /* QuiltCollectionViewCell.swift in Sources */,
 				8222610D1AE0A2A80066DE17 /* BlockSelectViewController.swift in Sources */,
+				827C3BF21AFB08EB007D3D19 /* BlockCollectionViewController.swift in Sources */,
 				82FCF5AC1ACE29D2000FC779 /* CollectionViewController.swift in Sources */,
+				8298099F1AEA26C50056F685 /* Patch.swift in Sources */,
 				8222610F1AE1DEAE0066DE17 /* Global.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -423,14 +402,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		821F9C1E1AE748480080B220 /* Main_iPad.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				821F9C1F1AE748480080B220 /* Base */,
-			);
-			name = Main_iPad.storyboard;
-			sourceTree = "<group>";
-		};
 		82455F5F1ACBA1F600973B40 /* LaunchScreen.xib */ = {
 			isa = PBXVariantGroup;
 			children = (

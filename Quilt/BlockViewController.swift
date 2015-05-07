@@ -119,6 +119,16 @@ extension BlockViewController: BlockViewDelegate {
         break
       }
     }
+    
+    if let collectionViewController = storyboard?.instantiateViewControllerWithIdentifier("FabricCollectionViewController") as? FabricCollectionViewController {
+      collectionViewController.delegate = self
+      navigationController?.pushViewController(collectionViewController, animated: true)
+    }
+    
+    
+    return
+    
+    
     if let collectionViewController = storyboard?.instantiateViewControllerWithIdentifier("CollectionViewController") as? CollectionViewController {
       collectionViewController.appState = .Fabric
       collectionViewController.delegate = self
@@ -141,6 +151,32 @@ extension BlockViewController: BlockViewDelegate {
       
     }
   }
+}
+
+extension BlockViewController:FabricCollectionViewControllerDelegate {
+  func didSelectFabric(fabric: Fabric) {
+    println("didSelectFabric: \(fabric.name)")
+    if block.blockFabrics.count < block.patches.count {
+      block.blockFabrics = [String](count: block.patches.count, repeatedValue: " ")
+    }
+    if let fabricImage = fabric.image  {
+      if let selectedColor = selectedPatchColor {
+        for (index, color) in enumerate(block.patchColors) {
+          if color == selectedColor {
+            let path = block.patches[index].path
+            let fabricColor = UIColor(patternImage: fabricImage)
+            block.patches[index].color = fabricColor
+            block.patches[index].fabric = fabric
+            
+            block.blockFabrics[index] = fabric.name
+          }
+        }
+        blockView.setNeedsDisplay()
+      }
+    }
+    navigationController?.popViewControllerAnimated(true)
+  }
+
 }
 
 extension BlockViewController: CollectionViewControllerDelegate {

@@ -223,32 +223,6 @@ class Block  {
 
 }
 
-class Patch {
-  var points:[CGPoint] = []
-  var color: UIColor = UIColor.blueColor()
-  var path: UIBezierPath = UIBezierPath() //sometimes path is available instead of points
-  var fabric: Fabric? = nil
-  
-  func createPath(blockSize:CGSize) -> UIBezierPath {
-    var first = true
-    var path = UIBezierPath()
-    for point in points {
-      let locationX = point.x * blockSize.width
-      let locationY = point.y * blockSize.height
-      if first {
-        path.moveToPoint(CGPoint(x: locationX, y: locationY))
-        first = false
-      } else {
-        path.addLineToPoint(CGPoint(x: locationX, y: locationY))
-      }
-    }
-    path.closePath()
-    return path
-  }
-  
-
-  
-}
 
 extension Block: DatabaseProtocol {
   

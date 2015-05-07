@@ -112,10 +112,11 @@ class QuiltViewController: UIViewController {
       
       currentQuiltMatrixID = view.tag
       
-      if let controller = storyboard?.instantiateViewControllerWithIdentifier("BlockSelectViewController") as? BlockSelectViewController {
-        controller.currentQuilt = quilt
-        controller.currentBlock = block
-        controller.quiltMatrixID = view.tag
+//      if let controller = storyboard?.instantiateViewControllerWithIdentifier("BlockSelectViewController") as? BlockSelectViewController {
+        if let controller = storyboard?.instantiateViewControllerWithIdentifier("BlockViewController") as? BlockViewController {
+//        controller.currentQuilt = quilt
+        controller.block = block
+//        controller.quiltMatrixID = view.tag
         navigationController?.pushViewController(controller, animated: true)
         
       }
