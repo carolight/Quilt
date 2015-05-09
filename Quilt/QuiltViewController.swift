@@ -25,6 +25,10 @@ class QuiltViewController: UIViewController {
   
   var toolbar: ToolbarViewController!
   
+  //IPAD
+  var rightNavigationController:UINavigationController!
+  //END IPAD
+  
   func createNewQuilt() {
     let newQuilt = quilt.copy(currentScheme)
     newQuilt.name = "Mine"
@@ -107,6 +111,7 @@ class QuiltViewController: UIViewController {
     switch toolbar.currentTool {
     case .Block:
       println("block")
+      
       if let view = gesture.view {
         let column = (view.tag - 1) % gMatrixMultiplier
         let row = (view.tag - 1 - column) / gMatrixMultiplier
@@ -123,7 +128,12 @@ class QuiltViewController: UIViewController {
           //        controller.currentQuilt = quilt
           controller.block = block
           //        controller.quiltMatrixID = view.tag
-          navigationController?.pushViewController(controller, animated: true)
+          
+          if IPAD {
+            rightNavigationController.pushFadeViewController(controller)
+          } else {
+            navigationController?.pushViewController(controller, animated: true)
+          }
           
         }
         
@@ -264,6 +274,9 @@ class QuiltViewController: UIViewController {
         controller.delegate = self
         toolbar = controller
       }
+    } else if segue.identifier == "RightContainerSegue" {
+      rightNavigationController = segue.destinationViewController as! UINavigationController
+      rightNavigationController.navigationBar.hidden = true
     }
   }
 }
@@ -285,17 +298,39 @@ extension QuiltViewController: ToolbarViewControllerDelegate {
   
   func toolOptions() {
     println("toolOptions")
+    if rightNavigationController.viewControllers.count > 1 {
+      rightNavigationController.popToRootFadeViewController()
+    }
+    
+    
+    if let controller = storyboard?.instantiateViewControllerWithIdentifier("OptionsTableViewController") as? OptionsTableViewController {
+      if IPAD {
+        rightNavigationController.pushFadeViewController(controller)
+      } else {
+        navigationController?.pushViewController(controller, animated: true)
+      }
+    }
+
   }
   
   func toolFlipBlockHorizontal() {
     println("flip horizontal")
+    if rightNavigationController.viewControllers.count > 1 {
+      rightNavigationController.popToRootFadeViewController()
+    }
   }
   
   func toolFlipBlockVertical() {
     println("flip vertical")
+    if rightNavigationController.viewControllers.count > 1 {
+      rightNavigationController.popToRootFadeViewController()
+    }
   }
   
   func toolRotateBlock() {
     println("rotate block")
+    if rightNavigationController.viewControllers.count > 1 {
+      rightNavigationController.popToRootFadeViewController()
+    }
   }
 }

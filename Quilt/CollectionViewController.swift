@@ -52,6 +52,7 @@ extension CollectionViewController: UICollectionViewDataSource {
   }
   
   override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    println("Collection count: \(array.count)")
     return array.count
   }
   

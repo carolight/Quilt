@@ -244,7 +244,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="694" y="336"/>
+            <point key="canvasLocation" x="670" y="429"/>
         </scene>
         <!--Scheme Collection View Controller-->
         <scene sceneID="8Fc-Uc-Rag">
@@ -303,14 +303,14 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oQX-qA-nCZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="311" y="-289"/>
+            <point key="canvasLocation" x="207" y="-322"/>
         </scene>
         <!--Collection View Controller-->
         <scene sceneID="qec-gz-Yf8">
             <objects>
                 <collectionViewController storyboardIdentifier="CollectionViewController" id="8rg-gq-u6H" customClass="CollectionViewController" customModule="Quilt" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="gHo-Ur-gBT">
-                        <rect key="frame" x="0.0" y="0.0" width="300" height="300"/>
+                        <rect key="frame" x="0.0" y="0.0" width="288" height="408"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="ReJ-1d-fSn">
@@ -321,7 +321,7 @@
                         </collectionViewFlowLayout>
                         <cells>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CollectionViewCell" id="Xn1-Fw-iMr" customClass="CollectionViewCell" customModule="Quilt" customModuleProvider="target">
-                                <rect key="frame" x="30" y="0.0" width="240" height="400"/>
+                                <rect key="frame" x="24" y="0.0" width="240" height="400"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                     <rect key="frame" x="0.0" y="0.0" width="240" height="400"/>
@@ -469,7 +469,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DQV-E6-jn0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="749" y="1051"/>
+            <point key="canvasLocation" x="694" y="1171"/>
         </scene>
         <!--Block View Controller-->
         <scene sceneID="Lt9-OS-ahY">
@@ -542,7 +542,7 @@
                         </collectionViewFlowLayout>
                         <cells>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="BlockCollectionCell" id="CNH-vR-WiM">
-                                <rect key="frame" x="0.0" y="64" width="100" height="100"/>
+                                <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                     <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
@@ -689,7 +689,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pz2-wt-kTT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="621" y="1587"/>
+            <point key="canvasLocation" x="597" y="1725"/>
         </scene>
     </scenes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
@@ -698,6 +698,6 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="0EX-FM-CTb"/>
+        <segue reference="uhG-ux-Wd7"/>
     </inferredMetricsTieBreakers>
 </document>

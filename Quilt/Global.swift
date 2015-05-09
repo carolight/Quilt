@@ -45,3 +45,5 @@ let gMatrixMultiplier = 1000
 //let row = (imageView.tag - column) / gMatrixMultiplier
 
 let gQuiltThumbnailSize = CGSize(width: 240, height: 400)
+
+let IPAD = UI_USER_INTERFACE_IDIOM() == .Pad

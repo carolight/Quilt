@@ -20,6 +20,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     println("Database: \(database)")
     createViews()
     
+    if IPAD {
+      let storyboard = UIStoryboard(name: "Main-iPad", bundle: nil)
+      let viewController = storyboard.instantiateViewControllerWithIdentifier("InitialNavigationController") as! UINavigationController
+      self.window!.rootViewController = viewController
+    } 
+    
+
+    
 //    if UIDevice.currentDevice().userInterfaceIdiom == .Pad {
 //      if let orientation = self.window!.rootViewController?.interfaceOrientation {
 //        if UIInterfaceOrientationIsLandscape(orientation) {

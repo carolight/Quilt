@@ -28,7 +28,10 @@
 		82544D391AD4E05100CCA4B2 /* LoadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82544D381AD4E05100CCA4B2 /* LoadViewController.swift */; };
 		827C3BF21AFB08EB007D3D19 /* BlockCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 827C3BF11AFB08EB007D3D19 /* BlockCollectionViewController.swift */; };
 		827C3BF41AFB0D4B007D3D19 /* ToolbarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 827C3BF31AFB0D4B007D3D19 /* ToolbarViewController.swift */; };
+		827C3BF71AFB1A1F007D3D19 /* Main-iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 827C3BF51AFB1A1F007D3D19 /* Main-iPad.storyboard */; };
 		8298099F1AEA26C50056F685 /* Patch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8298099E1AEA26C50056F685 /* Patch.swift */; };
+		82C31CB21AFB81810014E64D /* OptionsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82C31CB11AFB81810014E64D /* OptionsTableViewController.swift */; };
+		82C31CB41AFB86420014E64D /* Categories.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82C31CB31AFB86420014E64D /* Categories.swift */; };
 		82C381091AD36CF500B85B39 /* CouchbaseLite.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82C381081AD36CF500B85B39 /* CouchbaseLite.framework */; };
 		82C3810C1AD36D7A00B85B39 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82C3810B1AD36D7A00B85B39 /* CFNetwork.framework */; };
 		82C3810E1AD36D7F00B85B39 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82C3810D1AD36D7F00B85B39 /* Security.framework */; };
@@ -87,7 +90,10 @@
 		82544D381AD4E05100CCA4B2 /* LoadViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadViewController.swift; sourceTree = "<group>"; };
 		827C3BF11AFB08EB007D3D19 /* BlockCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockCollectionViewController.swift; sourceTree = "<group>"; };
 		827C3BF31AFB0D4B007D3D19 /* ToolbarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolbarViewController.swift; sourceTree = "<group>"; };
+		827C3BF61AFB1A1F007D3D19 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = "Base.lproj/Main-iPad.storyboard"; sourceTree = "<group>"; };
 		8298099E1AEA26C50056F685 /* Patch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Patch.swift; sourceTree = "<group>"; };
+		82C31CB11AFB81810014E64D /* OptionsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OptionsTableViewController.swift; sourceTree = "<group>"; };
+		82C31CB31AFB86420014E64D /* Categories.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Categories.swift; sourceTree = "<group>"; };
 		82C381081AD36CF500B85B39 /* CouchbaseLite.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = CouchbaseLite.framework; sourceTree = "<group>"; };
 		82C3810B1AD36D7A00B85B39 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		82C3810D1AD36D7F00B85B39 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
@@ -160,6 +166,7 @@
 				82455F561ACBA1F500973B40 /* AppDelegate.swift */,
 				8222610E1AE1DEAE0066DE17 /* Global.swift */,
 				82FCF5AF1ACE3C4A000FC779 /* Main.storyboard */,
+				827C3BF51AFB1A1F007D3D19 /* Main-iPad.storyboard */,
 				82C381191AD36E0400B85B39 /* Database.swift */,
 				827C3BF31AFB0D4B007D3D19 /* ToolbarViewController.swift */,
 				82455F581ACBA1F500973B40 /* QuiltSelectViewController.swift */,
@@ -181,6 +188,8 @@
 				82C3811F1AD3C2E600B85B39 /* CreateBlockPointTableViewController.swift */,
 				82C381211AD4A19700B85B39 /* CreateBlockPatchEditViewController.swift */,
 				82544D381AD4E05100CCA4B2 /* LoadViewController.swift */,
+				82C31CB11AFB81810014E64D /* OptionsTableViewController.swift */,
+				82C31CB31AFB86420014E64D /* Categories.swift */,
 				825353CB1ACE505400FEE2D9 /* Model */,
 				82FCF5A61ACE2059000FC779 /* Images */,
 				82455F5D1ACBA1F600973B40 /* Images.xcassets */,
@@ -337,6 +346,7 @@
 				82ED3B711AD352E50049EB87 /* fabrics in Resources */,
 				82455F611ACBA1F600973B40 /* LaunchScreen.xib in Resources */,
 				82455F5E1ACBA1F600973B40 /* Images.xcassets in Resources */,
+				827C3BF71AFB1A1F007D3D19 /* Main-iPad.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -366,10 +376,12 @@
 				82C3811A1AD36E0400B85B39 /* Database.swift in Sources */,
 				82455F591ACBA1F500973B40 /* QuiltSelectViewController.swift in Sources */,
 				82FCF5AA1ACE2134000FC779 /* FabricViewController.swift in Sources */,
+				82C31CB21AFB81810014E64D /* OptionsTableViewController.swift in Sources */,
 				825353CA1ACE502100FEE2D9 /* Fabric.swift in Sources */,
 				82455F571ACBA1F500973B40 /* AppDelegate.swift in Sources */,
 				823EE5F31AD8C36900DDC338 /* SchemeCollectionViewController.swift in Sources */,
 				82FCF5A81ACE2127000FC779 /* FabricView.swift in Sources */,
+				82C31CB41AFB86420014E64D /* Categories.swift in Sources */,
 				82E943811ACCC9E400211608 /* BlockViewController.swift in Sources */,
 				824A0D591AF701A8002E51E5 /* FabricCollectionViewController.swift in Sources */,
 				827C3BF41AFB0D4B007D3D19 /* ToolbarViewController.swift in Sources */,
@@ -412,6 +424,14 @@
 				82455F601ACBA1F600973B40 /* Base */,
 			);
 			name = LaunchScreen.xib;
+			sourceTree = "<group>";
+		};
+		827C3BF51AFB1A1F007D3D19 /* Main-iPad.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				827C3BF61AFB1A1F007D3D19 /* Base */,
+			);
+			name = "Main-iPad.storyboard";
 			sourceTree = "<group>";
 		};
 		82FCF5AF1ACE3C4A000FC779 /* Main.storyboard */ = {
@@ -520,6 +540,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Quilt/Quilt-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -538,6 +559,7 @@
 				"OTHER_LDFLAGS[arch=*]" = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Quilt/Quilt-Bridging-Header.h";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
